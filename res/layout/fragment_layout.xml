@@ -1,0 +1,80 @@
+<com.example.dentallab.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#eeeeee" >
+
+    <!-- Job Button -->
+
+    <Button
+        android:id="@+id/btn_job"
+        style="@style/DashboardButton"
+        android:layout_width="wrap_content"
+        android:drawableTop="@drawable/bag"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="JOB"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+    <!-- Admin Button -->
+
+    <Button
+        android:id="@+id/btn_admin"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/lock"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="ADMIN"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+    <!-- Marketing Button -->
+
+    <Button
+        android:id="@+id/btn_marketing"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/marketing"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="MARKETING"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+    <!-- Dealer Button -->
+
+    <Button
+        android:id="@+id/btn_dealer"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/dealer"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="DEALER"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+    <!-- Bill Button -->
+
+    <Button
+        android:id="@+id/btn_bill"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/calculator"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="BILL"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+    <!-- Photos Button -->
+
+    <Button
+        android:id="@+id/btn_settings"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/settings"
+        android:elevation="10dp"
+        android:padding="15dp"
+        android:text="SETTINGS"
+        android:translationX="10dp"
+        android:translationY="10dp" />
+
+</com.example.dentallab.DashboardLayout>
