@@ -1,21 +1,13 @@
-package com.example.dentallab;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.Toast;
+package com.rns.shwetalab.mobile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.detallab.R;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 /**
  * Created by Rajesh on 8/28/2015.

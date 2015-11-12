@@ -1,26 +1,22 @@
-package com.example.dentallab;
-
-import com.example.detallab.R;
+package com.rns.shwetalab.mobile;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AdminAddWorkTypeActivity extends Activity 
-{
+public class BalanceSheet extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_admin_add_work_type);
+		setContentView(R.layout.activity_balance_sheet);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.admin_add_work_type, menu);
+		getMenuInflater().inflate(R.menu.balance_sheet, menu);
 		return true;
 	}
 

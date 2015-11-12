@@ -1,4 +1,4 @@
-package com.example.dentallab;
+package com.rns.shwetalab.mobile;
 
 
 
@@ -16,8 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.example.detallab.R;
 
 
 public class HomePage extends Activity {

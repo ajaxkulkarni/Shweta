@@ -1,4 +1,7 @@
-package com.example.dentallab;
+package com.rns.shwetalab.mobile;
+
+import java.util.HashMap;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
-import java.util.HashMap;
-import java.util.List;
-
-import com.example.detallab.R;
 
 /**
  * Created by Rajesh on 8/28/2015.

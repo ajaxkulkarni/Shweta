@@ -1,27 +1,40 @@
-package com.example.dentallab;
-
-import com.example.detallab.R;
-import com.example.detallab.R.id;
-import com.example.detallab.R.layout;
-import com.example.detallab.R.menu;
+package com.rns.shwetalab.mobile;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
-public class BalanceSheet extends Activity {
+import com.rns.shwetalab.util.PersonDao;
+
+public class AddPerson extends Activity 
+{
+
+	private PersonDao personDao;
+	private Button addPersonButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_balance_sheet);
+		setContentView(R.layout.activity_add_person);
+		addPersonButton = (Button) findViewById(R.id.add_person_activity_add_button);
+		addPersonButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				personDao = new PersonDao(getApplicationContext());
+			}
+		});
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.balance_sheet, menu);
+		getMenuInflater().inflate(R.menu.add_person, menu);
 		return true;
 	}
 

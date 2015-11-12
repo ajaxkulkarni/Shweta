@@ -1,4 +1,4 @@
-package com.example.dentallab;
+package com.rns.shwetalab.mobile;
 
 import java.util.ArrayList;
 
@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.example.detallab.R;
 
 public class JobList extends Activity 
 {
@@ -35,7 +33,7 @@ public class JobList extends Activity
 
 		 objLv = (ListView) findViewById(R.id.Job_listView);
 
-	        jobs_list_adapter Adapter = new jobs_list_adapter(this, objArrayListName);
+	        JobListAdapter Adapter = new JobListAdapter(this, objArrayListName);
 	        objLv.setAdapter(Adapter);
 
 

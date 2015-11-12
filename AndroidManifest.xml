@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.detallab"
+    package="com.rns.shwetalab.mobile"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
     <application
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.dentallab.SplashScreen"
+            android:name="com.rns.shwetalab.mobile.SplashScreen"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
@@ -24,17 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.dentallab.HomePage"
+            android:name="com.rns.shwetalab.mobile.HomePage"
             android:label="@string/title_activity_home_page"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.AdminLogin"
+            android:name="com.rns.shwetalab.mobile.AdminLogin"
             android:label="@string/title_activity_admin_login"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.AddPerson"
+            android:name="com.rns.shwetalab.mobile.AddPerson"
             android:label="@string/title_activity_add_person"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -44,26 +44,22 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.ExpandableDoctorListView"
+            android:name="com.rns.shwetalab.mobile.ExpandableDoctorListView"
             android:label="@string/title_activity_expandable_doctor_list_view"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.AdminAddWorkTypeActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-        <activity
-            android:name="com.example.dentallab.JobEntry"
+            android:name="com.rns.shwetalab.mobile.JobEntry"
             android:label="@string/title_activity_job_entry"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.JobList"
+            android:name="com.rns.shwetalab.mobile.JobList"
             android:label="@string/title_activity_job_list"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.example.dentallab.BalanceSheet"
+            android:name="com.rns.shwetalab.mobile.BalanceSheet"
             android:label="@string/title_activity_balance_sheet" >
         </activity>
     </application>

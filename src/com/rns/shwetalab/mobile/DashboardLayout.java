@@ -1,4 +1,4 @@
-package com.example.dentallab;
+package com.rns.shwetalab.mobile;
 /*
  * Copyright 2011 Google Inc.
  *

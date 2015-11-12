@@ -1,4 +1,4 @@
-package com.example.dentallab;
+package com.rns.shwetalab.mobile;
 
 import java.util.ArrayList;
 
@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.detallab.R;
-
 /**
  * Created by Rajesh on 8/27/2015.
  */
-public class jobs_list_adapter extends BaseAdapter
+public class JobListAdapter extends BaseAdapter
 {
 
     private ArrayList<String> name;
@@ -22,7 +20,7 @@ public class jobs_list_adapter extends BaseAdapter
     LayoutInflater inflater;
 
 
-    public jobs_list_adapter(JobList jobsList,
+    public JobListAdapter(JobList jobsList,
                                   ArrayList<String> objArrayListName)
     {
         // TODO Auto-generated constructor stub
