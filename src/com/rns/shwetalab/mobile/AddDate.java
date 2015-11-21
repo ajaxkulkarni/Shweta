@@ -64,6 +64,8 @@ public class AddDate extends Activity implements OnClickListener
 		AddDateListAdapter Adapter = new AddDateListAdapter (this, objArrayListDate);
 		objLv.setAdapter(Adapter);
 		
+		//hello
+		
 		submitDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
