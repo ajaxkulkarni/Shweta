@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.rns.shwetalab.mobile.adapter.AddDateListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.DatabaseHelper;
 import com.rns.shwetalab.mobile.db.JobsDao;
@@ -60,8 +61,8 @@ public class AddDate extends Activity implements OnClickListener
 		objArrayListDate.add("Last 7 Day");
 		
 		objLv = (ListView) findViewById(R.id.add_date_listView);
-		//AddDoctorListAdapter Adapter = new AddDoctorListAdapter (this, objArrayListDate);
-		//objLv.setAdapter(Adapter);
+		AddDateListAdapter Adapter = new AddDateListAdapter (this, objArrayListDate);
+		objLv.setAdapter(Adapter);
 		
 		submitDate.setOnClickListener(new OnClickListener() {
 			

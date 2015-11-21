@@ -13,6 +13,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded"
+        android:drawableRight="@drawable/calender"
         android:ems="10"
         android:gravity="center"
         android:hint="Enter Date"
