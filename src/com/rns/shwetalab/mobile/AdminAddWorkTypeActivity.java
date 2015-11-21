@@ -31,7 +31,8 @@ public class AdminAddWorkTypeActivity extends Activity
 	private WorkType work;
 	private PersonDao personDao;
 	private RadioButton lab,doctor;
-	
+
+
 	private ListView objlv1,objlv2;
 	private List<String> doctorNames = new ArrayList<String>();
 	private List<String> doctorAmounts = new ArrayList<String>();
@@ -46,20 +47,27 @@ public class AdminAddWorkTypeActivity extends Activity
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		workTypeEditText = (EditText) findViewById(R.id.add_worktype_activity_worktype_editText);
 		addWorkTypeButton = (Button) findViewById(R.id.add_worktype_activity_worktype_add_button);
-		
 		doctor = (RadioButton)findViewById(R.id.addworktypeDoctorradioButton1);
 		lab = (RadioButton)findViewById(R.id.addworktypeLabradioButton2);
 		objlv1 = (ListView) findViewById(R.id.addworktypedoctorlistView);
 		objlv2 = (ListView) findViewById(R.id.addworktypelablistView);
+
 		
+		doctorNames.add("Ajinkya Kulkarni");
+		doctorAmounts.add("Rs.200/-");
+		labNames.add("Shewta Lab");
+
+
+
 		AddWorkTypeDoctorListAdapter doctorListAdapter = new AddWorkTypeDoctorListAdapter(this,doctorNames,doctorAmounts);
 		objlv1.setAdapter(doctorListAdapter);
 
 		AddWorkTypeLabListAdapter labListAdapter = new AddWorkTypeLabListAdapter (this,labNames ,labAmounts);
 		objlv2.setAdapter(labListAdapter);
-		
-		addWorkTypeButton.setOnClickListener(new OnClickListener() {
-			
+
+		addWorkTypeButton.setOnClickListener(new OnClickListener() 
+		{
+
 			@Override
 			public void onClick(View v) {
 				prepareWorkType();
@@ -68,6 +76,35 @@ public class AdminAddWorkTypeActivity extends Activity
 			}
 
 		});
+
+
+		doctor.setOnClickListener(new OnClickListener() 
+		{
+
+			@Override
+			public void onClick(View v) 
+			{
+
+				lab.setChecked(false);
+				objlv2.setVisibility(View.GONE);
+				objlv1.setVisibility(View.VISIBLE);	
+
+			}
+		});
+
+		lab.setOnClickListener(new OnClickListener() 
+		{
+
+			@Override
+			public void onClick(View v) 
+			{
+				doctor.setChecked(false);
+				objlv1.setVisibility(View.GONE);
+				objlv2.setVisibility(View.VISIBLE);	
+
+			}
+		});
+
 	}
 
 	private void prepareWorkType() {
@@ -75,7 +112,7 @@ public class AdminAddWorkTypeActivity extends Activity
 		work.setName(workTypeEditText.getText().toString());
 		work.setDefaultPrice(BigDecimal.TEN);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
