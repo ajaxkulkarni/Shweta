@@ -65,6 +65,7 @@ public class AddDate extends Activity implements OnClickListener
 		objLv.setAdapter(Adapter);
 		
 		//hello
+		/*Needs to be changed*/
 		
 		submitDate.setOnClickListener(new OnClickListener() {
 			
