@@ -66,6 +66,7 @@ public class AddDate extends Activity implements OnClickListener
 		
 		/*Needs to be changed*/
 		
+		
 		submitDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
