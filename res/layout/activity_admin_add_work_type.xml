@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:padding="40dp"
+            android:padding="20dp"
             android:text="ADD WORK TYPE"
             android:textColor="@android:color/white"
             android:textSize="18sp"
@@ -34,7 +34,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="40dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp" >
 
         <EditText
@@ -42,59 +42,72 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/rounded"
             android:ems="10"
             android:gravity="center"
-            android:hint=" Work Type " >
+            android:hint=" Work Type "
+            android:padding="10dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/add_worktype_activity_amount_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Default Price"
+            android:padding="10dp" >
         </EditText>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp" >
 
-        <EditText
-            android:id="@+id/add_worktype_activity_worktype_labname_editText"
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/addworktypeDoctorradioButton1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:gravity="center"
-            android:hint=" Lab Name " />
+            android:text="Doctor" />
 
-        <CheckBox
-            android:id="@+id/add_worktype_activity_worktype_labname_checkBox"
-            android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/addworktypeLabradioButton2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp" />
+            android:layout_weight="1"
+            android:text="Lab" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/add_worktype_activity_worktype_dealername_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:gravity="center"
-            android:hint=" Dealer Name " />
+        <ListView
+            android:id="@+id/addworktypedoctorlistView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+        </ListView>
 
-        <CheckBox
-            android:id="@+id/add_worktype_activity_worktype_dealername_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="" />
+        <ListView
+            android:id="@+id/addworktypelablistView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+        </ListView>
     </LinearLayout>
-
+    
     <Button
         android:id="@+id/add_worktype_activity_worktype_add_button"
         android:layout_width="match_parent"

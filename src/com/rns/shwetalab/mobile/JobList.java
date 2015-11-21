@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.rns.shwetalab.mobile.adapter.JobListAdapter;
+
 public class JobList extends Activity 
 {
 

@@ -1,4 +1,4 @@
-package com.rns.shwetalab.mobile;
+package com.rns.shwetalab.mobile.adapter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.rns.shwetalab.mobile.R;
 
 /**
  * Created by Rajesh on 8/28/2015.

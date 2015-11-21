@@ -1,3 +1,7 @@
 /proguard-project.txt
 /project.properties
 /bin/
+/gen/
+/libs/
+/dental
+/ic_launcher-web.png

@@ -62,6 +62,10 @@
             android:name="com.rns.shwetalab.mobile.BalanceSheet"
             android:label="@string/title_activity_balance_sheet" >
         </activity>
+        <activity
+            android:name="com.rns.shwetalab.mobile.AddDate"
+            android:label="@string/title_activity_add_date" >
+        </activity>
     </application>
 
 </manifest>

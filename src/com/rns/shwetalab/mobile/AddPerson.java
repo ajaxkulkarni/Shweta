@@ -7,28 +7,46 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.rns.shwetalab.util.PersonDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.domain.Person;
 
 public class AddPerson extends Activity 
 {
 
+	private static final String TYPE_DOCTOR = "Doctor";
 	private PersonDao personDao;
 	private Button addPersonButton;
+	private Person person;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_person);
+		personDao = new PersonDao(getApplicationContext());
 		addPersonButton = (Button) findViewById(R.id.add_person_activity_add_button);
 		addPersonButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				personDao = new PersonDao(getApplicationContext());
+				preparePerson();
+				personDao.insertDetails(person);
+				Toast.makeText(getApplicationContext(), "Record Inserted successfully!!", Toast.LENGTH_LONG).show();
 			}
 		});
+	}
+
+	private void preparePerson() {
+		person = new Person();
+		EditText nameEditText = (EditText) findViewById(R.id.add_person_activity_name_editText);
+		EditText emailEditText = (EditText)findViewById(R.id.add_person_activity_email_editText);
+		EditText phoneEditText = (EditText)findViewById(R.id.add_person_activity_phone_editText);
+		person.setName(nameEditText.getText().toString());
+		person.setEmail(emailEditText.getText().toString());
+		person.setPhone(phoneEditText.getText().toString());
+		person.setWorkType(TYPE_DOCTOR);
 	}
 
 	@Override

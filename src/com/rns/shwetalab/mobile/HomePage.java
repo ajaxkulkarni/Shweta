@@ -227,7 +227,7 @@ public class HomePage extends Activity {
 					public void onClick(DialogInterface arg0,
 							int arg1) 
 					{
-						Intent i = new Intent(HomePage.this, JobList.class);
+						Intent i = new Intent(HomePage.this, AddDate.class);
 						startActivity(i);
 					}
 				});
