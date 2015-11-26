@@ -62,7 +62,8 @@ public class AdminAddWorkTypeActivity extends Activity {
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) 
+			{
 				prepareWorkType();
 				workTypeDao.insertDetails(work);
 				//prepareWorkPersonMaps();
