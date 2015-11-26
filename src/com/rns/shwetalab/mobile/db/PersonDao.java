@@ -145,4 +145,9 @@ public class PersonDao {
 		return persons;
 	}
 
+	public List<Person> getAllPeopleByType(String type) {
+		openToWrite();
+		return iteratePersonCursor(personDb.query(DatabaseHelper.PERSON_TABLE, cols, DatabaseHelper.PERSON_TYPE + " like '" + type + "'", null, null,null, null));
+	}
+
 }

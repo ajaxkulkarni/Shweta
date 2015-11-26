@@ -17,94 +17,102 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
-import com.rns.shwetalab.mobile.adapter.AddWorkTypeLabListAdapter;
+import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
+import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
-public class AdminAddWorkTypeActivity extends Activity 
-{
+public class AdminAddWorkTypeActivity extends Activity {
 
 	private EditText workTypeEditText;
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
 	private WorkType work;
 	private PersonDao personDao;
-	private RadioButton lab,doctor;
+	private RadioButton lab, doctor;
 
-
-	private ListView objlv1,objlv2;
-	private List<String> doctorNames = new ArrayList<String>();
-	private List<String> doctorAmounts = new ArrayList<String>();
-	private List<String> labNames = new ArrayList<String>();
-	private List<String> labAmounts = new ArrayList<String>();
+	private ListView doctorsListView, labsListView;
+	private ArrayList<WorkPersonMap> workPersonMaps;
+	//private List<String> doctorNames = new ArrayList<String>();
+	//private List<String> doctorAmounts = new ArrayList<String>();
+	//private List<String> labNames = new ArrayList<String>();
+	//private List<String> labAmounts = new ArrayList<String>();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_add_work_type);
+		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		workTypeEditText = (EditText) findViewById(R.id.add_worktype_activity_worktype_editText);
 		addWorkTypeButton = (Button) findViewById(R.id.add_worktype_activity_worktype_add_button);
-		doctor = (RadioButton)findViewById(R.id.addworktypeDoctorradioButton1);
-		lab = (RadioButton)findViewById(R.id.addworktypeLabradioButton2);
-		objlv1 = (ListView) findViewById(R.id.addworktypedoctorlistView);
-		objlv2 = (ListView) findViewById(R.id.addworktypelablistView);
+		doctor = (RadioButton) findViewById(R.id.addworktypeDoctorradioButton1);
+		lab = (RadioButton) findViewById(R.id.addworktypeLabradioButton2);
+		doctorsListView = (ListView) findViewById(R.id.addworktypedoctorlistView);
+		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
+		prepareWorkPersonMaps();
+		AddWorkTypeDoctorListAdapter doctorListAdapter = new AddWorkTypeDoctorListAdapter(this,workPersonMaps);
+		doctorsListView.setAdapter(doctorListAdapter);
 
-		
-		doctorNames.add("Ajinkya Kulkarni");
-		doctorAmounts.add("Rs.200/-");
-		labNames.add("Shewta Lab");
+		//AddWorkTypeLabListAdapter labListAdapter = new AddWorkTypeLabListAdapter(this, labNames, labAmounts);
+		//objlv2.setAdapter(labListAdapter);
 
-
-
-		AddWorkTypeDoctorListAdapter doctorListAdapter = new AddWorkTypeDoctorListAdapter(this,doctorNames,doctorAmounts);
-		objlv1.setAdapter(doctorListAdapter);
-
-		AddWorkTypeLabListAdapter labListAdapter = new AddWorkTypeLabListAdapter (this,labNames ,labAmounts);
-		objlv2.setAdapter(labListAdapter);
-
-		addWorkTypeButton.setOnClickListener(new OnClickListener() 
-		{
+		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				prepareWorkType();
 				workTypeDao.insertDetails(work);
+				//prepareWorkPersonMaps();
+				workPersonMaps.size();
 				Toast.makeText(getApplicationContext(), "Record inserted successfully!", Toast.LENGTH_LONG).show();
 			}
 
+
 		});
 
-
-		doctor.setOnClickListener(new OnClickListener() 
-		{
+		doctor.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 
 				lab.setChecked(false);
-				objlv2.setVisibility(View.GONE);
-				objlv1.setVisibility(View.VISIBLE);	
+				labsListView.setVisibility(View.GONE);
+				doctorsListView.setVisibility(View.VISIBLE);
 
 			}
 		});
 
-		lab.setOnClickListener(new OnClickListener() 
-		{
+		lab.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 				doctor.setChecked(false);
-				objlv1.setVisibility(View.GONE);
-				objlv2.setVisibility(View.VISIBLE);	
+				doctorsListView.setVisibility(View.GONE);
+				labsListView.setVisibility(View.VISIBLE);
 
 			}
 		});
 
+	}
+	
+	/*private void prepareWorkPersonMaps() {
+		//for(WorkPersonMap map:objlv1.getAdapter().get)
+	}*/
+
+	private void prepareWorkPersonMaps() {
+		workPersonMaps = new ArrayList<WorkPersonMap>();
+		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+		if(doctors == null || doctors.size() == 0) {
+			return;
+		}
+		for(Person doctor:doctors) {
+			WorkPersonMap map = new WorkPersonMap();
+			map.setPerson(doctor);
+			workPersonMaps.add(map);
+		}
 	}
 
 	private void prepareWorkType() {

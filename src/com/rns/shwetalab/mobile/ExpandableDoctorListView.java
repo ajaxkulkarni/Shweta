@@ -12,7 +12,9 @@ import android.widget.ExpandableListView;
 import com.rns.shwetalab.mobile.adapter.ExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.DatabaseHelper;
 import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 
 /**
  * Created by Rajesh on 8/28/2015.
@@ -24,12 +26,15 @@ public class ExpandableDoctorListView extends Activity {
 	private HashMap<String, List<String>> listDataChild;
 	private JobsDao jobsDao;
 	private String dateSelected;
+	private WorkPersonMapDao workPersonMapDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_expandable_doctor_list_view);
 		jobsDao = new JobsDao(getApplicationContext());
+		workPersonMapDao = new WorkPersonMapDao(getApplicationContext());
+		
 		dateSelected = getIntent().getStringExtra(DatabaseHelper.JOB_DATE);
 		expListView = (ExpandableListView) findViewById(R.id.myjobsexpandable_listview);
 
@@ -109,6 +114,7 @@ public class ExpandableDoctorListView extends Activity {
 			if (job.getWorkType() != null) {
 				jobDetails.add(job.getWorkType().getName());
 			}
+			prepareJobPrice(job);
 			if (job.getPrice() != null) {
 				jobDetails.add(job.getPrice().toString());
 			}
@@ -116,60 +122,17 @@ public class ExpandableDoctorListView extends Activity {
 			listDataChild.put(job.getDoctor().getName(), jobDetails);
 		}
 
-		/*// Adding child data
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
-		listDataHeader.add("Dr.Ajinkya Kulkarni ");
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
-		listDataHeader.add("Dr.Ajinkya Kulkarni");
+	}
 
-		// Adding child data
-		List<String> patientinfo1 = new ArrayList<String>();
-		patientinfo1.add("Rohit Wadke");
-		patientinfo1.add("Type of Work-Shade");
-		patientinfo1.add("28/08/2015");
-
-		List<String> patientinfo2 = new ArrayList<String>();
-		patientinfo2.add("Rajesh Mangale");
-		patientinfo2.add("Type of Work-Shade");
-		patientinfo2.add("02/08/2015");
-
-		List<String> patientinfo3 = new ArrayList<String>();
-		patientinfo3.add("Abhishek Patil");
-		patientinfo3.add("Type of Work-Shade");
-		patientinfo3.add("08/08/2015");
-
-		List<String> patientinfo4 = new ArrayList<String>();
-		patientinfo4.add("Kunal Karanjkar");
-		patientinfo4.add("Type of Work-Shade");
-		patientinfo4.add("18/08/2015");
-
-		List<String> patientinfo5 = new ArrayList<String>();
-		patientinfo5.add("Apoorv Tailang");
-		patientinfo5.add("Type of Work-Shade");
-		patientinfo5.add("28/07/2015");
-
-		List<String> patientinfo6 = new ArrayList<String>();
-		patientinfo6.add("Ayush Dhar");
-		patientinfo6.add("Type of Work-Shade");
-		patientinfo6.add("08/07/2015");
-
-		List<String> patientinfo7 = new ArrayList<String>();
-		patientinfo7.add("Apoorv Tailang");
-		patientinfo7.add("Type of Work-Shade");
-		patientinfo7.add("18/07/2015");
-
-		listDataChild.put(listDataHeader.get(0), patientinfo1); // Header, Child
-																// data
-		listDataChild.put(listDataHeader.get(1), patientinfo2);
-		listDataChild.put(listDataHeader.get(2), patientinfo3);
-		listDataChild.put(listDataHeader.get(3), patientinfo4);
-		listDataChild.put(listDataHeader.get(4), patientinfo5);
-		listDataChild.put(listDataHeader.get(5), patientinfo6);
-		listDataChild.put(listDataHeader.get(6), patientinfo7);*/
-
+	private void prepareJobPrice(Job job) {
+		WorkPersonMap map = new WorkPersonMap();
+		map.setPerson(job.getDoctor());
+		map.setWorkType(job.getWorkType());
+		map = workPersonMapDao.getWorkPersonMap(map);
+		if(map == null) {
+			return;
+		}
+		job.setPrice(map.getPrice());
 	}
 
 }

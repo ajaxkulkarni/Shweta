@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.domain.Person;
 
 public class AddPerson extends Activity 
 {
 
-	private static final String TYPE_DOCTOR = "Doctor";
 	private PersonDao personDao;
 	private Button addPersonButton;
 	private Person person;
@@ -46,7 +46,7 @@ public class AddPerson extends Activity
 		person.setName(nameEditText.getText().toString());
 		person.setEmail(emailEditText.getText().toString());
 		person.setPhone(phoneEditText.getText().toString());
-		person.setWorkType(TYPE_DOCTOR);
+		person.setWorkType(CommonUtil.TYPE_DOCTOR);
 	}
 
 	@Override
