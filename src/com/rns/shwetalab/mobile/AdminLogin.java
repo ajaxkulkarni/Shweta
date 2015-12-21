@@ -28,34 +28,8 @@ public class AdminLogin extends Activity {
 			@Override
 			public void onClick(View v)
 			{
-
-				AlertDialog.Builder alert = new AlertDialog.Builder
-						(AdminLogin.this);
-				alert.setTitle("Select Your Option:");
-
-				alert.setPositiveButton("Add Person",
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0,
-							int arg1) 
-					{
-						Log.d("sdsd","ddfdf");
-						Intent i = new Intent(AdminLogin.this, AddPerson.class);
-						startActivity(i);
-					}
-
-				});
-
-				alert.setNegativeButton("Add Work",
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0,
-							int arg1) {
-						Intent i = new Intent(AdminLogin.this, AdminAddWorkTypeActivity.class);
-						startActivity(i);
-					}
-				});
-				alert.show();
-
-
+				Intent i = new Intent(AdminLogin.this,AddPersonWork.class);
+				startActivity(i);
 
 			}
 		});

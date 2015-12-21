@@ -58,73 +58,8 @@ public class HomePage extends Activity {
 			@Override
 			public void onClick(View view) 
 			{
-				// Launching News Feed Screen
-				//				Intent i = new Intent(getApplicationContext(), NewsFeedActivity.class);
-				//				startActivity(i);
-
-				AlertDialog.Builder alert = new AlertDialog.Builder
-						(HomePage.this);
-				alert.setTitle("Select Your Option:");
-
-				alert.setPositiveButton("Balance Sheet",
-
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0,
-							int arg1) {
-						Intent i = new Intent(HomePage.this, BalanceSheet.class);
-						startActivity(i);
-					}
-
-				});
-
-				alert.setNegativeButton("Add Expense",
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0,
-							int arg1) {
-
-						AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomePage.this);
-						alertDialog.setTitle("Add Expense");
-
-
-						Context context;
-						LinearLayout layout = new LinearLayout(HomePage.this);
-						layout.setOrientation(LinearLayout.VERTICAL);
-
-						final EditText titleBox = new EditText(HomePage.this);
-
-						titleBox.setPadding(30, 30, 30, 30);
-						titleBox.setGravity(Gravity.CENTER);
-						titleBox.setHint("Add Description");
-						layout.addView(titleBox);
-
-						final EditText descriptionBox = new EditText(HomePage.this);
-						descriptionBox.setPadding(20, 20, 20, 20);
-						descriptionBox.setGravity(Gravity.CENTER);
-						descriptionBox.setHint("Add Amount");
-						layout.addView(descriptionBox);
-
-						alertDialog.setView(layout);
-
-
-						alertDialog.setPositiveButton("ADD",
-								new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								Toast.makeText(getApplicationContext(), "Expense Successfully Added", Toast.LENGTH_SHORT).show();
-
-							}
-						});
-
-
-						alertDialog.show();
-
-
-					}
-				});
-
-
-				alert.show();
-
-
+				Intent i =new Intent(HomePage.this,AddBalanceExpense.class);
+				startActivity(i);
 			}
 		});
 
@@ -205,33 +140,8 @@ public class HomePage extends Activity {
 			@Override
 			public void onClick(View view) 
 			{
-				AlertDialog.Builder alert = new AlertDialog.Builder(HomePage.this);
-				alert.setTitle("Select Your Option:");
-
-				alert.setPositiveButton("Add Job",
-
-						new DialogInterface.OnClickListener() 
-				{
-					public void onClick(DialogInterface arg0,
-							int arg1) 
-					{
-						Intent i = new Intent(HomePage.this, JobEntry.class);
-						startActivity(i);
-					}
-
-				});
-
-				alert.setNegativeButton("View Job",
-						new DialogInterface.OnClickListener() 
-				{
-					public void onClick(DialogInterface arg0,
-							int arg1) 
-					{
-						Intent i = new Intent(HomePage.this, AddDate.class);
-						startActivity(i);
-					}
-				});
-				alert.show();
+				Intent i = new Intent(HomePage.this,SelectJob.class);
+				startActivity(i);
 			}
 		});
 

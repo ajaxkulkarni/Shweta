@@ -13,5 +13,9 @@
     <string name="title_activity_job_list">JobList</string>
     <string name="title_activity_balance_sheet">BalanceSheet</string>
     <string name="title_activity_add_date">View Jobs</string>
+    <string name="title_activity_select_job">SelectJob</string>
+    <string name="title_activity_add_person_work">AddPersonWork</string>
+    <string name="title_activity_add_balance_expense">AddBalanceExpense</string>
+    <string name="title_activity_add_expense">AddExpense</string>
 
 </resources>

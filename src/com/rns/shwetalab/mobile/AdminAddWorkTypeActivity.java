@@ -26,7 +26,7 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class AdminAddWorkTypeActivity extends Activity {
 
-	private EditText workTypeEditText;
+	private EditText workTypeEditText,defaultprice;
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
 	private WorkType work;
@@ -46,6 +46,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 		setContentView(R.layout.activity_admin_add_work_type);
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
+		defaultprice = (EditText)findViewById(R.id.add_worktype_activity_defaultamount_editText);
 		workTypeEditText = (EditText) findViewById(R.id.add_worktype_activity_worktype_editText);
 		addWorkTypeButton = (Button) findViewById(R.id.add_worktype_activity_worktype_add_button);
 		doctor = (RadioButton) findViewById(R.id.addworktypeDoctorradioButton1);
@@ -55,10 +56,11 @@ public class AdminAddWorkTypeActivity extends Activity {
 		prepareWorkPersonMaps();
 		AddWorkTypeDoctorListAdapter doctorListAdapter = new AddWorkTypeDoctorListAdapter(this,workPersonMaps);
 		doctorsListView.setAdapter(doctorListAdapter);
-
+		defaultprice.setText("100");
 		//AddWorkTypeLabListAdapter labListAdapter = new AddWorkTypeLabListAdapter(this, labNames, labAmounts);
 		//objlv2.setAdapter(labListAdapter);
-
+		defaultprice.setEnabled(false);
+		
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -119,7 +121,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 	private void prepareWorkType() {
 		work = new WorkType();
 		work.setName(workTypeEditText.getText().toString());
-		work.setDefaultPrice(BigDecimal.TEN);
+		work.setDefaultPrice(defaultprice.getText().toString());
 	}
 
 	@Override
