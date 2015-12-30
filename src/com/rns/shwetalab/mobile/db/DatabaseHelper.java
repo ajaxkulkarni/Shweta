@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_WORK_TYPE = "create table " + WORKTYPE_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + WORKTYPE_NAME + " text not null, " + WORKTYPE_PRICE
-			+ " decimal)";
+			+ " integer)";
 
 	public static final String CREATE_TABLE_WORK_TYPE_PERSON = "create table " + WORKTYPE_PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + WORKTYPE_PERSON_PERSON_ID + " integer ,"

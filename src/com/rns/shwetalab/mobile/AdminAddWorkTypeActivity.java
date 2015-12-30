@@ -2,10 +2,15 @@ package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
@@ -26,19 +33,23 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class AdminAddWorkTypeActivity extends Activity {
 
-	private EditText workTypeEditText,defaultprice;
+	private EditText workTypeEditText, defaultprice;
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
 	private WorkType work;
+	private WorkPersonMap workPersonMap;
 	private PersonDao personDao;
 	private RadioButton lab, doctor;
-
+	private WorkPersonMapDao workpersonMapDao;
 	private ListView doctorsListView, labsListView;
 	private ArrayList<WorkPersonMap> workPersonMaps;
-	//private List<String> doctorNames = new ArrayList<String>();
-	//private List<String> doctorAmounts = new ArrayList<String>();
-	//private List<String> labNames = new ArrayList<String>();
-	//private List<String> labAmounts = new ArrayList<String>();
+
+	private AddWorkTypeDoctorListAdapter doctorListAdapter;
+
+	// private List<String> doctorNames = new ArrayList<String>();
+	private List<String> doctorAmounts = new ArrayList<String>();
+	// private List<String> labNames = new ArrayList<String>();
+	// private List<String> labAmounts = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +57,8 @@ public class AdminAddWorkTypeActivity extends Activity {
 		setContentView(R.layout.activity_admin_add_work_type);
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
-		defaultprice = (EditText)findViewById(R.id.add_worktype_activity_defaultamount_editText);
+		workpersonMapDao = new WorkPersonMapDao(getApplicationContext());
+		defaultprice = (EditText) findViewById(R.id.add_worktype_activity_defaultamount_editText);
 		workTypeEditText = (EditText) findViewById(R.id.add_worktype_activity_worktype_editText);
 		addWorkTypeButton = (Button) findViewById(R.id.add_worktype_activity_worktype_add_button);
 		doctor = (RadioButton) findViewById(R.id.addworktypeDoctorradioButton1);
@@ -54,25 +66,32 @@ public class AdminAddWorkTypeActivity extends Activity {
 		doctorsListView = (ListView) findViewById(R.id.addworktypedoctorlistView);
 		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
 		prepareWorkPersonMaps();
-		AddWorkTypeDoctorListAdapter doctorListAdapter = new AddWorkTypeDoctorListAdapter(this,workPersonMaps);
+		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps,doctorAmounts);
 		doctorsListView.setAdapter(doctorListAdapter);
+		//doctorListAdapter.notifyDataSetChanged();
 		defaultprice.setText("100");
-		//AddWorkTypeLabListAdapter labListAdapter = new AddWorkTypeLabListAdapter(this, labNames, labAmounts);
-		//objlv2.setAdapter(labListAdapter);
+		// AddWorkTypeLabListAdapter labListAdapter = new
+		// AddWorkTypeLabListAdapter(this, labNames, labAmounts);
+		// objlv2.setAdapter(labListAdapter);
 		defaultprice.setEnabled(false);
-		
+
+
+
+
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) 
 			{
+
 				prepareWorkType();
 				workTypeDao.insertDetails(work);
-				//prepareWorkPersonMaps();
+				prepareWorkPersonMaps();
+				getAmount();
+				workpersonMapDao.insertDetails(workPersonMap);
 				workPersonMaps.size();
 				Toast.makeText(getApplicationContext(), "Record inserted successfully!", Toast.LENGTH_LONG).show();
 			}
-
 
 		});
 
@@ -100,28 +119,82 @@ public class AdminAddWorkTypeActivity extends Activity {
 		});
 
 	}
-	
-	/*private void prepareWorkPersonMaps() {
-		//for(WorkPersonMap map:objlv1.getAdapter().get)
-	}*/
+
+
+	//	  private void prepareWorkPersonMaps() 
+	//	  { for(WorkPersonMap map:objlv1.getAdapter().get) 
+	//}
+
 
 	private void prepareWorkPersonMaps() {
 		workPersonMaps = new ArrayList<WorkPersonMap>();
+		workPersonMap = new WorkPersonMap();
 		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
-		if(doctors == null || doctors.size() == 0) {
+
+		if (doctors == null || doctors.size() == 0) {
 			return;
 		}
-		for(Person doctor:doctors) {
+		for (Person doctor : doctors) {
 			WorkPersonMap map = new WorkPersonMap();
 			map.setPerson(doctor);
 			workPersonMaps.add(map);
 		}
+
+
+
+
+
+		//		{
+		//			View view = doctorsListView.getChildAt(i);
+		//			EditText editText = (EditText) view.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
+		//			Toast.makeText(AdminAddWorkTypeActivity.this,editText.getText().toString() ,Toast.LENGTH_SHORT).show();
+		//
+		//		}
+
+
+		// TODO: prepare list of workpersonmap Objects. Populate doctor obj with
+		// name from adapter and price from EditText and worktype obj from main
+		// worktype text..
+
 	}
+
+	private void getAmount() 
+	{
+		View v;
+		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+		//WorkType workType = new WorkType();
+		//WorkPersonMap map = new WorkPersonMap();
+
+		for(int i=0;i<doctors.size();i++)
+		{
+
+
+			v = doctorsListView.getAdapter().getView(i, null,null);
+			v = doctorsListView.getChildAt(i);
+			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
+			if(!TextUtils.isEmpty(editText.getText().toString()))
+			{
+
+				workPersonMap.setPerson(doctors.get(i));
+				workPersonMap.setPrice(new BigDecimal(editText.getText().toString()));
+				workPersonMap.setWorkType(work);
+				Toast.makeText(getApplicationContext(),editText.getText().toString(),Toast.LENGTH_SHORT).show();
+			}
+			else
+				Toast.makeText(AdminAddWorkTypeActivity.this,"Price not Added",Toast.LENGTH_SHORT).show();
+		}
+
+	}
+
 
 	private void prepareWorkType() {
 		work = new WorkType();
+		workPersonMap = new WorkPersonMap();
 		work.setName(workTypeEditText.getText().toString());
-		work.setDefaultPrice(defaultprice.getText().toString());
+		if (!TextUtils.isEmpty(defaultprice.getText())) 
+		{
+			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
+		}
 	}
 
 	@Override
@@ -133,9 +206,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

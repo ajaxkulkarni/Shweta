@@ -34,7 +34,7 @@ public class SelectJob extends Activity
 		{
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(SelectJob.this,JobList.class);
+				Intent i = new Intent(SelectJob.this,AddDate.class);
 				startActivity(i);
 			}
 		});

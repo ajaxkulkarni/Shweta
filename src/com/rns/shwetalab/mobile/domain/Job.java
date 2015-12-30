@@ -11,6 +11,14 @@ public class Job {
 	private Date date;
 	private Person doctor;
 	private WorkType workType;
+	private WorkPersonMap workPersonMap;
+	
+	public WorkPersonMap getWorkPersonMap() {
+		return workPersonMap;
+	}
+	public void setWorkPersonMap(WorkPersonMap workPersonMap) {
+		this.workPersonMap = workPersonMap;
+	}
 	private BigDecimal price;
 	
 	public Integer getId() {

@@ -43,6 +43,18 @@ public class WorkPersonMapDao {
 		workPersonMapDb.close();
 	}
 
+	
+	public long insertDetails(List <WorkPersonMap> list)
+	{
+		for(WorkPersonMap map : list)
+		{
+			insertDetails(map);
+		}
+		
+		return 0;
+		
+	}
+	
 	public long insertDetails(WorkPersonMap map) {
 		if (map.getPerson() == null || map.getWorkType() == null) {
 			return -10;

@@ -23,8 +23,8 @@ public class WorkType {
 	public BigDecimal getDefaultPrice() {
 		return defaultPrice;
 	}
-	public void setDefaultPrice(String price) {
+	public void setDefaultPrice(BigDecimal defaultPrice) {
 		this.defaultPrice = defaultPrice;
 	}
-	
+		
 }

@@ -19,6 +19,7 @@ public class JobsDao {
 	private SQLiteDatabase jobsDb;
 	private PersonDao personDao;
 	private WorkTypeDao workTypeDao;
+	private WorkPersonMapDao workPersonMapDao;
 	private Context context;
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
@@ -28,6 +29,7 @@ public class JobsDao {
 		context = c;
 		personDao = new PersonDao(context);
 		workTypeDao = new WorkTypeDao(context);
+		workPersonMapDao = new WorkPersonMapDao(context);
 	}
 
 	public void openToRead() {
@@ -54,9 +56,11 @@ public class JobsDao {
 			return -10;
 		}
 		WorkType workType = workTypeDao.getWorkType(job.getWorkType());
-		if (workType == null) {
+		if (workType == null) 
+		{
 			return -20;
 		}
+		
 		contentValues.put(DatabaseHelper.JOB_DOCTOR, doctor.getId());
 		contentValues.put(DatabaseHelper.JOB_WORK, workType.getId());
 
@@ -102,9 +106,16 @@ public class JobsDao {
 				job.setDate(CommonUtil.convertDate(cursor.getString(2)));
 				job.setShade(cursor.getInt(3));
 				job.setDoctor(personDao.getPerson(cursor.getInt(4)));
-				job.setWorkType(workTypeDao.getWorkType(cursor.getInt(4)));
-				if (job.getWorkType() != null) {
-					job.setPrice(job.getWorkType().getDefaultPrice());
+				job.setWorkType(workTypeDao.getWorkType(cursor.getInt(5)));
+				//job.setWorkPersonMap(workPersonMapDao.(cursor.getInt(6)));
+				if (job.getWorkType() != null) 
+				{
+//					if(job.getWorkPersonMap().getPrice()!=null)
+//					{
+//				    job.setPrice(job.getWorkPersonMap().getPrice());
+//					}
+//					else
+						job.setPrice(job.getWorkType().getDefaultPrice());
 				}
 				jobs.add(job);
 			} while (cursor.moveToNext());

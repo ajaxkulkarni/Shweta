@@ -1,5 +1,6 @@
 package com.rns.shwetalab.mobile.adapter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,16 +18,16 @@ import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 	//private List<String> name;
-	//private List<String> amount;
+	private List<String> amount;
 	private List<WorkPersonMap> workPersonMaps;
 	Activity context;
 	LayoutInflater inflater;
 
-	public AddWorkTypeDoctorListAdapter(AdminAddWorkTypeActivity adminAddWorkTypeActivity,List<WorkPersonMap> workPersonMapList) {
+	public AddWorkTypeDoctorListAdapter(AdminAddWorkTypeActivity adminAddWorkTypeActivity,List<WorkPersonMap> workPersonMapList, List<String> doctorAmounts) {
 		this.context = adminAddWorkTypeActivity;
 		inflater = LayoutInflater.from(context);
-		/*this.name = objArrayDoctorListName;
-		this.amount = objArrayDoctorListAmount;*/
+		/*this.name = objArrayDoctorListName;*/
+		this.amount = doctorAmounts;
 		this.workPersonMaps = workPersonMapList;
 	}
 
@@ -38,8 +39,10 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		if(workPersonMaps == null || workPersonMaps.size() == 0) {
+			return null;
+		}
+		return workPersonMaps.get(position);
 	}
 
 	@Override
@@ -73,17 +76,20 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 		/*if (name != null && name.size() > arg0) {
 			holder.tv1.setText(name.get(arg0));
-		}
+		}*/
 		if (amount != null && amount.size() > arg0) {
 			holder.ed1.setText(amount.get(arg0));
-		}*/
+			//workPersonMaps.get(arg0).setPrice(new BigDecimal(ed1).toString());
+		}
 
 		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPerson() != null) {
 			holder.tv1.setText(workPersonMaps.get(arg0).getPerson().getName());
 		}
-		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPrice() != null) {
-			holder.ed1.setText(workPersonMaps.get(arg0).getPrice().toString());
-		}
+		//		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPrice() != null) {
+		//			holder.ed1.setText(workPersonMaps.get(arg0).getPrice().toString());
+
+
+		//}
 		return view;
 	}
 

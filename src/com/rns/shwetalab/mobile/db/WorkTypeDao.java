@@ -1,5 +1,6 @@
 package com.rns.shwetalab.mobile.db;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class WorkTypeDao {
 		workTypeDb.close();
 	}
 
-	public long insertDetails(WorkType work) {
+	public long insertDetails(WorkType work) 
+	{
+
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(DatabaseHelper.WORKTYPE_NAME, work.getName());
 		if (work.getDefaultPrice() != null) {
@@ -86,12 +89,14 @@ public class WorkTypeDao {
 	private List<WorkType> iterateWorkTypes(Cursor cursor) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		if (cursor.moveToFirst()) {
-			do {
+			do
+			{
 				WorkType work = new WorkType();
 				work.setId(Integer.parseInt(cursor.getString(0)));
 				work.setName(cursor.getString(1));
+				work.setDefaultPrice(new BigDecimal(cursor.getString(2)));
 				workTypes.add(work);
-			} while (cursor.moveToNext());
+			}while (cursor.moveToNext());  
 		}
 
 		return workTypes;

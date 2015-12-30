@@ -1,8 +1,18 @@
 package com.rns.shwetalab.mobile;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
+import com.rns.shwetalab.mobile.db.WorkTypeDao;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,26 +27,19 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
-import com.rns.shwetalab.mobile.db.WorkTypeDao;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkType;
-
 public class JobEntry extends Activity implements OnItemSelectedListener {
 
 	Button addwork, jobentry;
-	EditText workType2, workType3, workType4;
+	EditText workType2, workType3, workType4,price;
 	int count = 0;
 	Spinner sp1, sp2;
 	private AutoCompleteTextView doctorName;
 	private PersonDao personDao;
 	private AutoCompleteTextView workType1;
 	private WorkTypeDao workTypeDao;
+	private WorkPersonMapDao workPersonMapDao;
 	private JobsDao jobsDao;
-	private EditText date, patientName, shade;
+	private EditText  patientName, shade;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		jobsDao = new JobsDao(getApplicationContext());
-
+		workPersonMapDao = new WorkPersonMapDao(getApplicationContext());
 		prepareDoctorNames();
 		prepareWorkTypes();
 
@@ -56,13 +59,11 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		workType4 = (EditText) findViewById(R.id.jobentry_worktype3_editText);
 		sp1 = (Spinner) findViewById(R.id.spinner_position);
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
-
-		date = (EditText) findViewById(R.id.jobentry_date_editText);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
-
+		price = (EditText)findViewById(R.id.price_edittext);
 		spinner_quad(sp1);
-		// spinner_position(sp2);
+		spinner_position(sp2);
 
 		jobentry.setOnClickListener(new OnClickListener() {
 
@@ -109,7 +110,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 					count++;
 				} else if (count == 3)
 					Toast.makeText(getApplicationContext(), "You can't add more than 3 Jobs", Toast.LENGTH_SHORT)
-							.show();
+					.show();
 
 			}
 		});
@@ -132,7 +133,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 
 	private void prepareWorkTypes() {
 		workType1 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype_autocomplete);
-		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(getApplicationContext(),
+		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this,
 				android.R.layout.simple_dropdown_item_1line, workTypeDao.getWorkTypeNames());
 		workType1.setThreshold(1);
 		workType1.setAdapter(doctorNames);
@@ -141,7 +142,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 
 	private void prepareDoctorNames() {
 		doctorName = (AutoCompleteTextView) findViewById(R.id.jobentry_docname_autocomplete);
-		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(getApplicationContext(),
+		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this,
 				android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames());
 		doctorName.setThreshold(1);
 		doctorName.setAdapter(doctorNames);
@@ -156,9 +157,9 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		categories.add("XYZ");
 		categories.add("Computer");
 		categories.add("ABC");
-		categories.add("XYZ");
+		categories.add("XYZ"); 
 
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item,
 				categories);
 
 		sp_docnm2.setAdapter(dataAdapter);
@@ -175,9 +176,10 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		categories.add("3");
 		categories.add("4");
 
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item,
 				categories);
 
+		sp_docnm2.setAdapter(dataAdapter);
 	}
 
 	@Override
@@ -191,4 +193,26 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		// TODO Auto-generated method stub
 
 	}
+
+	private void spinner_position(Spinner sp_docnm2) {
+
+		sp_docnm2.setOnItemSelectedListener(this);
+
+		List<String> categories = new ArrayList<String>();
+
+		categories.add("1");
+		categories.add("2");
+		categories.add("3");
+		categories.add("4");
+		categories.add("5");
+		categories.add("6");
+		categories.add("7");
+		categories.add("8");
+
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item,
+				categories);
+
+		sp_docnm2.setAdapter(dataAdapter);
+	}
+
 }
