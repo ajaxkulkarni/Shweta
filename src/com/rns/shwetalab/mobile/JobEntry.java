@@ -16,6 +16,7 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -61,15 +62,18 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
-		price = (EditText)findViewById(R.id.price_edittext);
+
 		spinner_quad(sp1);
 		spinner_position(sp2);
+
+
 
 		jobentry.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
+			public void onClick(View v) 
+			{
+				//Validations();
 				long result  = jobsDao.insertDetails(prepareJob());
 				if(result < 0) {
 					if(result == -10) {
@@ -87,6 +91,28 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 
 			}
 
+//			private void Validations() 
+//			{
+//
+//				if(TextUtils.isEmpty(doctorName.getText()))
+//				{
+//					doctorName.setError("Enter Docotor Name");
+//				}
+//				else if(TextUtils.isEmpty(workType1.getText()))
+//				{
+//					workType1.setError("Enter Worktype");
+//				}
+//				else if(TextUtils.isEmpty(patientName.getText()))
+//				{
+//					patientName.setError("Enter Patient Name");
+//				}
+//				else if(TextUtils.isEmpty(shade.getText()))
+//				{
+//					shade.setError("Enter Shade");
+//				}
+//
+//			}
+
 		});
 		addwork.setOnClickListener(new View.OnClickListener() {
 
@@ -99,7 +125,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 					count++;
 				}
 
-				if (count == 1) {
+				else if (count == 1) {
 
 					workType3.setVisibility(View.VISIBLE);
 					count++;
@@ -168,8 +194,8 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 
 	private void spinner_quad(Spinner sp_docnm2) {
 
+		sp_docnm2.setPrompt("Quadrent");
 		sp_docnm2.setOnItemSelectedListener(this);
-
 		List<String> categories = new ArrayList<String>();
 		categories.add("1");
 		categories.add("2");
@@ -194,10 +220,10 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 
 	}
 
-	private void spinner_position(Spinner sp_docnm2) {
+	private void spinner_position(Spinner sp_docnm3) {
 
-		sp_docnm2.setOnItemSelectedListener(this);
-
+		sp_docnm3.setOnItemSelectedListener(this);
+		sp_docnm3.setPrompt("Position");
 		List<String> categories = new ArrayList<String>();
 
 		categories.add("1");
@@ -212,7 +238,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item,
 				categories);
 
-		sp_docnm2.setAdapter(dataAdapter);
+		sp_docnm3.setAdapter(dataAdapter);
 	}
 
 }

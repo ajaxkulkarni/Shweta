@@ -1,17 +1,37 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class BalanceSheet extends Activity {
-
+public class BalanceSheet extends Activity 
+{
+	
+	
+	TextView doctor_price,lab_price;
+	WorkType worktype;
+	WorkPersonMap workpersonmap;
+	
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance_sheet);
+		
+		doctor_price = (TextView)findViewById(R.id.activity_billingsheet_doctor_textView); 
+	
+		//getAmount();
+		
+		
 	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

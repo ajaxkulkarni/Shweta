@@ -60,7 +60,7 @@ public class JobsDao {
 		{
 			return -20;
 		}
-		
+
 		contentValues.put(DatabaseHelper.JOB_DOCTOR, doctor.getId());
 		contentValues.put(DatabaseHelper.JOB_WORK, workType.getId());
 
@@ -96,6 +96,24 @@ public class JobsDao {
 				null, null);
 	}
 
+	
+	public List<Job> getAmountByWorktype(String price )
+	{
+		return iterateJobsCursor(querybyAmount(price));
+		
+	}
+	
+	//  select Job.work_type_id,worktype.default_price FROM Job INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID;
+ 	
+	
+	
+	private Cursor querybyAmount(String price) 
+	{
+		openToRead();
+		String query = "SELECT jobs.work_type_id,worktype.default_price FROM jobs INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID";
+		return  null;
+	}
+
 	private List<Job> iterateJobsCursor(Cursor cursor) {
 		List<Job> jobs = new ArrayList<Job>();
 		if (cursor.moveToFirst()) {
@@ -110,12 +128,7 @@ public class JobsDao {
 				//job.setWorkPersonMap(workPersonMapDao.(cursor.getInt(6)));
 				if (job.getWorkType() != null) 
 				{
-//					if(job.getWorkPersonMap().getPrice()!=null)
-//					{
-//				    job.setPrice(job.getWorkPersonMap().getPrice());
-//					}
-//					else
-						job.setPrice(job.getWorkType().getDefaultPrice());
+					job.setPrice(job.getWorkType().getDefaultPrice());
 				}
 				jobs.add(job);
 			} while (cursor.moveToNext());

@@ -43,9 +43,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 	private WorkPersonMapDao workpersonMapDao;
 	private ListView doctorsListView, labsListView;
 	private ArrayList<WorkPersonMap> workPersonMaps;
-
 	private AddWorkTypeDoctorListAdapter doctorListAdapter;
-
 	// private List<String> doctorNames = new ArrayList<String>();
 	private List<String> doctorAmounts = new ArrayList<String>();
 	// private List<String> labNames = new ArrayList<String>();
@@ -65,28 +63,26 @@ public class AdminAddWorkTypeActivity extends Activity {
 		lab = (RadioButton) findViewById(R.id.addworktypeLabradioButton2);
 		doctorsListView = (ListView) findViewById(R.id.addworktypedoctorlistView);
 		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
-		prepareWorkPersonMaps();
-		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps,doctorAmounts);
-		doctorsListView.setAdapter(doctorListAdapter);
-		//doctorListAdapter.notifyDataSetChanged();
 		defaultprice.setText("100");
+		defaultprice.setEnabled(false);
+	//	Validations();
+		prepareWorkPersonMaps();
+		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmounts);
+		doctorsListView.setAdapter(doctorListAdapter);
+
+		// doctorListAdapter.notifyDataSetChanged();
 		// AddWorkTypeLabListAdapter labListAdapter = new
 		// AddWorkTypeLabListAdapter(this, labNames, labAmounts);
 		// objlv2.setAdapter(labListAdapter);
-		defaultprice.setEnabled(false);
-
-
-
 
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 
 				prepareWorkType();
 				workTypeDao.insertDetails(work);
-				prepareWorkPersonMaps();
+				// prepareWorkPersonMaps();
 				getAmount();
 				workpersonMapDao.insertDetails(workPersonMap);
 				workPersonMaps.size();
@@ -120,11 +116,19 @@ public class AdminAddWorkTypeActivity extends Activity {
 
 	}
 
+	private void Validations() {
+		if (TextUtils.isEmpty(defaultprice.getText())) {
+			defaultprice.setError("Add Default Price");
+		}
 
-	//	  private void prepareWorkPersonMaps() 
-	//	  { for(WorkPersonMap map:objlv1.getAdapter().get) 
-	//}
+		if (TextUtils.isEmpty(workTypeEditText.getText())) {
+			defaultprice.setError("Enter Worktype");
+		}
 
+		
+
+
+	}
 
 	private void prepareWorkPersonMaps() {
 		workPersonMaps = new ArrayList<WorkPersonMap>();
@@ -139,60 +143,33 @@ public class AdminAddWorkTypeActivity extends Activity {
 			map.setPerson(doctor);
 			workPersonMaps.add(map);
 		}
-
-
-
-
-
-		//		{
-		//			View view = doctorsListView.getChildAt(i);
-		//			EditText editText = (EditText) view.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
-		//			Toast.makeText(AdminAddWorkTypeActivity.this,editText.getText().toString() ,Toast.LENGTH_SHORT).show();
-		//
-		//		}
-
-
-		// TODO: prepare list of workpersonmap Objects. Populate doctor obj with
-		// name from adapter and price from EditText and worktype obj from main
-		// worktype text..
-
 	}
 
-	private void getAmount() 
-	{
+	private void getAmount() {
 		View v;
 		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
-		//WorkType workType = new WorkType();
-		//WorkPersonMap map = new WorkPersonMap();
+		// WorkType workType = new WorkType();
+		// WorkPersonMap map = new WorkPersonMap();
 
-		for(int i=0;i<doctors.size();i++)
-		{
+		for (int i = 0; i < doctors.size(); i++) {
 
-
-			v = doctorsListView.getAdapter().getView(i, null,null);
+			v = doctorsListView.getAdapter().getView(i, null, null);
 			v = doctorsListView.getChildAt(i);
 			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
-			if(!TextUtils.isEmpty(editText.getText().toString()))
-			{
+			if (!TextUtils.isEmpty(editText.getText().toString())) {
 
 				workPersonMap.setPerson(doctors.get(i));
 				workPersonMap.setPrice(new BigDecimal(editText.getText().toString()));
 				workPersonMap.setWorkType(work);
-				Toast.makeText(getApplicationContext(),editText.getText().toString(),Toast.LENGTH_SHORT).show();
 			}
-			else
-				Toast.makeText(AdminAddWorkTypeActivity.this,"Price not Added",Toast.LENGTH_SHORT).show();
 		}
-
 	}
-
 
 	private void prepareWorkType() {
 		work = new WorkType();
 		workPersonMap = new WorkPersonMap();
 		work.setName(workTypeEditText.getText().toString());
-		if (!TextUtils.isEmpty(defaultprice.getText())) 
-		{
+		if (!TextUtils.isEmpty(defaultprice.getText())) {
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}
 	}

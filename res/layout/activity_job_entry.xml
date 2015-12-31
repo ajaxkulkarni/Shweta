@@ -147,13 +147,15 @@
                 android:id="@+id/spinner_quadrant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:padding="10dp" />
 
             <Spinner
                 android:id="@+id/spinner_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:padding="10dp" />
         </LinearLayout>
 
         <EditText
@@ -167,15 +169,6 @@
             android:hint="Shade"
             android:inputType="number"
             android:padding="15dp" />
-
-        <EditText
-            android:id="@+id/price_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10" >
-
-            <requestFocus />
-        </EditText>
 
         <Button
             android:id="@+id/jobentrybutton"
