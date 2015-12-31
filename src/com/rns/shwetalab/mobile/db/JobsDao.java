@@ -3,15 +3,17 @@ package com.rns.shwetalab.mobile.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class JobsDao {
 
@@ -24,6 +26,9 @@ public class JobsDao {
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
 			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_WORK };
+
+	private static String[] joinCols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
+			DatabaseHelper.JOB_SHADE, DatabaseHelper.WORKTYPE_NAME,DatabaseHelper.WORKTYPE_PRICE };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -96,23 +101,42 @@ public class JobsDao {
 				null, null);
 	}
 
-	
+
 	public List<Job> getAmountByWorktype(String price )
 	{
 		return iterateJobsCursor(querybyAmount(price));
-		
+
 	}
-	
+
 	//  select Job.work_type_id,worktype.default_price FROM Job INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID;
- 	
-	
-	
+
+
+
 	private Cursor querybyAmount(String price) 
 	{
 		openToRead();
 		String query = "SELECT jobs.work_type_id,worktype.default_price FROM jobs INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID";
-		return  null;
+
+		SQLiteQueryBuilder joinquery = new SQLiteQueryBuilder();
+
+		//Specify books table and add join to categories table (use full_id for joining categories table)
+		joinquery.setTables(DatabaseHelper.JOB_TABLE + 
+				" INNER JOIN " + DatabaseHelper.WORKTYPE_TABLE + " ON " + 
+				DatabaseHelper.JOB_WORK + " = " + DatabaseHelper.KEY_ID);
+
+		//Order by records by title
+		//		_OrderBy = BookColumns.BOOK_TITLE + " ASC";
+
+		//Open database connection
+
+		//Get cursor
+		return joinquery.query(jobsDb, joinCols, null, null, null, null,null);
+
+
 	}
+
+
+
 
 	private List<Job> iterateJobsCursor(Cursor cursor) {
 		List<Job> jobs = new ArrayList<Job>();
@@ -123,13 +147,33 @@ public class JobsDao {
 				job.setPatientName(cursor.getString(1));
 				job.setDate(CommonUtil.convertDate(cursor.getString(2)));
 				job.setShade(cursor.getInt(3));
-				job.setDoctor(personDao.getPerson(cursor.getInt(4)));
-				job.setWorkType(workTypeDao.getWorkType(cursor.getInt(5)));
-				//job.setWorkPersonMap(workPersonMapDao.(cursor.getInt(6)));
+				Person person = personDao.getPerson(cursor.getInt(4));
+				job.setDoctor(person);
+				WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
+				job.setWorkType(workType);
+				WorkPersonMap map = new WorkPersonMap();
 				if (job.getWorkType() != null) 
 				{
+					if(map.getPrice()!=null)
+					{
+						job.setPrice(map.getPrice());
+					}
+					//if(job.setPrice(map.getPrice()))
 					job.setPrice(job.getWorkType().getDefaultPrice());
 				}
+				if(workType == null || person == null) {
+					continue;
+				}
+
+				map.setWorkType(job.getWorkType());
+				map.setPerson(job.getDoctor());
+				map = workPersonMapDao.getWorkPersonMap(map);
+				//job.setWorkPersonMap(workPersonMapDao.(cursor.getInt(6)));
+				if(map!=null)
+				{
+					job.getWorkType().setDefaultPrice(map.getPrice());
+				}
+
 				jobs.add(job);
 			} while (cursor.moveToNext());
 		}

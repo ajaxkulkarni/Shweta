@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.rns.shwetalab.mobile.adapter.ExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.DatabaseHelper;
@@ -28,24 +29,22 @@ public class ExpandableDoctorListView extends Activity {
 	private String dateSelected;
 	private WorkPersonMapDao workPersonMapDao;
 
+	TextView date;	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_expandable_doctor_list_view);
 		jobsDao = new JobsDao(getApplicationContext());
 		workPersonMapDao = new WorkPersonMapDao(getApplicationContext());
-		
+		date = (TextView)findViewById(R.id.expandabledoctorlistdate_textview);
 		dateSelected = getIntent().getStringExtra(DatabaseHelper.JOB_DATE);
 		expListView = (ExpandableListView) findViewById(R.id.myjobsexpandable_listview);
-
+		date.setText(dateSelected);
 		prepareListData();
-
 		listAdapter = new ExpandableListViewAdapter(this, listDataHeader, listDataChild);
-
 		expListView.setAdapter(listAdapter);
-		// Listview Group click listener
 		expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
 			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 				// Toast.makeText(getApplicationContext(),
@@ -121,7 +120,6 @@ public class ExpandableDoctorListView extends Activity {
 			listDataHeader.add(job.getDoctor().getName());
 			listDataChild.put(job.getDoctor().getName(), jobDetails);
 		}
-
 	}
 
 	private void prepareJobPrice(Job job) {

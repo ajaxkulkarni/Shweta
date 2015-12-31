@@ -66,10 +66,8 @@ public class AddPerson extends Activity
 		{
 			phoneEditText.setError("");
 		}
-		
 		else
 			Toast.makeText(getApplicationContext(), "Record Inserted successfully!!", Toast.LENGTH_SHORT).show();
-			
 	}
 
 	@Override

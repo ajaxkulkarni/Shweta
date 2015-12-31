@@ -65,7 +65,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
 		defaultprice.setText("100");
 		defaultprice.setEnabled(false);
-	//	Validations();
+
 		prepareWorkPersonMaps();
 		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmounts);
 		doctorsListView.setAdapter(doctorListAdapter);
@@ -116,19 +116,10 @@ public class AdminAddWorkTypeActivity extends Activity {
 
 	}
 
-	private void Validations() {
-		if (TextUtils.isEmpty(defaultprice.getText())) {
-			defaultprice.setError("Add Default Price");
-		}
-
-		if (TextUtils.isEmpty(workTypeEditText.getText())) {
-			defaultprice.setError("Enter Worktype");
-		}
-
-		
 
 
-	}
+
+
 
 	private void prepareWorkPersonMaps() {
 		workPersonMaps = new ArrayList<WorkPersonMap>();
