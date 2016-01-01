@@ -10,45 +10,45 @@ import android.widget.Button;
 
 public class AddBalanceExpense extends Activity 
 {
-	
+
 	Button balance,expense;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_balance_expense);
-	
-	init();
-	
-	balance.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {	
-			// TODO Auto-generated method stub
-			Intent i =new Intent(AddBalanceExpense.this,BalanceSheet.class);
-			startActivity(i);
-		}
-	});
-	
-	
-	expense.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {	
-			// TODO Auto-generated method stub
-			Intent i =new Intent(AddBalanceExpense.this,AddExpense.class);
-			startActivity(i);
-		}
-	});
-	
+
+		init();
+
+		balance.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {	
+				// TODO Auto-generated method stub
+				Intent i =new Intent(AddBalanceExpense.this,ViewMonth.class);
+				startActivity(i);
+			}
+		});
+
+
+		expense.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {	
+				// TODO Auto-generated method stub
+				Intent i =new Intent(AddBalanceExpense.this,AddExpense.class);
+				startActivity(i);
+			}
+		});
+
 	}
 
 	private void init() 
 	{
 		// TODO Auto-generated method stub
-	
+
 		balance = (Button)findViewById(R.id.addbalance_button);
 		expense = (Button)findViewById(R.id.addexpense_button);
-		
+
 	}
 }

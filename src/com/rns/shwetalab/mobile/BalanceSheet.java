@@ -1,9 +1,13 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,24 +15,27 @@ import android.widget.TextView;
 
 public class BalanceSheet extends Activity 
 {
-	
-	
+
+
 	TextView doctor_price,lab_price;
 	WorkType worktype;
 	WorkPersonMap workpersonmap;
-	
-	
+	//PersonDao personDao;
+	private JobsDao jobsDao;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance_sheet);
-		
+
+
+		Bundle extras = getIntent().getExtras();
+		String month = extras.getString("Month");
 		doctor_price = (TextView)findViewById(R.id.activity_billingsheet_doctor_textView); 
-	
-		//getAmount();
-		
-		
+
+		doctor_price.setText(jobsDao.getJobsByMonth(month).toString());
 	}
 
 

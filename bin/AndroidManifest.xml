@@ -82,6 +82,10 @@
             android:name=".AddExpense"
             android:label="@string/title_activity_add_expense" >
         </activity>
+        <activity
+            android:name=".ViewMonth"
+            android:label="@string/title_activity_view_month" >
+        </activity>
     </application>
 
 </manifest>

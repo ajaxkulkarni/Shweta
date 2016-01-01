@@ -1,5 +1,6 @@
 package com.rns.shwetalab.mobile.db;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,10 @@ public class JobsDao {
 	private WorkPersonMapDao workPersonMapDao;
 	private Context context;
 
+
+
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
 			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_WORK };
-
-	private static String[] joinCols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
-			DatabaseHelper.JOB_SHADE, DatabaseHelper.WORKTYPE_NAME,DatabaseHelper.WORKTYPE_PRICE };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -101,42 +101,35 @@ public class JobsDao {
 				null, null);
 	}
 
+	public List<Job> getJobsByMonth(String month) {
+		//TODO: Convert to int
+		return iterateJobsCursor(queryForMonth(1));
+	}
 
-	public List<Job> getAmountByWorktype(String price )
+	public BigDecimal getDoctorIncomeForMonth(String month)
 	{
-		return iterateJobsCursor(querybyAmount(price));
+
+		BigDecimal total = BigDecimal.ZERO;
+		List<Job> jobs = getJobsByMonth(month);
+		for (Job job: jobs) 
+		{
+			if(job.getWorkType()==null || job.getWorkType().getDefaultPrice()==null)
+				continue;
+
+			total = total.add(job.getWorkType().getDefaultPrice());
+
+		}
+		return total;
 
 	}
 
-	//  select Job.work_type_id,worktype.default_price FROM Job INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID;
-
-
-
-	private Cursor querybyAmount(String price) 
-	{
+	private Cursor queryForMonth(int month) {
+		String date1 = "01-" + month + "2016";
+		String date2 = "30-" + month + "2016";
 		openToRead();
-		String query = "SELECT jobs.work_type_id,worktype.default_price FROM jobs INNER JOIN  worktype ON worktype.KEY_ID=job.KEY_ID";
-
-		SQLiteQueryBuilder joinquery = new SQLiteQueryBuilder();
-
-		//Specify books table and add join to categories table (use full_id for joining categories table)
-		joinquery.setTables(DatabaseHelper.JOB_TABLE + 
-				" INNER JOIN " + DatabaseHelper.WORKTYPE_TABLE + " ON " + 
-				DatabaseHelper.JOB_WORK + " = " + DatabaseHelper.KEY_ID);
-
-		//Order by records by title
-		//		_OrderBy = BookColumns.BOOK_TITLE + " ASC";
-
-		//Open database connection
-
-		//Get cursor
-		return joinquery.query(jobsDb, joinCols, null, null, null, null,null);
-
-
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, "'" + date1 + "'<=" + DatabaseHelper.JOB_DATE + " <= '" + date2 + "'", null, null,
+				null, null);
 	}
-
-
-
 
 	private List<Job> iterateJobsCursor(Cursor cursor) {
 		List<Job> jobs = new ArrayList<Job>();

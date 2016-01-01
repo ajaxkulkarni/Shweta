@@ -139,16 +139,11 @@ public class AdminAddWorkTypeActivity extends Activity {
 	private void getAmount() {
 		View v;
 		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
-		// WorkType workType = new WorkType();
-		// WorkPersonMap map = new WorkPersonMap();
-
 		for (int i = 0; i < doctors.size(); i++) {
-
 			v = doctorsListView.getAdapter().getView(i, null, null);
 			v = doctorsListView.getChildAt(i);
 			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
 			if (!TextUtils.isEmpty(editText.getText().toString())) {
-
 				workPersonMap.setPerson(doctors.get(i));
 				workPersonMap.setPrice(new BigDecimal(editText.getText().toString()));
 				workPersonMap.setWorkType(work);
