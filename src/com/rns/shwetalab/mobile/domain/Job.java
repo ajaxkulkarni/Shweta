@@ -12,6 +12,7 @@ public class Job {
 	private Person doctor;
 	private WorkType workType;
 	private WorkPersonMap workPersonMap;
+	private BigDecimal price;
 	
 	public WorkPersonMap getWorkPersonMap() {
 		return workPersonMap;
@@ -19,7 +20,6 @@ public class Job {
 	public void setWorkPersonMap(WorkPersonMap workPersonMap) {
 		this.workPersonMap = workPersonMap;
 	}
-	private BigDecimal price;
 	
 	public Integer getId() {
 		return id;

@@ -1,8 +1,6 @@
 package com.rns.shwetalab.mobile;
 
 import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
-import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
@@ -11,34 +9,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class BalanceSheet extends Activity 
 {
-
-
 	TextView doctor_price,lab_price;
 	WorkType worktype;
 	WorkPersonMap workpersonmap;
-	//PersonDao personDao;
 	private JobsDao jobsDao;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance_sheet);
-
-
+		jobsDao = new JobsDao(this);
 		Bundle extras = getIntent().getExtras();
-		String month = extras.getString("Month");
+		final String month = extras.getString("Month");
 		doctor_price = (TextView)findViewById(R.id.activity_billingsheet_doctor_textView); 
+		doctor_price.setText(jobsDao.getDoctorIncomeForMonth(month).toString());
 
-		doctor_price.setText(jobsDao.getJobsByMonth(month).toString());
+		doctor_price.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) 
+			{
+				Intent i = new Intent(BalanceSheet.this,Doctor_List_Amount.class);
+				i.putExtra("Month",month);
+				startActivity(i);
+			}
+		});
+
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,7 +48,6 @@ public class BalanceSheet extends Activity
 		getMenuInflater().inflate(R.menu.balance_sheet, menu);
 		return true;
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

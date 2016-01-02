@@ -103,30 +103,28 @@ public class JobsDao {
 
 	public List<Job> getJobsByMonth(String month) {
 		//TODO: Convert to int
-		return iterateJobsCursor(queryForMonth(1));
+
+		return iterateJobsCursor(queryForMonth(month));
 	}
 
 	public BigDecimal getDoctorIncomeForMonth(String month)
 	{
-
+	//	int value = Integer.parseInt(month);
 		BigDecimal total = BigDecimal.ZERO;
-		List<Job> jobs = getJobsByMonth(month);
+		List<Job> jobs = getJobsByMonth(month );
 		for (Job job: jobs) 
 		{
 			if(job.getWorkType()==null || job.getWorkType().getDefaultPrice()==null)
 				continue;
-
 			total = total.add(job.getWorkType().getDefaultPrice());
-
 		}
 		return total;
-
 	}
 
-	private Cursor queryForMonth(int month) {
-		String date1 = "01-" + month + "2016";
-		String date2 = "30-" + month + "2016";
-		openToRead();
+	private Cursor queryForMonth(String month) {
+		String date1 = "01-" + month+"-" + "2016";
+		String date2 = "30-" + month+"-" + "2016";
+		openToWrite();
 		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, "'" + date1 + "'<=" + DatabaseHelper.JOB_DATE + " <= '" + date2 + "'", null, null,
 				null, null);
 	}

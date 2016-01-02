@@ -18,5 +18,6 @@
     <string name="title_activity_add_balance_expense">AddBalanceExpense</string>
     <string name="title_activity_add_expense">AddExpense</string>
     <string name="title_activity_view_month">ViewMonth</string>
+    <string name="title_activity_doctor__list__amount">Doctor_List_Amount</string>
 
 </resources>
