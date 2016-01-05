@@ -21,8 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-public class Doctor_List_Amount extends Activity 
-{
+public class Doctor_List_Amount extends Activity {
 
 	private List<String> listDataHeader;
 	private JobsDao jobsDao;
@@ -30,76 +29,48 @@ public class Doctor_List_Amount extends Activity
 	private WorkType workType;
 
 	ListView lv;
-	private 
-	ArrayList<String> objArrayListDoctorName = new ArrayList<String>();
+	private ArrayList<String> objArrayListDoctorName = new ArrayList<String>();
 	Map<String, BigDecimal> map = new HashMap<String, BigDecimal>();
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_doctor__list__amount);
-
-
 		Bundle extras = getIntent().getExtras();
-		final String month = extras.getString("Month");
+		String month = extras.getString("Month");
 		prepareListData(month);
 		lv = (ListView) findViewById(R.id.doctor_listView);
-		DoctorListAdapter Adapter = new DoctorListAdapter(this, objArrayListDoctorName);
+		DoctorListAdapter Adapter = new DoctorListAdapter(this, map);
 		lv.setAdapter(Adapter);
-
 
 	}
 
-	private void prepareListData(String month) 
-	{
+	private void prepareListData(String month) {
+
+		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getJobsByMonth(month);
 		BigDecimal total = BigDecimal.ZERO;
-		//for(Job job: jobs)
+		// for(Job job: jobs)
 		Job job2;
-		for(int i=0;i<jobs.size();i++)
-		{
-
+		for (int i = 0; i < jobs.size(); i++) {
 			Job job = new Job();
 			job = jobs.get(i);
 			total = BigDecimal.ZERO;
-			total = job.getPrice();
-			for(int j = i+1;j<jobs.size();j++)
-			{
+			total = job.getWorkType().getDefaultPrice();
+			for (int j = i + 1; j < jobs.size(); j++) {
 				job2 = new Job();
 				job2 = jobs.get(j);
-				if(job.getDoctor().getName().equals(job2.getDoctor().getName())==true && job2.getDoctor().getName().equals("no")!= true )
+				if (job.getDoctor().getName().equals(job2.getDoctor().getName()) == true) 
 				{
-					if(job2.getWorkPersonMap().getPrice()==null)
-					{
-						job2.getWorkPersonMap().setPrice(BigDecimal.ZERO);
-					}
+					if (job2.getWorkPersonMap().getPrice() != null) {
+						total = total.add(job2.getWorkType().getDefaultPrice());
+						// job2.getDoctor().setName("no");
+					} else
+						job2.getWorkPersonMap().setPrice(workType.getDefaultPrice());
 					total = total.add(job2.getPrice());
-					job2.getDoctor().setName("no");
-					continue;
 				}
 			}
-			map.put(job.getDoctor().getName(),total);
+			map.put(job.getDoctor().getName(), total);
 		}
 	}
-
-	//	private Integer appendPrice(Map<String, Integer> map2, Job job) 
-	//	{
-	//		// TODO if not in map then add default price else add to existing value
-	//		BigDecimal total = BigDecimal.ZERO;
-	//		if(job.getWorkPersonMap().getPrice()!= null)
-	//		{
-	//			//total = total.add(job.getWorkType().getDefaultPrice());
-	//			for(int i=0;i<job.getDoctor().getName().s;i++)
-	//			{
-	//
-	//			}
-	//
-	//		}
-	//		else
-	//			total = job.getWorkType().getDefaultPrice();
-	//		return null ;
-	//	}
-
-
 }

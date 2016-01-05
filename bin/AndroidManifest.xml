@@ -90,6 +90,10 @@
             android:name=".Doctor_List_Amount"
             android:label="@string/title_activity_doctor__list__amount" >
         </activity>
+        <activity
+            android:name=".EditWorktype"
+            android:label="@string/title_activity_edit_worktype" >
+        </activity>
     </application>
 
 </manifest>

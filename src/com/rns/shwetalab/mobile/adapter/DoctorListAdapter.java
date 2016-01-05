@@ -1,7 +1,10 @@
 package com.rns.shwetalab.mobile.adapter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.rns.shwetalab.mobile.Doctor_List_Amount;
 import com.rns.shwetalab.mobile.R;
@@ -19,31 +22,32 @@ import android.widget.TextView;
 public class DoctorListAdapter extends BaseAdapter
 {
 
-	private ArrayList<String> name;
+	private Map<String, BigDecimal> name;
 	Activity context;
-	
-		
+	private final ArrayList mData ;
+
 	private List<Job> jobs;
 	LayoutInflater inflater;
 
-	public DoctorListAdapter(Doctor_List_Amount doctor_List_Amount, ArrayList<String> objArrayListDoctorName)
+	public DoctorListAdapter(Doctor_List_Amount doctor_List_Amount, Map<String, BigDecimal> map)
 	{
+		mData = new ArrayList();
 		this.context = doctor_List_Amount;
 		inflater = LayoutInflater.from(context);
-		this.name = objArrayListDoctorName;
+		this.mData.addAll(map.entrySet());
+	}
+
+	@Override
+	public Entry<String, BigDecimal> getItem(int position) {
+		return (Map.Entry) mData.get(position);
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return name.size();
+		return mData.size();
 	}
 
-	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public long getItemId(int position) {
@@ -51,35 +55,20 @@ public class DoctorListAdapter extends BaseAdapter
 		return 0;
 	}
 
-	public class ViewHolder
-	{
-		TextView name;
-		TextView amount;
-	}
 
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2)
 	{
-
-		ViewHolder holder = null;
-		View view = arg1;
-
-		if (view == null) {
-			holder = new ViewHolder();
-			view = inflater.inflate(R.layout.activity_doctorlist_adapter, null);
-			holder.name = (TextView) view.findViewById(R.id.doctorListName_textView);
-			holder.amount = (EditText) view.findViewById(R.id.doctorListAmount_textView);
-			view.setTag(holder);
-
+		final View result;
+		if (arg1 == null) {
+			result = LayoutInflater.from(arg2.getContext()).inflate(R.layout.activity_doctorlist_adapter, arg2, false);
+		} else {
+			result = arg1;
 		}
-		else
-			holder = (ViewHolder)view.getTag();
-			holder.name.setText(name.get(arg0));
-
-
-		// TODO Auto-generated method stub
-		return view;
-
+		Map.Entry<String, BigDecimal> item = getItem(arg0);
+		((TextView) result.findViewById(R.id.doctorListName_textView)).setText(item.getKey());
+		((TextView) result.findViewById(R.id.doctorListAmount_textView)).setText(item.getValue().toString());
+		return result;
 	}
 
 }

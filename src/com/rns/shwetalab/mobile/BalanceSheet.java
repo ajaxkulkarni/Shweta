@@ -11,14 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class BalanceSheet extends Activity 
 {
-	TextView doctor_price,lab_price;
+	TextView doctor_price,lab_price,doctor;
 	WorkType worktype;
 	WorkPersonMap workpersonmap;
 	private JobsDao jobsDao;
+	Button next;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -30,10 +32,13 @@ public class BalanceSheet extends Activity
 		final String month = extras.getString("Month");
 		doctor_price = (TextView)findViewById(R.id.activity_billingsheet_doctor_textView); 
 		doctor_price.setText(jobsDao.getDoctorIncomeForMonth(month).toString());
+		next = (Button)findViewById(R.id.balancesheet_submit_button);
+		doctor = (TextView)findViewById(R.id.activity_billingsheetdoctortextView);
 
-		doctor_price.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) 
-			{
+		doctor.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
 				Intent i = new Intent(BalanceSheet.this,Doctor_List_Amount.class);
 				i.putExtra("Month",month);
 				startActivity(i);

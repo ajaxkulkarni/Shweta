@@ -9,19 +9,19 @@ import android.widget.Button;
 
 public class AddPersonWork extends Activity 
 {
-	Button person,work;
+	Button person,work,edit;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_person_work);
-		
+
 		init();
-		
+
 		person.setOnClickListener(new OnClickListener() 
 		{
-			
+
 			@Override
 			public void onClick(View v) 
 			{
@@ -32,11 +32,22 @@ public class AddPersonWork extends Activity
 
 		work.setOnClickListener(new OnClickListener() 
 		{
-			
+
 			@Override
 			public void onClick(View v) 
 			{
 				Intent i = new Intent(AddPersonWork.this,AdminAddWorkTypeActivity.class);
+				startActivity(i);				
+			}
+		});
+
+		edit.setOnClickListener(new OnClickListener() 
+		{
+
+			@Override
+			public void onClick(View v) 
+			{
+				Intent i = new Intent(AddPersonWork.this,EditWorktype.class);
 				startActivity(i);				
 			}
 		});
@@ -46,8 +57,9 @@ public class AddPersonWork extends Activity
 	{
 		person = (Button)findViewById(R.id.addperson_button);
 		work = (Button)findViewById(R.id.addwork_button);
+		edit = (Button)findViewById(R.id.editworktype_button);
 	}
-	
-	
-	
+
+
+
 }
