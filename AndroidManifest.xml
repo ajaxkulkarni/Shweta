@@ -87,7 +87,7 @@
             android:label="@string/title_activity_view_month" >
         </activity>
         <activity
-            android:name=".Doctor_List_Amount"
+            android:name=".DoctorMonthlyBalanceList"
             android:label="@string/title_activity_doctor__list__amount" >
         </activity>
         <activity

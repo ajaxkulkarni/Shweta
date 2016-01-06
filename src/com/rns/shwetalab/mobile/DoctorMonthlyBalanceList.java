@@ -1,35 +1,25 @@
 package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
-import com.rns.shwetalab.mobile.adapter.JobListAdapter;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkType;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 
-public class Doctor_List_Amount extends Activity {
+import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
+import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
-	private List<String> listDataHeader;
+public class DoctorMonthlyBalanceList extends Activity {
+
 	private JobsDao jobsDao;
-	private PersonDao personDao;
 	private WorkType workType;
 
 	ListView lv;
-	private ArrayList<String> objArrayListDoctorName = new ArrayList<String>();
 	Map<String, BigDecimal> map = new HashMap<String, BigDecimal>();
 
 	@Override
@@ -52,7 +42,7 @@ public class Doctor_List_Amount extends Activity {
 		BigDecimal total = BigDecimal.ZERO;
 		// for(Job job: jobs)
 		Job job2;
-		for (int i = 0; i < jobs.size(); i++) {
+		/*for (int i = 0; i < jobs.size(); i++) {
 			Job job = new Job();
 			job = jobs.get(i);
 			total = BigDecimal.ZERO;
@@ -71,6 +61,21 @@ public class Doctor_List_Amount extends Activity {
 				}
 			}
 			map.put(job.getDoctor().getName(), total);
+		}*/
+		for(Job job:jobs) {
+			if(job.getDoctor() == null || job.getWorkType() == null || job.getWorkType().getDefaultPrice() == null) {
+				continue;
+			}
+			if(map.get(job.getDoctor().getName()) == null) {
+				map.put(job.getDoctor().getName(), job.getWorkType().getDefaultPrice());
+			}
+			else {
+				total = map.get(job.getDoctor().getName());
+				if(total == null) {
+					continue;
+				}
+				map.put(job.getDoctor().getName(), total.add(job.getWorkType().getDefaultPrice()));
+			}
 		}
 	}
 }

@@ -39,7 +39,7 @@ public class BalanceSheet extends Activity
 		{
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(BalanceSheet.this,Doctor_List_Amount.class);
+				Intent i = new Intent(BalanceSheet.this,DoctorMonthlyBalanceList.class);
 				i.putExtra("Month",month);
 				startActivity(i);
 			}

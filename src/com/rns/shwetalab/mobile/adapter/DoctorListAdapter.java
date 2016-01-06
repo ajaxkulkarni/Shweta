@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.rns.shwetalab.mobile.Doctor_List_Amount;
+import com.rns.shwetalab.mobile.DoctorMonthlyBalanceList;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter.ViewHolder;
 import com.rns.shwetalab.mobile.domain.Job;
@@ -29,7 +29,7 @@ public class DoctorListAdapter extends BaseAdapter
 	private List<Job> jobs;
 	LayoutInflater inflater;
 
-	public DoctorListAdapter(Doctor_List_Amount doctor_List_Amount, Map<String, BigDecimal> map)
+	public DoctorListAdapter(DoctorMonthlyBalanceList doctor_List_Amount, Map<String, BigDecimal> map)
 	{
 		mData = new ArrayList();
 		this.context = doctor_List_Amount;
