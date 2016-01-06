@@ -40,17 +40,29 @@ public class WorkTypeDao {
 	public long insertDetails(WorkType work) 
 	{
 
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(DatabaseHelper.WORKTYPE_NAME, work.getName());
-		if (work.getDefaultPrice() != null) {
-			contentValues.put(DatabaseHelper.WORKTYPE_PRICE, work.getDefaultPrice().toString());
-		}
+		ContentValues contentValues = prepareContentValues(work);
 		openToWrite();
 		long val = workTypeDb.insert(DatabaseHelper.WORKTYPE_TABLE, null, contentValues);
 		Log.d(DatabaseHelper.DATABASE_NAME, "Work type inserted!! Result :" + val);
 		Close();
 		return val;
 
+	}
+	
+	public long updateWorkType(WorkType workType) {
+		if(workType == null) {
+			return -10;
+		}
+		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.KEY_ID + " = " + workType.getId(), null);
+	}
+
+	private ContentValues prepareContentValues(WorkType work) {
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(DatabaseHelper.WORKTYPE_NAME, work.getName());
+		if (work.getDefaultPrice() != null) {
+			contentValues.put(DatabaseHelper.WORKTYPE_PRICE, work.getDefaultPrice().toString());
+		}
+		return contentValues;
 	}
 
 	public String[] getWorkTypeNames() {
