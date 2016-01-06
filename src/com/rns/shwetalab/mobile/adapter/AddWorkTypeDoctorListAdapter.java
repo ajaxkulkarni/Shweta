@@ -1,6 +1,6 @@
 package com.rns.shwetalab.mobile.adapter;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.rns.shwetalab.mobile.AdminAddWorkTypeActivity;
+import com.rns.shwetalab.mobile.AdminEditWorkTypeActivity;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 
@@ -23,9 +23,16 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 	Activity context;
 	LayoutInflater inflater;
 
-	public AddWorkTypeDoctorListAdapter(AdminAddWorkTypeActivity adminAddWorkTypeActivity,List<WorkPersonMap> workPersonMapList, List<String> doctorAmounts) {
-		this.context = adminAddWorkTypeActivity;
-		inflater = LayoutInflater.from(context);
+	public AddWorkTypeDoctorListAdapter(AdminEditWorkTypeActivity adminEditWorkTypeActivity,List<WorkPersonMap> workPersonMapList, List<String> doctorAmounts) {
+		this.context = adminEditWorkTypeActivity;
+		this.inflater = LayoutInflater.from(context);
+		this.amount = doctorAmounts;
+		this.workPersonMaps = workPersonMapList;
+	}
+
+	public AddWorkTypeDoctorListAdapter(AdminEditWorkTypeActivity adminEditWorkTypeActivity, ArrayList<WorkPersonMap> workPersonMapList, List<String> doctorAmounts) {
+		this.context = adminEditWorkTypeActivity;
+		this.inflater = LayoutInflater.from(context);
 		/*this.name = objArrayDoctorListName;*/
 		this.amount = doctorAmounts;
 		this.workPersonMaps = workPersonMapList;
@@ -33,7 +40,6 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return workPersonMaps.size();
 	}
 
@@ -47,7 +53,6 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -58,7 +63,6 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
-		// TODO Auto-generated method stub
 		ViewHolder holder = null;
 		View view = arg1;
 
@@ -74,22 +78,13 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 		else
 			holder = (ViewHolder) view.getTag();
 
-		/*if (name != null && name.size() > arg0) {
-			holder.tv1.setText(name.get(arg0));
-		}*/
 		if (amount != null && amount.size() > arg0) {
 			holder.ed1.setText(amount.get(arg0));
-			//workPersonMaps.get(arg0).setPrice(new BigDecimal(ed1).toString());
 		}
 
 		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPerson() != null) {
 			holder.tv1.setText(workPersonMaps.get(arg0).getPerson().getName());
 		}
-		//		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPrice() != null) {
-		//			holder.ed1.setText(workPersonMaps.get(arg0).getPrice().toString());
-
-
-		//}
 		return view;
 	}
 

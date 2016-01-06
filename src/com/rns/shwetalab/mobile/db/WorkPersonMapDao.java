@@ -125,15 +125,18 @@ public class WorkPersonMapDao {
 		DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + map.getPerson().getId() + " AND "+ 
 		DatabaseHelper.WORKTYPE_PERSON_WORK_ID + " = " + map.getWorkType().getId(), null, null, null,null);
 	}
-
-	/*
-	 * public WorkType getWorkType(int id) { Cursor c = queryById(id);
-	 * List<WorkType> workTypes = iterateWorkTypes(c); if (workTypes == null ||
-	 * workTypes.size() == 0) { return null; } return workTypes.get(0); }
-	 * 
-	 * private Cursor queryById(int id) { openToWrite(); return
-	 * workPersonMapDb.query(DatabaseHelper.WORKTYPE_TABLE, cols,
-	 * DatabaseHelper.KEY_ID + " = " + id , null,null, null, null); }
-	 */
+	
+	private Cursor queryByWorkType(long workTypeId) {
+		openToWrite();
+		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols,
+		DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + workTypeId, null, null, null,null);
+	}
+	
+	public List<WorkPersonMap> getMapsForWorkType(WorkType workType) {
+		if(workType == null) {
+			return new ArrayList<WorkPersonMap>();
+		}
+		return iterateWorkTypes(queryByWorkType(workType.getId()));
+	}
 
 }
