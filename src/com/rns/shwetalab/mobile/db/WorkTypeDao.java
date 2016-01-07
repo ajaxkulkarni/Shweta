@@ -48,12 +48,14 @@ public class WorkTypeDao {
 		return val;
 
 	}
-	
+
 	public long updateWorkType(WorkType workType) {
 		if(workType == null) {
 			return -10;
 		}
-		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.KEY_ID + " = " + workType.getId(), null);
+		openToWrite();
+		//getWorkType(workType);
+		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.WORKTYPE_NAME+ " = " + workType.getName(), null);
 	}
 
 	private ContentValues prepareContentValues(WorkType work) {

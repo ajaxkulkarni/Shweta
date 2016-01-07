@@ -1,7 +1,11 @@
 package com.rns.shwetalab.mobile.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.rns.shwetalab.mobile.AdminEditWorkTypeActivity;
+import com.rns.shwetalab.mobile.R;
+import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter.ViewHolder;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,30 +15,22 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.rns.shwetalab.mobile.AdminAddWorkTypeActivity;
-import com.rns.shwetalab.mobile.AdminEditWorkTypeActivity;
-import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+public class AdminEditWorkTypeAdapter extends BaseAdapter
+{
 
-public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
-
-	//private List<String> name;
 	private List<String> amount;
 	private List<WorkPersonMap> workPersonMaps;
 	Activity context;
 	LayoutInflater inflater;
 
-
-
-	public AddWorkTypeDoctorListAdapter(AdminAddWorkTypeActivity adminAddWorkTypeActivity, ArrayList<WorkPersonMap> workPersonMapList, List<String> doctorAmount) {
-		this.context = adminAddWorkTypeActivity;
+	public AdminEditWorkTypeAdapter(AdminEditWorkTypeActivity adminEditWorkTypeActivity,
+			List<WorkPersonMap> workPersonMaps, List<String> doctorAmounts) 
+	{
+		this.context = adminEditWorkTypeActivity;
 		this.inflater = LayoutInflater.from(context);
-		/*this.name = objArrayDoctorListName;*/
-		this.amount = doctorAmount;
-		this.workPersonMaps = workPersonMapList;
+		this.amount = doctorAmounts;
+		this.workPersonMaps = workPersonMaps;
 	}
-
-
 
 	@Override
 	public int getCount() {
@@ -66,9 +62,9 @@ public class AddWorkTypeDoctorListAdapter extends BaseAdapter {
 
 		if (view == null) {
 			holder = new ViewHolder();
-			view = inflater.inflate(R.layout.activity_add_work_type_doctorlist_adapter, null);
-			holder.tv1 = (TextView) view.findViewById(R.id.addwork_type_doctorlist_adapter_textView);
-			holder.ed1 = (EditText) view.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
+			view = inflater.inflate(R.layout.activity_edit_work_type_doctorlist_adapter, null);
+			holder.tv1 = (TextView) view.findViewById(R.id.editwork_type_doctorlist_adapter_textView);
+			holder.ed1 = (EditText) view.findViewById(R.id.editwork_type_doctorlist_adapter_editText);
 			view.setTag(holder);
 
 		}

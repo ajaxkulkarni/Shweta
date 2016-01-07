@@ -1,0 +1,128 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".AdminEditWorkTypeActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BFA5"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="ADD WORK TYPE"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <EditText
+                android:id="@+id/edit_worktype_activity_worktype_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded"
+                android:ems="10"
+                android:gravity="center"
+                android:hint=" Work Type "
+                android:padding="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/edit_worktype_activity_defaultamount_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Default Price"
+                android:padding="10dp" >
+            </EditText>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_worktype_activity_worktype_add_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="#00BFA5"
+            android:padding="15dp"
+            android:text="ADD"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <RadioButton
+                android:id="@+id/editworktypeDoctorradioButton1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Doctor" />
+
+            <RadioButton
+                android:id="@+id/editworktypeLabradioButton2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lab" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/editworktypedoctorlistView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="visible" >
+            </ListView>
+
+            <ListView
+                android:id="@+id/editworktypelablistView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" >
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

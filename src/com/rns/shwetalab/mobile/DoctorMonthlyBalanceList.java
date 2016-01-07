@@ -69,7 +69,8 @@ public class DoctorMonthlyBalanceList extends Activity {
 			if(map.get(job.getDoctor().getName()) == null) {
 				map.put(job.getDoctor().getName(), job.getWorkType().getDefaultPrice());
 			}
-			else {
+			else
+			{
 				total = map.get(job.getDoctor().getName());
 				if(total == null) {
 					continue;

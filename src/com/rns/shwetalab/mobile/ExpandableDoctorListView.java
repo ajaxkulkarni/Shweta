@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
-
 import com.rns.shwetalab.mobile.adapter.ExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.DatabaseHelper;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Rajesh on 8/28/2015.
@@ -46,10 +49,19 @@ public class ExpandableDoctorListView extends Activity {
 		expListView.setAdapter(listAdapter);
 		expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-				// Toast.makeText(getApplicationContext(),
-				// "Group Clicked " + listDataHeader.get(groupPosition),
-				// Toast.LENGTH_SHORT).show();
+			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) 
+			{
+
+				Intent i = new Intent(ExpandableDoctorListView.this,DoctorJobs.class);
+				i.putExtra("Name",listDataHeader.get(groupPosition));
+				i.putExtra("Date", date.getText());
+				
+				startActivity(i);
+
+
+				Toast.makeText(getApplicationContext(),
+						"Group Clicked " + listDataHeader.get(groupPosition),
+						Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -58,9 +70,9 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				// Toast.makeText(getApplicationContext(),
-				// listDataHeader.get(groupPosition) + " Expanded",
-				// Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						listDataHeader.get(groupPosition) + " Expanded",
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -68,9 +80,9 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-				// Toast.makeText(getApplicationContext(),
-				// listDataHeader.get(groupPosition) + " Collapsed",
-				// Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						listDataHeader.get(groupPosition) + " Collapsed",
+						Toast.LENGTH_SHORT).show();
 
 			}
 		});
@@ -81,14 +93,14 @@ public class ExpandableDoctorListView extends Activity {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
-				// Toast.makeText(
-				// getApplicationContext(),
-				// listDataHeader.get(groupPosition)
-				// + " : "
-				// + listDataChild.get(
-				// listDataHeader.get(groupPosition)).get(
-				// childPosition), Toast.LENGTH_SHORT)
-				// .show();
+				Toast.makeText(
+						getApplicationContext(),
+						listDataHeader.get(groupPosition)
+						+ " : "
+						+ listDataChild.get(
+								listDataHeader.get(groupPosition)).get(
+										childPosition), Toast.LENGTH_SHORT)
+				.show();
 				return false;
 			}
 		});
@@ -96,11 +108,9 @@ public class ExpandableDoctorListView extends Activity {
 	}
 
 	private void prepareListData() {
-
 		List<Job> jobs = jobsDao.getJobsByDate(dateSelected);
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, List<String>>();
-
 		for (Job job : jobs) {
 			if(job.getDoctor() == null) {
 				continue;

@@ -20,5 +20,6 @@
     <string name="title_activity_view_month">ViewMonth</string>
     <string name="title_activity_doctor__list__amount">Doctor_List_Amount</string>
     <string name="title_activity_edit_worktype">EditWorktype</string>
+    <string name="title_activity_doctor_jobs">DoctorJobs</string>
 
 </resources>

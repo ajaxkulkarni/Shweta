@@ -45,7 +45,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 	private ArrayList<WorkPersonMap> workPersonMaps;
 	private AddWorkTypeDoctorListAdapter doctorListAdapter;
 	// private List<String> doctorNames = new ArrayList<String>();
-	private List<String> doctorAmounts = new ArrayList<String>();
+	private List<String> doctorAmount = new ArrayList<String>();
 	// private List<String> labNames = new ArrayList<String>();
 	// private List<String> labAmounts = new ArrayList<String>();
 
@@ -67,7 +67,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 		defaultprice.setEnabled(false);
 
 		prepareWorkPersonMaps();
-		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmounts);
+		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmount);
 		doctorsListView.setAdapter(doctorListAdapter);
 
 		// doctorListAdapter.notifyDataSetChanged();

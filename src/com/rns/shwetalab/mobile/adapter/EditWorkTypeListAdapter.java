@@ -29,7 +29,7 @@ public class EditWorkTypeListAdapter extends BaseAdapter
 		this.work = objArrayListWorktype;
 	}*/
 
-	
+
 	public EditWorkTypeListAdapter(EditWorktype editWorktype, List<WorkType> all) {
 		this.context = editWorktype;
 		this.inflater = LayoutInflater.from(context);
@@ -60,6 +60,7 @@ public class EditWorkTypeListAdapter extends BaseAdapter
 
 	public class ViewHolder {
 		TextView tv1;
+		TextView tv2;
 
 	}
 
@@ -72,16 +73,17 @@ public class EditWorkTypeListAdapter extends BaseAdapter
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.activity_add_work_type_list_adapter, null);
 			holder.tv1 = (TextView) view.findViewById(R.id.worktypetextView);
+			holder.tv2 = (TextView) view.findViewById(R.id.worktypepricetextView);
 			view.setTag(holder);
 
 		}
 		else
 			holder = (ViewHolder) view.getTag();
-			if (workTypes != null && workTypes.size() > position) 
-			{
-				holder.tv1.setText(workTypes.get(position).getName());
-				//TODO : Worktype default price to be displayed
-			}
+		if (workTypes != null && workTypes.size() > position) 
+		{
+			holder.tv1.setText(workTypes.get(position).getName());
+			holder.tv2.setText(workTypes.get(position).getDefaultPrice().toString());
+		}
 		return view;
 	}
 }

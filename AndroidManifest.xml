@@ -94,6 +94,12 @@
             android:name=".EditWorktype"
             android:label="@string/title_activity_edit_worktype" >
         </activity>
+        <activity android:name=".AdminEditWorkTypeActivity" >
+        </activity>
+        <activity
+            android:name=".DoctorJobs"
+            android:label="@string/title_activity_doctor_jobs" >
+        </activity>
     </application>
 
 </manifest>

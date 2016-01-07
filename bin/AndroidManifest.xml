@@ -87,12 +87,18 @@
             android:label="@string/title_activity_view_month" >
         </activity>
         <activity
-            android:name=".Doctor_List_Amount"
+            android:name=".DoctorMonthlyBalanceList"
             android:label="@string/title_activity_doctor__list__amount" >
         </activity>
         <activity
             android:name=".EditWorktype"
             android:label="@string/title_activity_edit_worktype" >
+        </activity>
+        <activity android:name=".AdminEditWorkTypeActivity" >
+        </activity>
+        <activity
+            android:name=".DoctorJobs"
+            android:label="@string/title_activity_doctor_jobs" >
         </activity>
     </application>
 

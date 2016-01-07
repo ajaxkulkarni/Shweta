@@ -3,6 +3,7 @@ package com.rns.shwetalab.mobile;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
+import com.rns.shwetalab.mobile.adapter.AdminEditWorkTypeAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
@@ -38,38 +40,41 @@ public class AdminEditWorkTypeActivity extends Activity {
 	private WorkPersonMapDao workpersonMapDao;
 	private ListView doctorsListView, labsListView;
 	private List<WorkPersonMap> workPersonMaps;
-	private AddWorkTypeDoctorListAdapter doctorListAdapter;
+	private AdminEditWorkTypeAdapter doctorListAdapter;
 	private List<String> doctorAmounts = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_admin_add_work_type);
+		setContentView(R.layout.activity_admin_edit_work_type);
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		workpersonMapDao = new WorkPersonMapDao(getApplicationContext());
-		defaultprice = (EditText) findViewById(R.id.add_worktype_activity_defaultamount_editText);
-		workTypeEditText = (EditText) findViewById(R.id.add_worktype_activity_worktype_editText);
-		addWorkTypeButton = (Button) findViewById(R.id.add_worktype_activity_worktype_add_button);
-		doctor = (RadioButton) findViewById(R.id.addworktypeDoctorradioButton1);
-		lab = (RadioButton) findViewById(R.id.addworktypeLabradioButton2);
-		doctorsListView = (ListView) findViewById(R.id.addworktypedoctorlistView);
-		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
+		defaultprice = (EditText) findViewById(R.id.edit_worktype_activity_defaultamount_editText);
+		workTypeEditText = (EditText) findViewById(R.id.edit_worktype_activity_worktype_editText);
+		addWorkTypeButton = (Button) findViewById(R.id.edit_worktype_activity_worktype_add_button);
+		doctor = (RadioButton) findViewById(R.id.editworktypeDoctorradioButton1);
+		lab = (RadioButton) findViewById(R.id.editworktypeLabradioButton2);
+		doctorsListView = (ListView) findViewById(R.id.editworktypedoctorlistView);
+		labsListView = (ListView) findViewById(R.id.editworktypelablistView);
 		defaultprice.setText("100");
-		defaultprice.setEnabled(false);
+
 
 		prepareWorkPersonMaps();
-		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmounts);
+
+		doctorListAdapter = new AdminEditWorkTypeAdapter(this, workPersonMaps, doctorAmounts);
 		doctorsListView.setAdapter(doctorListAdapter);
 
 
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
+			public void onClick(View v) 
+			{
 				prepareWorkType();
-				workTypeDao.insertDetails(work);
+
+				//	workTypeDao.insertDetails(work);
+				workTypeDao.updateWorkType(work);
 				getAmount();
 				workpersonMapDao.insertDetails(workPersonMap);
 				workPersonMaps.size();
@@ -108,11 +113,32 @@ public class AdminEditWorkTypeActivity extends Activity {
 
 
 
-	private void prepareWorkPersonMaps() {
-		//TODO: Get worktype from intent
+	private void prepareWorkPersonMaps() 
+	{
+		Bundle extras = getIntent().getExtras();
+		String worktype = extras.getString("WorkType");
+		String price = extras.getString("DefaultPrice");
+		workTypeEditText.setText(worktype);
+		defaultprice.setText(price);
+		//	WorkPersonMap map = new WorkPersonMap();
 		workPersonMaps = workpersonMapDao.getMapsForWorkType(work);
+
+
+		//		workPersonMaps = new ArrayList<WorkPersonMap>();
+		//		workPersonMap = new WorkPersonMap();
+		//		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+		//
+		//		if (doctors == null || doctors.size() == 0) {
+		//			return;
+		//		}
+		//		for (Person doctor : doctors) {
+		//			WorkPersonMap map = new WorkPersonMap();
+		//			map.setPerson(doctor);
+		//			workPersonMaps.add(map);
+		//		}
+
 		//TODO: Fill Doctor Amounts array from this list
-		
+
 	}
 
 	private void getAmount() {
@@ -127,6 +153,9 @@ public class AdminEditWorkTypeActivity extends Activity {
 				workPersonMap.setPrice(new BigDecimal(editText.getText().toString()));
 				workPersonMap.setWorkType(work);
 			}
+			else
+				workPersonMap.setPrice(new BigDecimal(work.getDefaultPrice().toString()));
+
 		}
 	}
 
