@@ -72,8 +72,8 @@ public class AdminEditWorkTypeAdapter extends BaseAdapter
 		else
 			holder = (ViewHolder) view.getTag();
 
-		if (amount != null && amount.size() > arg0) {
-			holder.ed1.setText(amount.get(arg0));
+		if (workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPrice() != null) {
+			holder.ed1.setText(workPersonMaps.get(arg0).getPrice().toString());
 		}
 
 		if(workPersonMaps.size() > arg0 && workPersonMaps.get(arg0).getPerson() != null) {

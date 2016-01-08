@@ -3,6 +3,8 @@ package com.rns.shwetalab.mobile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rns.shwetalab.mobile.adapter.EditWorkTypeListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
@@ -40,21 +42,22 @@ public class EditWorktype extends Activity {
 		lv = (ListView) findViewById(R.id.edit_worktype_listView);
 		workTypeDao = new WorkTypeDao(this);
 
-		EditWorkTypeListAdapter Adapter = new EditWorkTypeListAdapter(this, workTypeDao.getAll());
-		lv.setAdapter(Adapter);
+		final EditWorkTypeListAdapter adapter = new EditWorkTypeListAdapter(this, workTypeDao.getAll());
+		lv.setAdapter(adapter);
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				view = lv.getAdapter().getView(position, null, null);
-				view = lv.getChildAt(position);
-				TextView textView = (TextView) view.findViewById(R.id.worktypetextView);
-				TextView textView1 = (TextView) view.findViewById(R.id.worktypepricetextView);
-				Intent i = new Intent(EditWorktype.this, AdminEditWorkTypeActivity.class);
-				i.putExtra("WorkType", textView.getText().toString());
-				i.putExtra("DefaultPrice", textView1.getText().toString());
-				startActivity(i);
+				//				view = lv.getAdapter().getView(position, null, null);
+				//				view = lv.getChildAt(position);
+				//				TextView textView = (TextView) view.findViewById(R.id.worktypetextView);
+				//				TextView textView1 = (TextView) view.findViewById(R.id.worktypepricetextView);
 
+				Intent i = new Intent(EditWorktype.this, AdminEditWorkTypeActivity.class);
+				//i.putExtra("WorkType", textView.getText().toString());
+				i.putExtra("Data",new Gson().toJson(adapter.getItem(position)));
+				//i.putExtra("DefaultPrice", textView1.getText().toString());
+				startActivity(i);
 			}
 		});
 

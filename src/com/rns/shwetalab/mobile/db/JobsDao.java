@@ -102,14 +102,13 @@ public class JobsDao {
 	}
 
 	public List<Job> getJobsByMonth(String month) {
-		//TODO: Convert to int
 
 		return iterateJobsCursor(queryForMonth(month));
 	}
 
 	public BigDecimal getDoctorIncomeForMonth(String month)
 	{
-	//	int value = Integer.parseInt(month);
+		//	int value = Integer.parseInt(month);
 		BigDecimal total = BigDecimal.ZERO;
 		List<Job> jobs = getJobsByMonth(month );
 		for (Job job: jobs) 

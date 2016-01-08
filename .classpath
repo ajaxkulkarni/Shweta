@@ -9,5 +9,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="F:/softwares/Android_Setup/sdk/extras/android/m2repository/com/android/support/cardview-v7/22.1.1/cardview-v7-22.1.1-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Rajesh Mangale/workspace/appcompat_v7"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Rajesh Mangale/Desktop/TiffEat/Jars/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

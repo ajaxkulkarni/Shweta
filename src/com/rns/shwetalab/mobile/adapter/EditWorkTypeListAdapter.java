@@ -83,6 +83,7 @@ public class EditWorkTypeListAdapter extends BaseAdapter
 		{
 			holder.tv1.setText(workTypes.get(position).getName());
 			holder.tv2.setText(workTypes.get(position).getDefaultPrice().toString());
+			//workTypes.get(position).getId();
 		}
 		return view;
 	}

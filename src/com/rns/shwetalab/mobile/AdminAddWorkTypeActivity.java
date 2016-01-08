@@ -64,7 +64,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 		doctorsListView = (ListView) findViewById(R.id.addworktypedoctorlistView);
 		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
 		defaultprice.setText("100");
-		defaultprice.setEnabled(false);
+
 
 		prepareWorkPersonMaps();
 		doctorListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmount);
@@ -88,7 +88,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 				workPersonMaps.size();
 				Toast.makeText(getApplicationContext(), "Record inserted successfully!", Toast.LENGTH_LONG).show();
 			}
-
 		});
 
 		doctor.setOnClickListener(new OnClickListener() {

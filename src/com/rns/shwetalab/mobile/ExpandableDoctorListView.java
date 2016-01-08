@@ -52,11 +52,11 @@ public class ExpandableDoctorListView extends Activity {
 			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) 
 			{
 
-				Intent i = new Intent(ExpandableDoctorListView.this,DoctorJobs.class);
-				i.putExtra("Name",listDataHeader.get(groupPosition));
-				i.putExtra("Date", date.getText());
-				
-				startActivity(i);
+//				Intent i = new Intent(ExpandableDoctorListView.this,DoctorJobs.class);
+//				i.putExtra("Name",listDataHeader.get(groupPosition));
+//				i.putExtra("Date", date.getText());
+//				
+//				startActivity(i);
 
 
 				Toast.makeText(getApplicationContext(),

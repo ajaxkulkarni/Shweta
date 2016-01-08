@@ -55,6 +55,8 @@ public class WorkPersonMapDao {
 		
 	}
 	
+	
+	
 	public long insertDetails(WorkPersonMap map) {
 		if (map.getPerson() == null || map.getWorkType() == null) {
 			return -10;
@@ -137,6 +139,36 @@ public class WorkPersonMapDao {
 			return new ArrayList<WorkPersonMap>();
 		}
 		return iterateWorkTypes(queryByWorkType(workType.getId()));
+	}
+
+	public long updateWorkPersonMaps(List<WorkPersonMap> workPersonMaps) {
+		if(workPersonMaps == null || workPersonMaps.size() == 0) {
+			return -10;
+		}
+		for(WorkPersonMap map:workPersonMaps) {
+			long result = updateWorkType(map);
+			if(result < 0 ) {
+				return result;
+			}
+		}
+		return 0;
+	}
+	
+	public long updateWorkType(WorkPersonMap map) {
+		if(map == null) {
+			return -10;
+		}
+		openToWrite();
+		return workPersonMapDb.update(DatabaseHelper.WORKTYPE_PERSON_TABLE, prepareContentValues(map), DatabaseHelper.KEY_ID + " = ?",
+                new String[] { String.valueOf(map.getId()) });
+	}
+
+	private ContentValues prepareContentValues(WorkPersonMap map) {
+		ContentValues contentValues = new ContentValues();
+		if (map.getPrice() != null) {
+			contentValues.put(DatabaseHelper.WORKTYPE_PERSON_PRICE, map.getPrice().toString());
+		}
+		return contentValues;
 	}
 
 }

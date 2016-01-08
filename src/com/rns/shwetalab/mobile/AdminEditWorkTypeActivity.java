@@ -18,12 +18,15 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
 import com.rns.shwetalab.mobile.adapter.AdminEditWorkTypeAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
+import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -34,6 +37,8 @@ public class AdminEditWorkTypeActivity extends Activity {
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
 	private WorkType work;
+	private JobsDao jobsDao;
+	private Job job;
 	private WorkPersonMap workPersonMap;
 	private PersonDao personDao;
 	private RadioButton lab, doctor;
@@ -48,6 +53,7 @@ public class AdminEditWorkTypeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_edit_work_type);
 		personDao = new PersonDao(getApplicationContext());
+
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		workpersonMapDao = new WorkPersonMapDao(getApplicationContext());
 		defaultprice = (EditText) findViewById(R.id.edit_worktype_activity_defaultamount_editText);
@@ -72,16 +78,25 @@ public class AdminEditWorkTypeActivity extends Activity {
 			public void onClick(View v) 
 			{
 				prepareWorkType();
-
+				prepareWorkPersonMaps();
 				//	workTypeDao.insertDetails(work);
-				workTypeDao.updateWorkType(work);
-				getAmount();
-				workpersonMapDao.insertDetails(workPersonMap);
-				workPersonMaps.size();
-				Toast.makeText(getApplicationContext(), "Record inserted successfully!", Toast.LENGTH_LONG).show();
+				long result = workTypeDao.updateWorkType(work);
+				if(result < 0) {
+					Toast.makeText(getApplicationContext(), "Error while updating!!",Toast.LENGTH_SHORT).show();
+					return;
+				}
+				result = workpersonMapDao.updateWorkPersonMaps(prepareWorkPersonMapsList());
+				if(result < 0) {
+					Toast.makeText(getApplicationContext(), "Error while updating!!",Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Toast.makeText(getApplicationContext(), "Updated Successfully!!",Toast.LENGTH_SHORT).show();
 			}
 
 		});
+
+
+
 
 		doctor.setOnClickListener(new OnClickListener() {
 
@@ -111,23 +126,20 @@ public class AdminEditWorkTypeActivity extends Activity {
 
 
 
-
-
 	private void prepareWorkPersonMaps() 
 	{
+
+
 		Bundle extras = getIntent().getExtras();
-		String worktype = extras.getString("WorkType");
-		String price = extras.getString("DefaultPrice");
-		workTypeEditText.setText(worktype);
-		defaultprice.setText(price);
-		//	WorkPersonMap map = new WorkPersonMap();
+
+		String data = extras.getString("Data");
+		work = new Gson().fromJson(data,WorkType.class);
+		workTypeEditText.setText(work.getName());
+		defaultprice.setText(work.getDefaultPrice().toString());
+
+
 		workPersonMaps = workpersonMapDao.getMapsForWorkType(work);
 
-
-		//		workPersonMaps = new ArrayList<WorkPersonMap>();
-		//		workPersonMap = new WorkPersonMap();
-		//		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
-		//
 		//		if (doctors == null || doctors.size() == 0) {
 		//			return;
 		//		}
@@ -137,35 +149,37 @@ public class AdminEditWorkTypeActivity extends Activity {
 		//			workPersonMaps.add(map);
 		//		}
 
+
+
 		//TODO: Fill Doctor Amounts array from this list
 
 	}
 
-	private void getAmount() {
+	private List<WorkPersonMap> prepareWorkPersonMapsList() {
+		List<WorkPersonMap> maps = new ArrayList<WorkPersonMap>();
 		View v;
 		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
 		for (int i = 0; i < doctors.size(); i++) {
 			v = doctorsListView.getAdapter().getView(i, null, null);
-			v = doctorsListView.getChildAt(i);
-			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
-			if (!TextUtils.isEmpty(editText.getText().toString())) {
-				workPersonMap.setPerson(doctors.get(i));
-				workPersonMap.setPrice(new BigDecimal(editText.getText().toString()));
-				workPersonMap.setWorkType(work);
+			WorkPersonMap map = (WorkPersonMap) doctorsListView.getAdapter().getItem(i);
+			EditText editText = (EditText) v.findViewById(R.id.editwork_type_doctorlist_adapter_editText);
+			if (!TextUtils.isEmpty(editText.getText())) {
+				//workPersonMap.setPerson(doctors.get(i));
+				map.setPrice(new BigDecimal(editText.getText().toString()));
+				//	workPersonMap.setWorkType(work);
 			}
-			else
-				workPersonMap.setPrice(new BigDecimal(work.getDefaultPrice().toString()));
-
+			maps.add(map);
 		}
+		return maps;
 	}
 
-	private void prepareWorkType() {
-		work = new WorkType();
-		workPersonMap = new WorkPersonMap();
+	private void prepareWorkType() 
+	{
 		work.setName(workTypeEditText.getText().toString());
 		if (!TextUtils.isEmpty(defaultprice.getText())) {
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}
+
 	}
 
 	@Override

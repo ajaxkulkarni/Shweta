@@ -54,8 +54,8 @@ public class WorkTypeDao {
 			return -10;
 		}
 		openToWrite();
-		//getWorkType(workType);
-		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.WORKTYPE_NAME+ " = " + workType.getName(), null);
+		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.KEY_ID + " = ?",
+                new String[] { String.valueOf(workType.getId()) });
 	}
 
 	private ContentValues prepareContentValues(WorkType work) {
