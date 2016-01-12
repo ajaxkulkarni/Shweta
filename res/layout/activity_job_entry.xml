@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.dentallab.JobEntry" >
+    tools:context="com.rns.shwetalab.mobile.JobEntry" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,31 +28,22 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/jobentry_caseid_editText"
+        <AutoCompleteTextView
+            android:id="@+id/jobentry_docname_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="Case Id"
-            android:inputType="textPersonName"
-            android:padding="15dp" />
-
-        <EditText
-            android:id="@+id/jobentry_docname_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/rounded"
+            android:ems="10"
             android:gravity="center"
             android:hint="Doctor Name"
-            android:padding="15dp" />
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:windowSoftInputMode="stateHidden" >
+        </AutoCompleteTextView>
 
         <EditText
             android:id="@+id/jobentry_patname_editText"
@@ -80,23 +71,29 @@
                 android:layout_weight="0.75"
                 android:orientation="horizontal" >
 
-                <EditText
-                    android:id="@+id/jobentry_worktype_editText"
+                <AutoCompleteTextView
+                    android:id="@+id/jobentry_worktype_autocomplete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:background="@drawable/rounded"
+                    android:ems="10"
                     android:hint="Work Type"
-                    android:padding="15dp" />
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:windowSoftInputMode="stateHidden" >
+                </AutoCompleteTextView>
 
                 <Button
                     android:id="@+id/jobentry_buttonadd"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
                     android:background="@drawable/addbutton"
+                    android:padding="10dp"
                     android:text="+" />
             </LinearLayout>
         </LinearLayout>
@@ -139,7 +136,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="57dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -150,13 +147,15 @@
                 android:id="@+id/spinner_quadrant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:padding="10dp" />
 
             <Spinner
                 android:id="@+id/spinner_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:padding="10dp" />
         </LinearLayout>
 
         <EditText
@@ -168,18 +167,7 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:hint="Shade"
-            android:padding="15dp" />
-
-        <EditText
-            android:id="@+id/jobentry_date_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:hint="Date"
+            android:inputType="number"
             android:padding="15dp" />
 
         <Button
@@ -187,11 +175,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
             android:background="#80CBC4"
-            android:elevation="8dp"
             android:gravity="center"
             android:padding="15dp"
             android:text="ADD"

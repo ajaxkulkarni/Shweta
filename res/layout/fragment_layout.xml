@@ -1,4 +1,4 @@
-<com.example.dentallab.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.rns.shwetalab.mobile.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="1"
@@ -77,4 +77,4 @@
         android:translationX="10dp"
         android:translationY="10dp" />
 
-</com.example.dentallab.DashboardLayout>
+</com.rns.shwetalab.mobile.DashboardLayout>

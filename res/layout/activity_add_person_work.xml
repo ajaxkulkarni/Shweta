@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/addwork_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Add Work"
+        android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/editworktype_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addwork_button"
+        android:layout_alignLeft="@+id/addwork_button"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/button"
+        android:text="Edit Worktype"
+        android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/addperson_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/addwork_button"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
+        android:text="Add Person"
+        android:textColor="#FFF" />
+
+</RelativeLayout>
