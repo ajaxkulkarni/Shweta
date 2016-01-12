@@ -19,7 +19,7 @@ public class WorkPersonMapDao {
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase workPersonMapDb;
 	private Context context;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID,DatabaseHelper.WORKTYPE_PERSON_WORK_ID, DatabaseHelper.WORKTYPE_PERSON_PRICE };
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID, DatabaseHelper.WORKTYPE_PERSON_WORK_ID, DatabaseHelper.WORKTYPE_PERSON_PRICE };
 	private PersonDao personDao;
 	private WorkTypeDao workTypeDao;
 
@@ -43,20 +43,15 @@ public class WorkPersonMapDao {
 		workPersonMapDb.close();
 	}
 
-	
-	public long insertDetails(List <WorkPersonMap> list)
-	{
-		for(WorkPersonMap map : list)
-		{
+	public long insertDetails(List<WorkPersonMap> list) {
+		for (WorkPersonMap map : list) {
 			insertDetails(map);
 		}
-		
+
 		return 0;
-		
+
 	}
-	
-	
-	
+
 	public long insertDetails(WorkPersonMap map) {
 		if (map.getPerson() == null || map.getWorkType() == null) {
 			return -10;
@@ -123,44 +118,47 @@ public class WorkPersonMapDao {
 
 	public Cursor queryByMapping(WorkPersonMap map) {
 		openToWrite();
-		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols,
-		DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + map.getPerson().getId() + " AND "+ 
-		DatabaseHelper.WORKTYPE_PERSON_WORK_ID + " = " + map.getWorkType().getId(), null, null, null,null);
+		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + map.getPerson().getId() + " AND "
+				+ DatabaseHelper.WORKTYPE_PERSON_WORK_ID + " = " + map.getWorkType().getId(), null, null, null, null);
 	}
-	
+
 	private Cursor queryByWorkType(long workTypeId) {
 		openToWrite();
-		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols,
-		DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + workTypeId, null, null, null,null);
+		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + workTypeId, null, null, null, null);
 	}
-	
+
 	public List<WorkPersonMap> getMapsForWorkType(WorkType workType) {
-		if(workType == null) {
-			return new ArrayList<WorkPersonMap>();
+		if (workType == null) {
+			return null;
 		}
 		return iterateWorkTypes(queryByWorkType(workType.getId()));
 	}
 
 	public long updateWorkPersonMaps(List<WorkPersonMap> workPersonMaps) {
-		if(workPersonMaps == null || workPersonMaps.size() == 0) {
+		if (workPersonMaps == null || workPersonMaps.size() == 0) {
 			return -10;
 		}
-		for(WorkPersonMap map:workPersonMaps) {
-			long result = updateWorkType(map);
-			if(result < 0 ) {
+		for (WorkPersonMap map : workPersonMaps) {
+			long result = 0;
+			if (map.getId() == null || map.getId() == 0) {
+				result = insertDetails(map);
+			} else {
+				result = updateWorkPersonMap(map);
+			}
+			if (result < 0) {
 				return result;
 			}
 		}
 		return 0;
 	}
-	
-	public long updateWorkType(WorkPersonMap map) {
-		if(map == null) {
+
+	public long updateWorkPersonMap(WorkPersonMap map) {
+		if (map == null) {
 			return -10;
 		}
 		openToWrite();
-		return workPersonMapDb.update(DatabaseHelper.WORKTYPE_PERSON_TABLE, prepareContentValues(map), DatabaseHelper.KEY_ID + " = ?",
-                new String[] { String.valueOf(map.getId()) });
+		return workPersonMapDb
+				.update(DatabaseHelper.WORKTYPE_PERSON_TABLE, prepareContentValues(map), DatabaseHelper.KEY_ID + " = ?", new String[] { String.valueOf(map.getId()) });
 	}
 
 	private ContentValues prepareContentValues(WorkPersonMap map) {

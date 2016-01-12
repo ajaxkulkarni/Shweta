@@ -1,18 +1,6 @@
 package com.rns.shwetalab.mobile;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.rns.shwetalab.mobile.adapter.EditWorkTypeListAdapter;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
-import com.rns.shwetalab.mobile.db.WorkTypeDao;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkPersonMap;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,7 +9,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.rns.shwetalab.mobile.adapter.EditWorkTypeListAdapter;
+import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.db.WorkTypeDao;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class EditWorktype extends Activity {
 	private WorkType work;
