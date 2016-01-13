@@ -30,6 +30,7 @@ import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class AdminEditWorkTypeActivity extends Activity {
+
 	private EditText workTypeEditText, defaultprice;
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
@@ -160,5 +161,6 @@ public class AdminEditWorkTypeActivity extends Activity {
 		if (!TextUtils.isEmpty(defaultprice.getText())) {
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}
+
+		
 	}
-}

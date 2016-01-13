@@ -9,6 +9,7 @@
         android:id="@+id/month_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -26,6 +27,12 @@
         android:background="#2196f3"
         android:text="View Balance"
         android:textColor="#FFF"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center" />
+
+   
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< HEAD
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.PersonDao;
@@ -165,6 +166,156 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 		job.setDoctor(doctor);
 		job.setWorkType(workType);
 
+=======
+import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
+import com.rns.shwetalab.mobile.db.WorkTypeDao;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+public class JobEntry extends Activity implements OnItemSelectedListener {
+
+	Button addwork, jobentry;
+	EditText workType2, workType3, workType4,price;
+	int count = 0;
+	Spinner sp1, sp2;
+	private AutoCompleteTextView doctorName;
+	private PersonDao personDao;
+	private AutoCompleteTextView workType1;
+	private WorkTypeDao workTypeDao;
+	private WorkPersonMapDao workPersonMapDao;
+	private JobsDao jobsDao;
+	private EditText  patientName, shade;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_job_entry);
+		personDao = new PersonDao(getApplicationContext());
+		workTypeDao = new WorkTypeDao(getApplicationContext());
+		jobsDao = new JobsDao(getApplicationContext());
+		workPersonMapDao = new WorkPersonMapDao(getApplicationContext());
+		prepareDoctorNames();
+		prepareWorkTypes();
+
+		addwork = (Button) findViewById(R.id.jobentry_buttonadd);
+		jobentry = (Button) findViewById(R.id.jobentrybutton);
+		workType2 = (EditText) findViewById(R.id.jobentry_worktype1_editText);
+		workType3 = (EditText) findViewById(R.id.jobentry_worktype2_editText);
+		workType4 = (EditText) findViewById(R.id.jobentry_worktype3_editText);
+		sp1 = (Spinner) findViewById(R.id.spinner_position);
+		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
+		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
+		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
+
+		spinner_quad(sp1);
+		spinner_position(sp2);
+
+
+
+		jobentry.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) 
+			{
+				//Validations();
+				long result  = jobsDao.insertDetails(prepareJob());
+				if(result < 0) {
+					if(result == -10) {
+						Toast.makeText(getApplicationContext(), "Invalid DoctorName!!", Toast.LENGTH_LONG).show();
+						return;
+					}
+					if(result == -20) {
+						Toast.makeText(getApplicationContext(), "Invalid Work Type!!", Toast.LENGTH_LONG).show();
+						return;
+					}
+					Toast.makeText(getApplicationContext(), "Error while saving data!!", Toast.LENGTH_LONG).show();
+				}
+
+				Toast.makeText(getApplicationContext(), "Job Entered Successfully", Toast.LENGTH_LONG).show();
+
+			}
+
+//			private void Validations() 
+//			{
+//
+//				if(TextUtils.isEmpty(doctorName.getText()))
+//				{
+//					doctorName.setError("Enter Docotor Name");
+//				}
+//				else if(TextUtils.isEmpty(workType1.getText()))
+//				{
+//					workType1.setError("Enter Worktype");
+//				}
+//				else if(TextUtils.isEmpty(patientName.getText()))
+//				{
+//					patientName.setError("Enter Patient Name");
+//				}
+//				else if(TextUtils.isEmpty(shade.getText()))
+//				{
+//					shade.setError("Enter Shade");
+//				}
+//
+//			}
+
+		});
+		addwork.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				if (count == 0) {
+
+					workType2.setVisibility(View.VISIBLE);
+					count++;
+				}
+
+				else if (count == 1) {
+
+					workType3.setVisibility(View.VISIBLE);
+					count++;
+				}
+
+				else if (count == 2) {
+					workType4.setVisibility(View.VISIBLE);
+					count++;
+				} else if (count == 3)
+					Toast.makeText(getApplicationContext(), "You can't add more than 3 Jobs", Toast.LENGTH_SHORT)
+					.show();
+
+			}
+		});
+
+	}
+
+	private Job prepareJob() {
+		Job job = new Job();
+		job.setDate(new Date());
+		job.setPatientName(patientName.getText().toString());
+		job.setShade(Integer.valueOf(shade.getText().toString()));
+		Person doctor = new Person();
+		doctor.setName(doctorName.getText().toString());
+		WorkType workType = new WorkType();
+		workType.setName(workType1.getText().toString());
+		job.setDoctor(doctor);
+		job.setWorkType(workType);
 		return job;
 	}
 
