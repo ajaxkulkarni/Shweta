@@ -1,10 +1,15 @@
 package com.rns.shwetalab.mobile;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +18,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,9 +32,12 @@ import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
-public class JobEntry extends Activity implements OnItemSelectedListener {
+public class JobEntry extends Activity implements OnItemSelectedListener,OnClickListener {
 
+	private EditText dateSelected;
+	private DatePickerDialog toDatePickerDialog;
 	Button addwork, jobentry;
+	private SimpleDateFormat dateFormatter;
 	EditText workType2, workType3, workType4;
 	int count = 0;
 	Spinner sp1, sp2;
@@ -43,13 +52,16 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_job_entry);
+		dateFormatter = new SimpleDateFormat(CommonUtil.DATE_FORMAT, Locale.US);
+		dateSelected = (EditText) findViewById(R.id.CurrentDateeditText);
+		setDateTimeField();
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
 		jobsDao = new JobsDao(getApplicationContext());
 		new WorkPersonMapDao(getApplicationContext());
 		prepareDoctorNames();
 		prepareWorkTypes();
-
+		
 		addwork = (Button) findViewById(R.id.jobentry_buttonadd);
 		jobentry = (Button) findViewById(R.id.jobentrybutton);
 		workType2 = (EditText) findViewById(R.id.jobentry_worktype1_editText);
@@ -116,6 +128,35 @@ public class JobEntry extends Activity implements OnItemSelectedListener {
 			}
 		});
 
+	}
+	
+	private void setDateTimeField() 
+	{
+		
+		SimpleDateFormat dfDate  = new SimpleDateFormat("dd-M-yyyy");   
+		Calendar c = Calendar.getInstance();
+		String date = dfDate.format(c.getTime());
+		dateSelected.setText(date); 
+
+		dateSelected.setOnClickListener(this);
+
+		Calendar newCalendar = Calendar.getInstance();
+		toDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				Calendar newDate = Calendar.getInstance();
+				newDate.set(year, monthOfYear, dayOfMonth);
+				dateSelected.setText(dateFormatter.format(newDate.getTime()));
+			}
+		}, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+		
+		
+		
+		
+	}
+
+	@Override
+	public void onClick(View view) {
+		toDatePickerDialog.show();
 	}
 
 	private Job prepareJob() {
