@@ -16,7 +16,7 @@ public class PersonDao {
 	private SQLiteDatabase personDb;
 	private DatabaseHelper personHelper;
 	private Context context;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.PERSON_NAME, DatabaseHelper.PERSON_EMAIL,DatabaseHelper.PERSON_TYPE };
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.PERSON_NAME, DatabaseHelper.PERSON_EMAIL, DatabaseHelper.PERSON_PHONE, DatabaseHelper.PERSON_TYPE };
 
 	public PersonDao(Context c) {
 		context = c;
@@ -104,7 +104,7 @@ public class PersonDao {
 	}
 
 	public String[] getDoctorNames() {
-		List<Person> persons = getAll();
+		List<Person> persons = getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
 		if (persons.size() == 0) {
 			return new String[0];
 		}
@@ -120,11 +120,6 @@ public class PersonDao {
 	public List<Person> getAll() {
 		openToWrite();
 		Cursor cursor = personDb.query(DatabaseHelper.PERSON_TABLE, cols, null, null, null, null, null);
-
-		/*
-		 * String selectQuery = "SELECT  * FROM " + DatabaseHelper.PERSON_TABLE;
-		 * openToRead(); Cursor cursor = personDb.rawQuery(selectQuery, null);
-		 */
 		Log.d(DatabaseHelper.DATABASE_NAME, "Records retreived:" + cursor.getCount());
 		return iteratePersonCursor(cursor);
 	}
@@ -138,6 +133,7 @@ public class PersonDao {
 				person.setName(cursor.getString(1));
 				person.setEmail(cursor.getString(2));
 				person.setPhone(cursor.getString(3));
+				person.setWorkType(cursor.getString(4));
 				persons.add(person);
 			} while (cursor.moveToNext());
 		}

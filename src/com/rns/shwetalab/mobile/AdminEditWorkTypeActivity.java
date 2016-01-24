@@ -7,8 +7,6 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,11 +18,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.rns.shwetalab.mobile.adapter.AdminEditWorkTypeAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
-import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -35,16 +31,12 @@ public class AdminEditWorkTypeActivity extends Activity {
 	private Button addWorkTypeButton;
 	private WorkTypeDao workTypeDao;
 	private WorkType work;
-	private JobsDao jobsDao;
-	private Job job;
-	private WorkPersonMap workPersonMap;
 	private PersonDao personDao;
 	private RadioButton lab, doctor;
 	private WorkPersonMapDao workpersonMapDao;
-	private ListView doctorsListView, labsListView;
+	private ListView personsListView, labsListView;
 	private List<WorkPersonMap> workPersonMaps;
-	private AdminEditWorkTypeAdapter doctorListAdapter;
-	private List<String> doctorAmounts = new ArrayList<String>();
+	private AdminEditWorkTypeAdapter personListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +50,9 @@ public class AdminEditWorkTypeActivity extends Activity {
 		addWorkTypeButton = (Button) findViewById(R.id.edit_worktype_activity_worktype_add_button);
 		doctor = (RadioButton) findViewById(R.id.editworktypeDoctorradioButton1);
 		lab = (RadioButton) findViewById(R.id.editworktypeLabradioButton2);
-		doctorsListView = (ListView) findViewById(R.id.editworktypedoctorlistView);
+		personsListView = (ListView) findViewById(R.id.editworktypedoctorlistView);
 		labsListView = (ListView) findViewById(R.id.editworktypelablistView);
-		defaultprice.setText("100");
-		prepareWorkPersonMaps();
-		doctorListAdapter = new AdminEditWorkTypeAdapter(this, workPersonMaps, doctorAmounts);
-		doctorsListView.setAdapter(doctorListAdapter);
+		preparePersonMaps();
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -91,10 +80,8 @@ public class AdminEditWorkTypeActivity extends Activity {
 		doctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
 				lab.setChecked(false);
-				labsListView.setVisibility(View.GONE);
-				doctorsListView.setVisibility(View.VISIBLE);
+				preparePersonMaps();
 			}
 		});
 
@@ -102,10 +89,15 @@ public class AdminEditWorkTypeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				doctor.setChecked(false);
-				doctorsListView.setVisibility(View.GONE);
-				labsListView.setVisibility(View.VISIBLE);
+				preparePersonMaps();
 			}
 		});
+	}
+
+	private void preparePersonMaps() {
+		prepareWorkPersonMaps();
+		personListAdapter = new AdminEditWorkTypeAdapter(this, workPersonMaps);
+		personsListView.setAdapter(personListAdapter);
 	}
 
 	private void prepareWorkPersonMaps() {
@@ -114,22 +106,42 @@ public class AdminEditWorkTypeActivity extends Activity {
 		work = new Gson().fromJson(data, WorkType.class);
 		workTypeEditText.setText(work.getName());
 		defaultprice.setText(work.getDefaultPrice().toString());
-		workPersonMaps = workpersonMapDao.getMapsForWorkType(work);
-		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
-		for (Person doctor : doctors) {
-			if (isDoctorPresent(doctor)) {
+		workPersonMaps = workpersonMapDao.getMapsForWorkType(work, getPersonType());
+		List<Person> persons = getPersonsByType();
+		for (Person person : persons) {
+			if (isPersonPresent(person)) {
 				continue;
 			}
 			WorkPersonMap map = new WorkPersonMap();
-			map.setPerson(doctor);
+			map.setPerson(person);
 			map.setWorkType(work);
 			workPersonMaps.add(map);
 		}
 	}
+	
+	private String getPersonType() {
+		if(lab.isChecked()) {
+			return CommonUtil.TYPE_LAB;
+		}
+		return CommonUtil.TYPE_DOCTOR;
+	}
 
-	private boolean isDoctorPresent(Person doctor) {
+	private List<Person> getPersonsByType() {
+		List<Person> persons = new ArrayList<Person>();
+		if (lab.isChecked()) {
+			persons = personDao.getAllPeopleByType(CommonUtil.TYPE_LAB);
+		} else {
+			persons = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+		}
+		return persons;
+	}
+
+	private boolean isPersonPresent(Person person) {
 		for (WorkPersonMap map : workPersonMaps) {
-			if (map.getPerson() != null && map.getPerson().getId() == doctor.getId()) {
+			if(map.getPerson() == null) {
+				return false;
+			}
+			if (map.getPerson().getId() == person.getId()) {
 				return true;
 			}
 		}
@@ -139,14 +151,14 @@ public class AdminEditWorkTypeActivity extends Activity {
 	private List<WorkPersonMap> prepareWorkPersonMapsList() {
 		List<WorkPersonMap> maps = new ArrayList<WorkPersonMap>();
 		View v;
-		List<Person> doctors = personDao.getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+		List<Person> doctors = getPersonsByType();
 		if (doctors == null || doctors.size() == 0) {
 			return null;
 		}
 		for (int i = 0; i < doctors.size(); i++) {
-			WorkPersonMap map = (WorkPersonMap) doctorsListView.getAdapter().getItem(i);
-			v = doctorsListView.getAdapter().getView(i, null, null);
-			v = doctorsListView.getChildAt(i);
+			WorkPersonMap map = (WorkPersonMap) personsListView.getAdapter().getItem(i);
+			v = personsListView.getAdapter().getView(i, null, null);
+			v = personsListView.getChildAt(i);
 			EditText editText = (EditText) v.findViewById(R.id.editwork_type_doctorlist_adapter_editText);
 			if (!TextUtils.isEmpty(editText.getText().toString())) {
 				map.setPrice(new BigDecimal(editText.getText().toString()));
@@ -162,5 +174,5 @@ public class AdminEditWorkTypeActivity extends Activity {
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}
 
-		
 	}
+}

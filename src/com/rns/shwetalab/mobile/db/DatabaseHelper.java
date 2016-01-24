@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String DATABASE_NAME = "DENTAL";
-	public static final int VERSION = 2;
+	public static final int VERSION = 3;
 	public static final String KEY_ID = "id";
 
 	public static final String PERSON_TABLE = "person";
@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_DATE = "job_date";
 	public static final String JOB_DOCTOR = "doctor_id";
 	public static final String JOB_WORK = "work_type_id";
+	public static final String JOB_PRICE = "price";
 
 	public static final String CREATE_TABLE_PERSON = "create table " + PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + PERSON_NAME + " text not null, " + PERSON_EMAIL
@@ -70,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("drop table " + WORKTYPE_PERSON_TABLE);
 		db.execSQL("drop table " + JOB_TABLE);
 		onCreate(db);*/
+		//db.execSQL("ALTER TABLE " + JOB_TABLE + " ADD COLUMN " + JOB_PRICE + " integer");
 		Log.d(DATABASE_NAME, "Upgrading the database from :" + oldVersion + " to :" + newVersion);
 	}
 

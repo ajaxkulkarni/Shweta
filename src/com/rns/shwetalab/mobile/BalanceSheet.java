@@ -1,5 +1,8 @@
 package com.rns.shwetalab.mobile;
 
+import java.math.BigDecimal;
+
+import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -14,33 +17,49 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class BalanceSheet extends Activity 
-{
-	TextView doctor_price,lab_price,doctor;
+public class BalanceSheet extends Activity {
+	TextView doctorPrice, labPrice, doctor, lab;
 	WorkType worktype;
 	WorkPersonMap workpersonmap;
 	private JobsDao jobsDao;
 	Button next;
+	private TextView totalPrice;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance_sheet);
 		jobsDao = new JobsDao(this);
 		Bundle extras = getIntent().getExtras();
 		final String month = extras.getString("Month");
-		doctor_price = (TextView)findViewById(R.id.activity_billingsheet_doctor_textView); 
-		doctor_price.setText(jobsDao.getDoctorIncomeForMonth(month).toString());
-		next = (Button)findViewById(R.id.balancesheet_submit_button);
-		doctor = (TextView)findViewById(R.id.activity_billingsheetdoctortextView);
+		doctorPrice = (TextView) findViewById(R.id.activity_billingsheet_doctor_textView);
+		BigDecimal gain = jobsDao.getIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
+		doctorPrice.setText(gain.toString());
+		labPrice = (TextView) findViewById(R.id.activity_billingsheetlab_textView);
+		BigDecimal labDues = jobsDao.getIncomeForMonth(month, CommonUtil.TYPE_LAB);
+		labPrice.setText(labDues.toString());
+		totalPrice = (TextView) findViewById(R.id.activity_billingsheettotal_textView);
+		totalPrice.setText(gain.subtract(labDues).toString());
+		next = (Button) findViewById(R.id.balancesheet_submit_button);
 
-		doctor.setOnClickListener(new OnClickListener()
-		{
+		doctor = (TextView) findViewById(R.id.activity_billingsheetdoctortextView);
+		doctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(BalanceSheet.this,DoctorMonthlyBalanceList.class);
-				i.putExtra("Month",month);
+				Intent i = new Intent(BalanceSheet.this, DoctorMonthlyBalanceList.class);
+				i.putExtra("Month", month);
+				i.putExtra("type", CommonUtil.TYPE_DOCTOR);
+				startActivity(i);
+			}
+		});
+
+		lab = (TextView) findViewById(R.id.activity_billingsheetlabtextView);
+		lab.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(BalanceSheet.this, DoctorMonthlyBalanceList.class);
+				i.putExtra("Month", month);
+				i.putExtra("type", CommonUtil.TYPE_LAB);
 				startActivity(i);
 			}
 		});
@@ -53,6 +72,7 @@ public class BalanceSheet extends Activity
 		getMenuInflater().inflate(R.menu.balance_sheet, menu);
 		return true;
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

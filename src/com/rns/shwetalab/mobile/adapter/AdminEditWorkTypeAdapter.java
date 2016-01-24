@@ -2,11 +2,6 @@ package com.rns.shwetalab.mobile.adapter;
 
 import java.util.List;
 
-import com.rns.shwetalab.mobile.AdminEditWorkTypeActivity;
-import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter.ViewHolder;
-import com.rns.shwetalab.mobile.domain.WorkPersonMap;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +10,21 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rns.shwetalab.mobile.AdminEditWorkTypeActivity;
+import com.rns.shwetalab.mobile.R;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+
 public class AdminEditWorkTypeAdapter extends BaseAdapter
 {
 
-	private List<String> amount;
 	private List<WorkPersonMap> workPersonMaps;
 	Activity context;
 	LayoutInflater inflater;
 
-	public AdminEditWorkTypeAdapter(AdminEditWorkTypeActivity adminEditWorkTypeActivity,
-			List<WorkPersonMap> workPersonMaps, List<String> doctorAmounts) 
+	public AdminEditWorkTypeAdapter(AdminEditWorkTypeActivity adminEditWorkTypeActivity,List<WorkPersonMap> workPersonMaps) 
 	{
 		this.context = adminEditWorkTypeActivity;
 		this.inflater = LayoutInflater.from(context);
-		this.amount = doctorAmounts;
 		this.workPersonMaps = workPersonMaps;
 	}
 

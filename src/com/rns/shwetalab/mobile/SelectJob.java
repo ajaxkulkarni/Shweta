@@ -1,5 +1,7 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +12,8 @@ import android.widget.Button;
 public class SelectJob extends Activity 
 {
 
-	Button add,view;
+	Button add,viewDentistJobs;
+	private Button viewLabsJobs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -30,11 +33,22 @@ public class SelectJob extends Activity
 		});
 
 
-		view.setOnClickListener(new OnClickListener() 
+		viewDentistJobs.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(SelectJob.this,AddDate.class);
+				i.putExtra("type", CommonUtil.TYPE_DOCTOR);
+				startActivity(i);
+			}
+		});
+		
+		viewLabsJobs.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(SelectJob.this,AddDate.class);
+				i.putExtra("type", CommonUtil.TYPE_LAB);
 				startActivity(i);
 			}
 		});
@@ -43,6 +57,8 @@ public class SelectJob extends Activity
 	private void init() 
 	{
 		add = (Button)findViewById(R.id.addjob_button);
-		view = (Button)findViewById(R.id.viewjob_button);
+		viewDentistJobs = (Button)findViewById(R.id.view_dentists_jobs_button);
+		viewLabsJobs = (Button)findViewById(R.id.view_labs_jobs_button);
+		
 	}
 }

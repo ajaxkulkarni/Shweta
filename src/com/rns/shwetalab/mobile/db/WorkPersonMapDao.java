@@ -47,9 +47,7 @@ public class WorkPersonMapDao {
 		for (WorkPersonMap map : list) {
 			insertDetails(map);
 		}
-
 		return 0;
-
 	}
 
 	public long insertDetails(WorkPersonMap map) {
@@ -85,7 +83,7 @@ public class WorkPersonMapDao {
 		openToWrite();
 		Cursor cursor = workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, null, null, null, null, null);
 		Log.d(DatabaseHelper.DATABASE_NAME, "Records retreived:" + cursor.getCount());
-		return iterateWorkTypes(cursor);
+		return iterateWorkPersonMaps(cursor);
 	}
 
 	public WorkPersonMap getWorkPersonMap(WorkPersonMap map) {
@@ -93,14 +91,14 @@ public class WorkPersonMapDao {
 			return null;
 		}
 		Cursor c = queryByMapping(map);
-		List<WorkPersonMap> workTypes = iterateWorkTypes(c);
+		List<WorkPersonMap> workTypes = iterateWorkPersonMaps(c);
 		if (workTypes == null || workTypes.size() == 0) {
 			return null;
 		}
 		return workTypes.get(0);
 	}
 
-	private List<WorkPersonMap> iterateWorkTypes(Cursor cursor) {
+	private List<WorkPersonMap> iterateWorkPersonMaps(Cursor cursor) {
 		List<WorkPersonMap> workPersonMaps = new ArrayList<WorkPersonMap>();
 		if (cursor.moveToFirst()) {
 			do {
@@ -124,14 +122,14 @@ public class WorkPersonMapDao {
 
 	private Cursor queryByWorkType(long workTypeId) {
 		openToWrite();
-		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + workTypeId, null, null, null, null);
+		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, DatabaseHelper.WORKTYPE_PERSON_WORK_ID + " = " + workTypeId, null, null, null, null);
 	}
 
 	public List<WorkPersonMap> getMapsForWorkType(WorkType workType) {
 		if (workType == null) {
 			return null;
 		}
-		return iterateWorkTypes(queryByWorkType(workType.getId()));
+		return iterateWorkPersonMaps(queryByWorkType(workType.getId()));
 	}
 
 	public long updateWorkPersonMaps(List<WorkPersonMap> workPersonMaps) {
@@ -167,6 +165,20 @@ public class WorkPersonMapDao {
 			contentValues.put(DatabaseHelper.WORKTYPE_PERSON_PRICE, map.getPrice().toString());
 		}
 		return contentValues;
+	}
+
+	public List<WorkPersonMap> getMapsForWorkType(WorkType work, String personType) {
+		if (work == null) {
+			return null;
+		}
+		List<WorkPersonMap> maps = iterateWorkPersonMaps(queryByWorkType(work.getId()));
+		List<WorkPersonMap> typeMaps = new ArrayList<WorkPersonMap>();
+		for (WorkPersonMap map : maps) {
+			if (map.getPerson() != null && map.getPerson().getWorkType()!=null && map.getPerson().getWorkType().equals(personType)) {
+				typeMaps.add(map);
+			}
+		}
+		return typeMaps;
 	}
 
 }

@@ -37,8 +37,7 @@ public class WorkTypeDao {
 		workTypeDb.close();
 	}
 
-	public long insertDetails(WorkType work) 
-	{
+	public long insertDetails(WorkType work) {
 
 		ContentValues contentValues = prepareContentValues(work);
 		openToWrite();
@@ -50,12 +49,11 @@ public class WorkTypeDao {
 	}
 
 	public long updateWorkType(WorkType workType) {
-		if(workType == null) {
+		if (workType == null) {
 			return -10;
 		}
 		openToWrite();
-		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.KEY_ID + " = ?",
-                new String[] { String.valueOf(workType.getId()) });
+		return workTypeDb.update(DatabaseHelper.WORKTYPE_TABLE, prepareContentValues(workType), DatabaseHelper.KEY_ID + " = ?", new String[] { String.valueOf(workType.getId()) });
 	}
 
 	private ContentValues prepareContentValues(WorkType work) {
@@ -103,14 +101,13 @@ public class WorkTypeDao {
 	private List<WorkType> iterateWorkTypes(Cursor cursor) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		if (cursor.moveToFirst()) {
-			do
-			{
+			do {
 				WorkType work = new WorkType();
 				work.setId(Integer.parseInt(cursor.getString(0)));
 				work.setName(cursor.getString(1));
 				work.setDefaultPrice(new BigDecimal(cursor.getString(2)));
 				workTypes.add(work);
-			}while (cursor.moveToNext());  
+			} while (cursor.moveToNext());
 		}
 
 		return workTypes;
@@ -118,7 +115,7 @@ public class WorkTypeDao {
 
 	public Cursor queryByName(String name) {
 		openToWrite();
-		return workTypeDb.query(DatabaseHelper.WORKTYPE_TABLE, cols, DatabaseHelper.WORKTYPE_NAME + " like '" + name + "'", null,null, null, null);
+		return workTypeDb.query(DatabaseHelper.WORKTYPE_TABLE, cols, DatabaseHelper.WORKTYPE_NAME + " like '" + name + "'", null, null, null, null);
 	}
 
 	public WorkType getWorkType(int id) {
@@ -132,7 +129,7 @@ public class WorkTypeDao {
 
 	private Cursor queryById(int id) {
 		openToWrite();
-		return workTypeDb.query(DatabaseHelper.WORKTYPE_TABLE, cols, DatabaseHelper.KEY_ID + " = " + id , null,null, null, null);
+		return workTypeDb.query(DatabaseHelper.WORKTYPE_TABLE, cols, DatabaseHelper.KEY_ID + " = " + id, null, null, null, null);
 	}
 
 }

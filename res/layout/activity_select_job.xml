@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
     <Button
@@ -11,6 +12,7 @@
         android:layout_above="@+id/viewjob_button"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/button"
@@ -18,7 +20,7 @@
         android:textColor="#FFF" />
 
     <Button
-        android:id="@+id/viewjob_button"
+        android:id="@+id/view_dentists_jobs_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -27,7 +29,20 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
-        android:text="View Job"
+        android:text="View Dentist Jobs"
+        android:textColor="#FFF" />
+    
+    <Button
+        android:id="@+id/view_labs_jobs_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button"
+        android:text="View Labs Jobs"
         android:textColor="#FFF" />
 
-</RelativeLayout>
+</LinearLayout>
