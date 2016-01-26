@@ -21,5 +21,8 @@
     <string name="title_activity_doctor__list__amount">Doctor_List_Amount</string>
     <string name="title_activity_edit_worktype">EditWorktype</string>
     <string name="title_activity_doctor_jobs">DoctorJobs</string>
+    <string name="title_activity_marketing_list">MarketingList</string>
+    <string name="title_activity_detail_marketing">DetailMarketing</string>
+    <string name="title_activity_marketing_person_details">MarketingPersonDetails</string>
 
 </resources>

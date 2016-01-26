@@ -100,6 +100,18 @@
             android:name=".DoctorJobs"
             android:label="@string/title_activity_doctor_jobs" >
         </activity>
+        <activity
+            android:name=".MarketingList"
+            android:label="@string/title_activity_marketing_list" >
+        </activity>
+        <activity
+            android:name=".DetailMarketing"
+            android:label="@string/title_activity_detail_marketing" >
+        </activity>
+        <activity
+            android:name=".MarketingPersonDetails"
+            android:label="@string/title_activity_marketing_person_details" >
+        </activity>
     </application>
 
 </manifest>

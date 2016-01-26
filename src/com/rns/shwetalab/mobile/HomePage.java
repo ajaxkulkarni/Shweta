@@ -27,16 +27,16 @@ public class HomePage extends Activity {
 		Button btn_admin = (Button) findViewById(R.id.btn_admin);
 
 		// Dashboard Messages button
-		Button btn_messages = (Button) findViewById(R.id.btn_marketing);
+		Button btn_marketing = (Button) findViewById(R.id.btn_marketing);
 
 		// Dashboard Places button
-		Button btn_places = (Button) findViewById(R.id.btn_dealer);
+		Button btn_dealer = (Button) findViewById(R.id.btn_dealer);
 
 		// Dashboard Events button
 		Button btn_bill = (Button) findViewById(R.id.btn_bill);
 
 		// Dashboard Photos button
-		Button btn_photos = (Button) findViewById(R.id.btn_settings);
+		Button btn_settings = (Button) findViewById(R.id.btn_settings);
 
 		/**
 		 * Handling all button click events
@@ -66,19 +66,18 @@ public class HomePage extends Activity {
 		});
 
 		// Listening Messages button click
-		btn_messages.setOnClickListener(new View.OnClickListener() {
+		btn_marketing.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
-				// Launching News Feed Screen
-				// Intent i = new Intent(getApplicationContext(),
-				// MessagesActivity.class);
-				// startActivity(i);
+				
+				Intent i = new Intent(HomePage.this,MarketingPersonDetails.class);
+				startActivity(i);
 			}
 		});
 
 		// Listening to Places button click
-		btn_places.setOnClickListener(new View.OnClickListener() {
+		btn_dealer.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
@@ -122,7 +121,7 @@ public class HomePage extends Activity {
 		});
 
 		// Listening to Photos button click
-		btn_photos.setOnClickListener(new View.OnClickListener() {
+		btn_settings.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
