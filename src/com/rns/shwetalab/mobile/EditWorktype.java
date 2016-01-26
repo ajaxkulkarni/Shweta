@@ -43,15 +43,9 @@ public class EditWorktype extends Activity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//				view = lv.getAdapter().getView(position, null, null);
-				//				view = lv.getChildAt(position);
-				//				TextView textView = (TextView) view.findViewById(R.id.worktypetextView);
-				//				TextView textView1 = (TextView) view.findViewById(R.id.worktypepricetextView);
 
 				Intent i = new Intent(EditWorktype.this, AdminEditWorkTypeActivity.class);
-				//i.putExtra("WorkType", textView.getText().toString());
 				i.putExtra("Data",new Gson().toJson(adapter.getItem(position)));
-				//i.putExtra("DefaultPrice", textView1.getText().toString());
 				startActivity(i);
 			}
 		});

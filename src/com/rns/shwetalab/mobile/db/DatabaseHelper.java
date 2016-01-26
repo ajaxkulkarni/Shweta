@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_JOB = "create table " + JOB_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer ," + JOB_WORK + " integer, "
-			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date)";
+			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE + " integer)";
 
 	public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);

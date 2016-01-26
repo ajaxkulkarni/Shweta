@@ -161,7 +161,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 
 	private Job prepareJob() {
 		Job job = new Job();
-		job.setDate(new Date());
+		job.setDate(CommonUtil.convertDate(dateSelected.getText().toString()));
 		job.setPatientName(patientName.getText().toString());
 		job.setShade(Integer.valueOf(shade.getText().toString()));
 		Person doctor = new Person();
