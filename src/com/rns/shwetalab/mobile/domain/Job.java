@@ -6,6 +6,7 @@ import java.util.Date;
 public class Job {
 	
 	private Integer id;
+	private Integer quadrent,position;
 	private String patientName;
 	private Integer shade;
 	private Date date;
@@ -14,6 +15,20 @@ public class Job {
 	private WorkPersonMap workPersonMap;
 	private BigDecimal price;
 	
+	
+	
+	public Integer getQuadrent() {
+		return quadrent;
+	}
+	public void setQuadrent(Integer quadrent) {
+		this.quadrent = quadrent;
+	}
+	public Integer getPosition() {
+		return position;
+	}
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
 	public WorkPersonMap getWorkPersonMap() {
 		return workPersonMap;
 	}

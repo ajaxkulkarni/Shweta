@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:background="#80CBC4"
             android:gravity="center"
-            android:padding="30dp" >
+            android:padding="20dp" >
 
             <TextView
                 android:id="@+id/jobentry_textView"
@@ -35,9 +35,10 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:ems="10"
-            android:gravity="center"
             android:drawableRight="@drawable/calender"
+            android:ems="10"
+            android:background="@drawable/rounded"
+            android:gravity="center"
             android:hint="Date"
             android:inputType="date" >
         </EditText>
@@ -67,9 +68,10 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Patient Name"
-            android:padding="15dp" />
+            android:padding="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +123,8 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:hint="Work Type"
-            android:padding="15dp"
+            android:background="@drawable/rounded"
+            android:padding="10dp"
             android:visibility="gone" />
 
         <EditText
@@ -131,9 +134,10 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Work Type"
-            android:padding="15dp"
+            android:padding="10dp"
             android:visibility="gone" />
 
         <EditText
@@ -142,10 +146,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/rounded"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:hint="Work Type"
-            android:padding="15dp"
+            android:padding="10dp"
             android:visibility="gone" />
 
         <LinearLayout
@@ -159,16 +164,20 @@
 
             <Spinner
                 android:id="@+id/spinner_quadrant"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/rounded"
                 android:padding="10dp" />
 
             <Spinner
                 android:id="@+id/spinner_position"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/rounded"
                 android:padding="10dp" />
         </LinearLayout>
 
@@ -179,22 +188,23 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Shade"
             android:inputType="number"
-            android:padding="15dp" />
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/jobentrybutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:background="#80CBC4"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="ADD"
             android:textColor="#fff"
             android:textSize="18sp"

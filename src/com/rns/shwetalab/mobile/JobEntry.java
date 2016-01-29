@@ -22,7 +22,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.PersonDao;
@@ -72,8 +71,21 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
 
-		spinner_quad(sp1);
-		spinner_position(sp2);
+		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position , android.R.layout.simple_spinner_item);
+
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		sp1.setAdapter(adapter);
+		
+		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Quadrent , android.R.layout.simple_spinner_item);
+
+		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		sp2.setAdapter(adapter1);
+		
+		//spinner_quad(sp1);
+		//spinner_position(sp2);
 
 		jobentry.setOnClickListener(new OnClickListener() {
 
@@ -163,6 +175,8 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		Job job = new Job();
 		job.setDate(CommonUtil.convertDate(dateSelected.getText().toString()));
 		job.setPatientName(patientName.getText().toString());
+		job.setPosition(sp1.getSelectedItemPosition());
+		job.setQuadrent(sp2.getSelectedItemPosition());
 		job.setShade(Integer.valueOf(shade.getText().toString()));
 		Person doctor = new Person();
 		doctor.setName(doctorName.getText().toString());
@@ -189,20 +203,22 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		doctorName.setAdapter(doctorNames);
 	}
 
-	private void spinner_quad(Spinner sp_docnm2) {
-
-		sp_docnm2.setPrompt("Quadrent");
-		sp_docnm2.setOnItemSelectedListener(this);
-		List<String> categories = new ArrayList<String>();
-		categories.add("1");
-		categories.add("2");
-		categories.add("3");
-		categories.add("4");
-
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
-
-		sp_docnm2.setAdapter(dataAdapter);
-	}
+//	private void spinner_quad(Spinner sp_docnm2) {
+//
+//		sp_docnm2.setPrompt("Quadrent");
+//		sp_docnm2.setOnItemSelectedListener(this);
+//		List<String> categories = new ArrayList<String>();
+//		categories.add("1");
+//		categories.add("2");
+//		categories.add("3");
+//		categories.add("4");
+//
+//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
+//
+//		sp_docnm2.setAdapter(dataAdapter);
+//	}
+	
+	
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -216,24 +232,24 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 
 	}
 
-	private void spinner_position(Spinner sp_docnm3) {
-
-		sp_docnm3.setOnItemSelectedListener(this);
-		sp_docnm3.setPrompt("Position");
-		List<String> categories = new ArrayList<String>();
-
-		categories.add("1");
-		categories.add("2");
-		categories.add("3");
-		categories.add("4");
-		categories.add("5");
-		categories.add("6");
-		categories.add("7");
-		categories.add("8");
-
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
-
-		sp_docnm3.setAdapter(dataAdapter);
-	}
+//	private void spinner_position(Spinner sp_docnm3) {
+//
+//		sp_docnm3.setOnItemSelectedListener(this);
+//		sp_docnm3.setPrompt("Position");
+//		List<String> categories = new ArrayList<String>();
+//
+//		categories.add("1");
+//		categories.add("2");
+//		categories.add("3");
+//		categories.add("4");
+//		categories.add("5");
+//		categories.add("6");
+//		categories.add("7");
+//		categories.add("8");
+//
+//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
+//
+//		sp_docnm3.setAdapter(dataAdapter);
+//	}
 
 }

@@ -26,7 +26,7 @@ public class JobsDao {
 	private Context context;
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE, DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR,
-			DatabaseHelper.JOB_WORK, DatabaseHelper.JOB_PRICE };
+			DatabaseHelper.JOB_WORK, DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT, DatabaseHelper.JOB_POSITION };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -60,7 +60,8 @@ public class JobsDao {
 			return -20;
 		}
 		job.setWorkType(workType);
-
+		job.setQuadrent(job.getQuadrent());
+		job.setPosition(job.getPosition());
 		WorkPersonMap map = new WorkPersonMap();
 		map.setWorkType(job.getWorkType());
 		map.setPerson(job.getDoctor());
@@ -71,6 +72,9 @@ public class JobsDao {
 		} else {
 			job.setPrice(job.getWorkType().getDefaultPrice());
 		}
+		
+		
+		
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
 		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
@@ -90,9 +94,12 @@ public class JobsDao {
 		contentValues.put(DatabaseHelper.JOB_DATE, CommonUtil.convertDate(job.getDate()));
 		contentValues.put(DatabaseHelper.JOB_DOCTOR, job.getDoctor().getId());
 		contentValues.put(DatabaseHelper.JOB_WORK, job.getWorkType().getId());
+		
 		if (job.getPrice() != null) {
 			contentValues.put(DatabaseHelper.JOB_PRICE, job.getPrice().toString());
 		}
+		contentValues.put(DatabaseHelper.JOB_QUADRENT, job.getQuadrent());
+		contentValues.put(DatabaseHelper.JOB_POSITION, job.getPosition());
 		return contentValues;
 	}
 
@@ -184,6 +191,8 @@ public class JobsDao {
 				WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
 				job.setWorkType(workType);
 				job.setPrice(new BigDecimal(cursor.getInt(6)));
+				job.setQuadrent(cursor.getInt(7));
+				job.setPosition(cursor.getInt(8));
 				jobs.add(job);
 			} while (cursor.moveToNext());
 		}

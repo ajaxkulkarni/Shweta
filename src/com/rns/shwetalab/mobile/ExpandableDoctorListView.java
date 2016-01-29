@@ -69,7 +69,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader.get(groupPosition), Toast.LENGTH_SHORT).show();
+			//	Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader.get(groupPosition), Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -78,7 +78,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
+			//	Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -86,7 +86,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Collapsed", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Collapsed", Toast.LENGTH_SHORT).show();
 
 			}
 		});
@@ -96,8 +96,8 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
+//						Toast.LENGTH_SHORT).show();
 
 				return false;
 			}
@@ -124,9 +124,14 @@ public class ExpandableDoctorListView extends Activity {
 			if (job.getPrice() != null) {
 				jobDetails.add("Price :" + job.getPrice().toString());
 			}
+			if (job.getQuadrent() != null) {
+				jobDetails.add("Tooth Quadrent :" + job.getQuadrent().toString());
+			}
+			if (job.getPosition() != null) {
+				jobDetails.add("Tooth Position :" + job.getPosition().toString());
+			}
 			listDataHeader.add(job.getDoctor().getName());
 			listDataChild.put(job.getDoctor().getName(), jobDetails);
 		}
 	}
-
 }

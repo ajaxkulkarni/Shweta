@@ -24,71 +24,61 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:padding="30dp"
+                android:padding="20dp"
                 android:text="ADD PERSON"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/add_person_activity_name_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded"
+            android:ems="10"
+            android:gravity="center"
+            android:hint=" Name "
+            android:padding="10dp"
+            android:textColor="@android:color/black" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/add_person_activity_email_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:padding="10dp" >
+            android:layout_weight="1"
+            android:background="@drawable/rounded"
+            android:ems="10"
+            android:gravity="center"
+            android:hint=" Email Id "
+            android:padding="10dp"
+            android:textColor="@android:color/black" >
+        </EditText>
 
-            <EditText
-                android:id="@+id/add_person_activity_name_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center"
-                android:hint=" Name "
-                android:padding="10dp"
-                android:textColor="@android:color/black" >
-            </EditText>
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/add_person_activity_phone_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <EditText
-                android:id="@+id/add_person_activity_email_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center"
-                android:hint=" Email Id "
-                android:padding="10dp"
-                android:textColor="@android:color/black" >
-            </EditText>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <EditText
-                android:id="@+id/add_person_activity_phone_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center"
-                android:hint=" Phone Number "
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textColor="@android:color/black" >
-            </EditText>
-        </LinearLayout>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded"
+            android:ems="10"
+            android:gravity="center"
+            android:hint=" Phone Number "
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textColor="@android:color/black" >
+        </EditText>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -102,20 +92,19 @@
                 android:layout_height="wrap_content" >
 
                 <RadioButton
-                    android:id="@+id/radio0"
+                    android:id="@+id/docotorradio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="Doctor" />
 
                 <RadioButton
-                    android:id="@+id/radio1"
+                    android:id="@+id/dealerradio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Dealer" />
 
                 <RadioButton
-                    android:id="@+id/radio2"
+                    android:id="@+id/labradio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Laboratory" />
@@ -129,9 +118,9 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="#CDDC39"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="ADD"
             android:textColor="#fff"
             android:textSize="20sp"

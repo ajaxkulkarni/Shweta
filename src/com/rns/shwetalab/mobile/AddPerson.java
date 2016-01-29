@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.PersonDao;
@@ -29,14 +30,22 @@ public class AddPerson extends Activity {
 		setContentView(R.layout.activity_add_person);
 		person = new Person();
 		personDao = new PersonDao(getApplicationContext());
-		doctor = (RadioButton) findViewById(R.id.radio0);
-		lab = (RadioButton) findViewById(R.id.radio1);
+		doctor = (RadioButton) findViewById(R.id.docotorradio);
+		lab = (RadioButton) findViewById(R.id.labradio);
 		addPersonButton = (Button) findViewById(R.id.add_person_activity_add_button);
 		addPersonButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				preparePerson();
+			public void onClick(View v) 
+			{
+
+				if(!(doctor.isChecked() || lab.isChecked()) )
+				{
+					Toast.makeText(AddPerson.this,"Please Select One Option!",Toast.LENGTH_SHORT).show();
+				}
+				else
+
+					preparePerson();
 				personDao.insertDetails(person);
 			}
 		});

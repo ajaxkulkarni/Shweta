@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
@@ -62,9 +63,9 @@ public class AdminAddWorkTypeActivity extends Activity {
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
-				validations();
+			public void onClick(View v) 
+			{
+			//	validations();
 				prepareWorkType();
 				long result = workTypeDao.insertDetails(work);
 				if (result < 0) {
@@ -75,20 +76,16 @@ public class AdminAddWorkTypeActivity extends Activity {
 				CommonUtil.showMessage(AdminAddWorkTypeActivity.this);
 			}
 
-			private boolean validations() {
-				if (TextUtils.isEmpty(workTypeEditText.getText())) {
-					workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
-					return false;
-				}
-				return true;
-			}
+			
 		});
 
+		
 		doctor.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				lab.setChecked(false);
+				doctor.setChecked(true);
 				preparePersonMaps();
 				// labsListView.setVisibility(View.GONE);
 				// doctorsListView.setVisibility(View.VISIBLE);
@@ -108,6 +105,18 @@ public class AdminAddWorkTypeActivity extends Activity {
 
 	}
 
+	
+	private boolean validations() 
+	{
+		
+		if (TextUtils.isEmpty(workTypeEditText.getText())) 
+		{
+			workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
+			return false;
+		}
+		return true;
+	}
+	
 	private void preparePersonMaps() {
 		prepareWorkPersonMaps();
 		personListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmount);
@@ -157,9 +166,14 @@ public class AdminAddWorkTypeActivity extends Activity {
 		return maps;
 	}
 
-	private void prepareWorkType() {
+	private void prepareWorkType() 
+	{
 		work = new WorkType();
-		work.setName(workTypeEditText.getText().toString());
+		if (!TextUtils.isEmpty(workTypeEditText.getText())) 
+		{
+			//workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
+			work.setName(workTypeEditText.getText().toString());	
+		}
 		if (!TextUtils.isEmpty(defaultprice.getText())) {
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}

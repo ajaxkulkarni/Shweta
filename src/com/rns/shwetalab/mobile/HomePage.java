@@ -124,11 +124,11 @@ public class HomePage extends Activity {
 		btn_settings.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View view) {
-				// Launching News Feed Screen
-				// Intent i = new Intent(getApplicationContext(),
-				// PhotosActivity.class);
-				// startActivity(i);
+			public void onClick(View view) 
+			{
+				Intent i = new Intent(HomePage.this, ExportDatabase.class);
+				startActivity(i);
+				
 			}
 		});
 

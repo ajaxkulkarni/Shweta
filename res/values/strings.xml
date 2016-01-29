@@ -24,5 +24,27 @@
     <string name="title_activity_marketing_list">MarketingList</string>
     <string name="title_activity_detail_marketing">DetailMarketing</string>
     <string name="title_activity_marketing_person_details">MarketingPersonDetails</string>
+    <string name="title_activity_export_database">ExportDatabase</string>
 
+    <string-array name="Quadrent">
+        <item>Select Quadrent</item> 
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+	</string-array>
+
+        <string-array name="Position">
+        <item>Select Position</item>    
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+	</string-array>
+    
+    
 </resources>
