@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="30dp"
+            android:padding="20dp"
             android:text=" BALANCESHEET "
             android:textColor="@android:color/white"
             android:textSize="18sp"

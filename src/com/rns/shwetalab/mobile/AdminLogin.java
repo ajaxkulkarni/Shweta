@@ -1,9 +1,10 @@
 package com.rns.shwetalab.mobile;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,24 +17,21 @@ public class AdminLogin extends Activity {
 	Button login;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("sdsd","qwqw");
+		Log.d("sdsd", "qwqw");
 		setContentView(R.layout.activity_admin_login);
-
-
+//		ActionBar bar = getActionBar();
+//		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#96281b")));
 		login = (Button) findViewById(R.id.Loginbutton);
 		login.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
-				Intent i = new Intent(AdminLogin.this,AddPersonWork.class);
+			public void onClick(View v) {
+				Intent i = new Intent(AdminLogin.this, AddPersonWork.class);
 				startActivity(i);
 
 			}
 		});
-
 
 	}
 

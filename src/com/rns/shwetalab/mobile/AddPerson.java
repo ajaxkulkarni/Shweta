@@ -2,6 +2,7 @@ package com.rns.shwetalab.mobile;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ public class AddPerson extends Activity {
 	private Button addPersonButton;
 	private Person person;
 	private EditText nameEditText, emailEditText, phoneEditText;
-	private RadioButton doctor, lab;
+	private RadioButton doctor, lab, dealer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +33,16 @@ public class AddPerson extends Activity {
 		personDao = new PersonDao(getApplicationContext());
 		doctor = (RadioButton) findViewById(R.id.docotorradio);
 		lab = (RadioButton) findViewById(R.id.labradio);
+		dealer = (RadioButton) findViewById(R.id.dealerradio);
 		addPersonButton = (Button) findViewById(R.id.add_person_activity_add_button);
 		addPersonButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{
-
-				if(!(doctor.isChecked() || lab.isChecked()) )
-				{
-					Toast.makeText(AddPerson.this,"Please Select One Option!",Toast.LENGTH_SHORT).show();
-				}
-				else
-
-					preparePerson();
+			public void onClick(View v) {
+				preparePerson();
+				validate();
 				personDao.insertDetails(person);
+				CommonUtil.showMessage(AddPerson.this);
 			}
 		});
 
@@ -58,20 +54,17 @@ public class AddPerson extends Activity {
 			}
 		});
 		lab.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				person.setWorkType(CommonUtil.TYPE_LAB);
 			}
 		});
-
 	}
 
 	private void preparePerson() {
 		nameEditText = (EditText) findViewById(R.id.add_person_activity_name_editText);
 		emailEditText = (EditText) findViewById(R.id.add_person_activity_email_editText);
 		phoneEditText = (EditText) findViewById(R.id.add_person_activity_phone_editText);
-		validate();
 		person.setName(nameEditText.getText().toString());
 		person.setEmail(emailEditText.getText().toString());
 		person.setPhone(phoneEditText.getText().toString());
@@ -79,36 +72,18 @@ public class AddPerson extends Activity {
 
 	private void validate() {
 		if (TextUtils.isEmpty(nameEditText.getText())) {
-			nameEditText.setError("");
+			nameEditText.setError(Html.fromHtml("<font color='black'>Enter Name</font>"));
 		}
 		if (TextUtils.isEmpty(emailEditText.getText())) {
-			emailEditText.setError("");
+			emailEditText.setError(Html.fromHtml("<font color='black'>Enter Name</font>"));
 		}
 		if (TextUtils.isEmpty(nameEditText.getText())) {
-			phoneEditText.setError("");
+			phoneEditText.setError(Html.fromHtml("<font color='black'>Enter Phone</font>"));
 		}
-		if (person.getWorkType() == null) {
-			CommonUtil.showError(this, "Please select person type!");
-		} else
-			CommonUtil.showMessage(this);
+		if (!(doctor.isChecked() || lab.isChecked() || dealer.isChecked())) {
+			Toast.makeText(AddPerson.this, "Please Select One Option!", Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.add_person, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 }

@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#64DD17"
+            android:background="#26A69A"
             android:orientation="horizontal" >
 
             <TextView
@@ -36,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
             android:background="@drawable/button"
             android:text="Export Data"
+            android:padding="10dp" 
             android:textColor="@android:color/white" />
 
         <Button
@@ -50,6 +51,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
             android:text="Import Data"
+            android:padding="10dp"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

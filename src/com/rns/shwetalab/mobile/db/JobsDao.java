@@ -73,8 +73,6 @@ public class JobsDao {
 			job.setPrice(job.getWorkType().getDefaultPrice());
 		}
 		
-		
-		
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
 		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
@@ -94,7 +92,6 @@ public class JobsDao {
 		contentValues.put(DatabaseHelper.JOB_DATE, CommonUtil.convertDate(job.getDate()));
 		contentValues.put(DatabaseHelper.JOB_DOCTOR, job.getDoctor().getId());
 		contentValues.put(DatabaseHelper.JOB_WORK, job.getWorkType().getId());
-		
 		if (job.getPrice() != null) {
 			contentValues.put(DatabaseHelper.JOB_PRICE, job.getPrice().toString());
 		}

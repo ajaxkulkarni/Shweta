@@ -13,6 +13,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
+        android:padding="10dp"
         android:text="Add Expense"
         android:textColor="#FFF" />
 
@@ -25,6 +26,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/button"
+        android:padding="10dp"
         android:text="View Balance"
         android:textColor="#FFF" />
 

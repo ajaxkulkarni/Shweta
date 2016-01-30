@@ -25,6 +25,7 @@ public class SplashScreen extends Activity {
 				}
 				Intent i = new Intent(SplashScreen.this, HomePage.class);
 				startActivity(i);
+				finish();
 			}
 		};
 		th.start();	

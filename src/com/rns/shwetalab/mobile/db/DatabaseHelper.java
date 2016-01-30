@@ -36,6 +36,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_PRICE = "price";
 	public static final String JOB_QUADRENT = "quadrent";
 	public static final String JOB_POSITION = "position";
+	
+	
+	
 
 	public static final String CREATE_TABLE_PERSON = "create table " + PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + PERSON_NAME + " text not null, " + PERSON_EMAIL
