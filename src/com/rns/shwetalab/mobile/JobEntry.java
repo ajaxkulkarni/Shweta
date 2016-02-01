@@ -37,12 +37,12 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 	private DatePickerDialog toDatePickerDialog;
 	Button addwork, jobentry;
 	private SimpleDateFormat dateFormatter;
-	EditText workType2, workType3, workType4;
+	
 	int count = 0;
 	Spinner sp1, sp2;
 	private AutoCompleteTextView doctorName;
 	private PersonDao personDao;
-	private AutoCompleteTextView workType1;
+	private AutoCompleteTextView workType1,workType2, workType3,workType4;
 	private WorkTypeDao workTypeDao;
 	private JobsDao jobsDao;
 	private EditText patientName, shade;
@@ -63,9 +63,9 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		
 		addwork = (Button) findViewById(R.id.jobentry_buttonadd);
 		jobentry = (Button) findViewById(R.id.jobentrybutton);
-		workType2 = (EditText) findViewById(R.id.jobentry_worktype1_editText);
-		workType3 = (EditText) findViewById(R.id.jobentry_worktype2_editText);
-		workType4 = (EditText) findViewById(R.id.jobentry_worktype3_editText);
+	//	workType2 = (EditText) findViewById(R.id.jobentry_worktype1_editText);
+	//	workType3 = (EditText) findViewById(R.id.jobentry_worktype2_editText);
+		//workType4 = (EditText) findViewById(R.id.jobentry_worktype3_editText);
 		sp1 = (Spinner) findViewById(R.id.spinner_position);
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
@@ -182,6 +182,9 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		doctor.setName(doctorName.getText().toString());
 		WorkType workType = new WorkType();
 		workType.setName(workType1.getText().toString());
+		workType.setName(workType2.getText().toString());
+		workType.setName(workType3.getText().toString());
+		
 		job.setDoctor(doctor);
 		job.setWorkType(workType);
 		return job;
@@ -190,9 +193,18 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 
 	private void prepareWorkTypes() {
 		workType1 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype_autocomplete);
+		workType2 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype1_editText);
+		workType3 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype2_editText);
+		workType4 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype3_editText); 
 		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_dropdown_item_1line, workTypeDao.getWorkTypeNames());
 		workType1.setThreshold(1);
+		workType2.setThreshold(1);
+		workType3.setThreshold(1);
+		workType4.setThreshold(1);
 		workType1.setAdapter(doctorNames);
+		workType2.setAdapter(doctorNames);
+		workType3.setAdapter(doctorNames);
+		workType4.setAdapter(doctorNames);
 
 	}
 

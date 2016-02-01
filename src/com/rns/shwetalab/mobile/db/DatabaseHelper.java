@@ -36,9 +36,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_PRICE = "price";
 	public static final String JOB_QUADRENT = "quadrent";
 	public static final String JOB_POSITION = "position";
+
+	public static final String JOB_WORKTYPES_TABLE = "worktypes_table";
+	public static final String JOB_ID = "job_id";
+	public static final String WORKTYPE_ID = "worktype_id";
 	
 	
 	
+	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
+			+ " integer primary key autoincrement, " + JOB_ID + " text not null, " + WORKTYPE_ID + " text not null)";
 
 	public static final String CREATE_TABLE_PERSON = "create table " + PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + PERSON_NAME + " text not null, " + PERSON_EMAIL
@@ -54,7 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_JOB = "create table " + JOB_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer ," + JOB_WORK + " integer, "
-			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE + " integer," + JOB_QUADRENT + " integer," + JOB_POSITION + " integer)";
+			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE
+			+ " integer," + JOB_QUADRENT + " integer," + JOB_POSITION + " integer)";
 
 	public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
@@ -71,12 +78,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		/*db.execSQL("drop table " + PERSON_TABLE);
-		db.execSQL("drop table " + WORKTYPE_TABLE);
-		db.execSQL("drop table " + WORKTYPE_PERSON_TABLE);
-		db.execSQL("drop table " + JOB_TABLE);
-		onCreate(db);*/
-		//db.execSQL("ALTER TABLE " + JOB_TABLE + " ADD COLUMN " + JOB_PRICE + " integer");
+		/*
+		 * db.execSQL("drop table " + PERSON_TABLE); db.execSQL("drop table " +
+		 * WORKTYPE_TABLE); db.execSQL("drop table " + WORKTYPE_PERSON_TABLE);
+		 * db.execSQL("drop table " + JOB_TABLE); onCreate(db);
+		 */
+		// db.execSQL("ALTER TABLE " + JOB_TABLE + " ADD COLUMN " + JOB_PRICE +
+		// " integer");
 		Log.d(DATABASE_NAME, "Upgrading the database from :" + oldVersion + " to :" + newVersion);
 	}
 

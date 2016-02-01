@@ -57,18 +57,6 @@ public class HomePage extends Activity {
 
 			@Override
 			public void onClick(View view) {
-//				AlertDialog.Builder alert = new AlertDialog.Builder(HomePage.this);
-//				alert.setTitle("Select Your Option:");
-//				alert.setPositiveButton("Add Job",
-//						new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface arg0, int arg1) {
-//					}
-//				});
-//				alert.setNegativeButton("View Job", new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface arg0, int arg1) {
-//					}
-//				});
-//				alert.show();
 			}
 		});
 

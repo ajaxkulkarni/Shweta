@@ -114,7 +114,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/jobentry_worktype1_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             android:padding="10dp"
             android:visibility="gone" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/jobentry_worktype2_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
             android:padding="10dp"
             android:visibility="gone" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/jobentry_worktype3_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

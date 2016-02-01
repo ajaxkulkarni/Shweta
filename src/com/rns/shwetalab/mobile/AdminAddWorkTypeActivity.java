@@ -75,8 +75,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 				workpersonMapDao.insertDetails(prepareWorkPersonMapsList());
 				CommonUtil.showMessage(AdminAddWorkTypeActivity.this);
 			}
-
-			
 		});
 
 		
@@ -179,19 +177,4 @@ public class AdminAddWorkTypeActivity extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.admin_add_work_type, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 }
