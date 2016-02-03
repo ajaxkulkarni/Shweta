@@ -23,6 +23,7 @@ public class JobsDao {
 	private PersonDao personDao;
 	private WorkTypeDao workTypeDao;
 	private WorkPersonMapDao workPersonMapDao;
+	private JobWorkTypeMapDao jobWorkTypeMapDao;
 	private Context context;
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE, DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR,
@@ -33,6 +34,7 @@ public class JobsDao {
 		personDao = new PersonDao(context);
 		workTypeDao = new WorkTypeDao(context);
 		workPersonMapDao = new WorkPersonMapDao(context);
+		jobWorkTypeMapDao = new JobWorkTypeMapDao(context);
 	}
 
 	public void openToRead() {
@@ -55,13 +57,12 @@ public class JobsDao {
 			return -10;
 		}
 		job.setDoctor(doctor);
-		WorkType workType = workTypeDao.getWorkType(job.getWorkType());
-		if (workType == null) {
-			return -20;
-		}
-		job.setWorkType(workType);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
+		//insert job-worktype mappings into table first
+		jobWorkTypeMapDao.insertDetails(job);
+		
+		//TODO :Calculate the price based on addition of list of worktypes prices
 		WorkPersonMap map = new WorkPersonMap();
 		map.setWorkType(job.getWorkType());
 		map.setPerson(job.getDoctor());
@@ -72,15 +73,9 @@ public class JobsDao {
 		} else {
 			job.setPrice(job.getWorkType().getDefaultPrice());
 		}
-		
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
-		
-			jobsDb.insert(DatabaseHelper.JOB_WORKTYPES_TABLE,null,getWorkType(job) );
-		
-		
-		
-		
+		jobsDb.insert(DatabaseHelper.JOB_WORKTYPES_TABLE,null,getWorkType(job) );
 		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
 		if (labJob != null) {
 			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
@@ -90,6 +85,7 @@ public class JobsDao {
 		return val;
 
 	}
+
 
 	private ContentValues getWorkType(Job job) 
 	{

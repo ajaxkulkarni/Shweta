@@ -2,6 +2,7 @@ package com.rns.shwetalab.mobile.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Job {
 	
@@ -11,7 +12,7 @@ public class Job {
 	private Integer shade;
 	private Date date;
 	private Person doctor;
-	private WorkType workType;
+	private List<WorkType> workTypes;
 	private WorkPersonMap workPersonMap;
 	private BigDecimal price;
 	
@@ -66,11 +67,11 @@ public class Job {
 	public void setDoctor(Person doctor) {
 		this.doctor = doctor;
 	}
-	public WorkType getWorkType() {
-		return workType;
+	public List<WorkType> getWorkTypes() {
+		return workTypes;
 	}
-	public void setWorkType(WorkType workType) {
-		this.workType = workType;
+	public void setWorkTypes(List<WorkType> workTypes) {
+		this.workTypes = workTypes;
 	}
 	public BigDecimal getPrice() {
 		return price;

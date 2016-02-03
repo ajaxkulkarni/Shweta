@@ -180,17 +180,19 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		job.setShade(Integer.valueOf(shade.getText().toString()));
 		Person doctor = new Person();
 		doctor.setName(doctorName.getText().toString());
-		WorkType workType = new WorkType();
-		
-		workType.setName(workType1.getText().toString());
-//		workType.setName(workType2.getText().toString());
-//		workType.setName(workType3.getText().toString());
-		
 		job.setDoctor(doctor);
-			job.setWorkType(workType);
-	
+		prepareWorkTypes(job);
 		return job;
 
+	}
+
+	private void prepareWorkTypes(Job job) {
+		List<WorkType> workTypes = new ArrayList<WorkType>();
+		WorkType work1 = new WorkType();
+		work1.setName(workType1.getText().toString());
+		workTypes.add(work1);
+		//TODO: Check if empty and if not, add other 2 worktypes in this list
+		job.setWorkTypes(workTypes);
 	}
 
 	private void prepareWorkTypes() {
