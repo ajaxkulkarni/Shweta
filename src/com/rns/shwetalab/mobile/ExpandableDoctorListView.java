@@ -16,6 +16,8 @@ import com.rns.shwetalab.mobile.db.DatabaseHelper;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
 /**
  * Created by Rajesh on 8/28/2015.
@@ -118,8 +120,10 @@ public class ExpandableDoctorListView extends Activity {
 			if (job.getShade() != null) {
 				jobDetails.add("Shade :" + job.getShade().toString());
 			}
-			if (job.getWorkType() != null) {
-				jobDetails.add("Work :" + job.getWorkType().getName());
+			if (job.getWorkTypes() != null) 
+			{
+				
+				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
 			}
 			if (job.getPrice() != null) {
 				jobDetails.add("Price :" + job.getPrice().toString());

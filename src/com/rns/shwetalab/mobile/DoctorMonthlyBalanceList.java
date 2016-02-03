@@ -38,7 +38,7 @@ public class DoctorMonthlyBalanceList extends Activity {
 		List<Job> jobs = jobsDao.getJobsByMonth(month);
 		BigDecimal total = BigDecimal.ZERO;
 		for (Job job : jobs) {
-			if (job.getDoctor() == null || job.getWorkType() == null || job.getPrice() == null || !personType.equals(job.getDoctor().getWorkType())) {
+			if (job.getDoctor() == null || job.getWorkTypes() == null || job.getPrice() == null || !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
 			if (map.get(job.getDoctor().getName()) == null) {

@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_SHADE = "shade";
 	public static final String JOB_DATE = "job_date";
 	public static final String JOB_DOCTOR = "doctor_id";
-	public static final String JOB_WORK = "work_type_id";
 	public static final String JOB_PRICE = "price";
 	public static final String JOB_QUADRENT = "quadrent";
 	public static final String JOB_POSITION = "position";
@@ -59,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ WORKTYPE_PERSON_WORK_ID + " integer, " + WORKTYPE_PERSON_PRICE + " decimal)";
 
 	public static final String CREATE_TABLE_JOB = "create table " + JOB_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer ," + JOB_WORK + " integer, "
+			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer , "
 			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE
 			+ " integer," + JOB_QUADRENT + " integer," + JOB_POSITION + " integer)";
 

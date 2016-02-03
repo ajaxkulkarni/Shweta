@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -189,8 +190,15 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 	private void prepareWorkTypes(Job job) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		WorkType work1 = new WorkType();
+		WorkType work2 = new WorkType();
+		WorkType work3 = new WorkType();
 		work1.setName(workType1.getText().toString());
+		work2.setName(workType2.getText().toString());
 		workTypes.add(work1);
+		if(!TextUtils.isEmpty(work2.toString()))
+		{
+			workTypes.add(work2);
+		}
 		//TODO: Check if empty and if not, add other 2 worktypes in this list
 		job.setWorkTypes(workTypes);
 	}
