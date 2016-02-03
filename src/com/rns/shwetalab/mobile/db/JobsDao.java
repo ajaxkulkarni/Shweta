@@ -75,6 +75,12 @@ public class JobsDao {
 		
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
+		
+			jobsDb.insert(DatabaseHelper.JOB_WORKTYPES_TABLE,null,getWorkType(job) );
+		
+		
+		
+		
 		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
 		if (labJob != null) {
 			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
@@ -83,6 +89,18 @@ public class JobsDao {
 		Close();
 		return val;
 
+	}
+
+	private ContentValues getWorkType(Job job) 
+	{
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(DatabaseHelper.JOB_ID, job.getId());
+//		WorkType type  = new WorkType();
+		for(int i=0;i<job.getWorkType().getId();i++)
+		{
+			contentValues.put(DatabaseHelper.WORKTYPE_ID,job.getWorkType().toString());
+		}
+		return null;
 	}
 
 	private ContentValues prepareContentValues(Job job) {

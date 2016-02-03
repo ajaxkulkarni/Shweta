@@ -181,12 +181,14 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		Person doctor = new Person();
 		doctor.setName(doctorName.getText().toString());
 		WorkType workType = new WorkType();
+		
 		workType.setName(workType1.getText().toString());
-		workType.setName(workType2.getText().toString());
-		workType.setName(workType3.getText().toString());
+//		workType.setName(workType2.getText().toString());
+//		workType.setName(workType3.getText().toString());
 		
 		job.setDoctor(doctor);
-		job.setWorkType(workType);
+			job.setWorkType(workType);
+	
 		return job;
 
 	}
