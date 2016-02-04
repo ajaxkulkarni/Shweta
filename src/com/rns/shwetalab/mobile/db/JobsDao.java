@@ -53,7 +53,8 @@ public class JobsDao {
 		jobsDb.close();
 	}
 
-	public long insertDetails(Job job) {
+	public long insertDetails(Job job) 
+	{
 		Person doctor = personDao.getPerson(job.getDoctor());
 		if (doctor == null) {
 			return -10;
@@ -61,37 +62,39 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
-		// insert job-worktype mappings into table first
-		jobWorkTypeMapDao.insertDetails(job);
+		job.setWorkTypes(job.getWorkTypes());
+
 		// TODO :Calculate the price based on addition of list of worktypes
-		// prices
 		WorkPersonMap map = new WorkPersonMap();
 		for (int i = 0; i < job.getWorkTypes().size(); i++) {
 			map.setWorkType(job.getWorkTypes().get(i));
 		}
 		map.setPerson(job.getDoctor());
 		map = workPersonMapDao.getWorkPersonMap(map);
-		// job.setWorkPersonMap(workPersonMapDao.(cursor.getInt(6)));
 		if (map != null) {
 			for (int i = 0; i < job.getWorkTypes().size(); i++) {
 				total = total.add(job.getPrice());
 			}
 			job.setPrice(total);
-		} else {
+		} 
+		else 
+		{
 			for (int i = 0; i < job.getWorkTypes().size(); i++) {
-				total = total.add(workType.getDefaultPrice());
-				job.setPrice(total);
-				//job.setPrice(new BigDecimal(workType.getDefaultPrice().toString()));
+				//	total = total.add(new BigDecimal(job.getWorkTypes().getDefaultPrice()));
+				//	job.setPrice(total);
+			//	job.setPrice(new BigDecimal("100"));
+				job.setPrice(new BigDecimal(workType.getDefaultPrice().toString()));
 			}
 		}
+
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
 
-		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
-		if (labJob != null) {
-			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
-		}
-		Log.d(DatabaseHelper.DATABASE_NAME, "Job inserted!! Result :" + val);
+		//		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
+		//		if (labJob != null) {
+		//			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
+		//		}
+		//		Log.d(DatabaseHelper.DATABASE_NAME, "Job inserted!! Result :" + val);
 		Close();
 		return val;
 
@@ -146,12 +149,18 @@ public class JobsDao {
 		return names;
 	}
 
-	public List<Job> getJobsByDate(String date, String personType) {
+	public List<Job> getJobsByDate(String date, String personType) 
+	{
+		Job job1 = new Job();
+
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
+		jobWorkTypeMapDao.insertDetails(job1);
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
 			if (job.getDoctor() != null && personType.equals(job.getDoctor().getWorkType())) {
 				jobsByType.add(job);
+
+
 			}
 		}
 		return jobsByType;
@@ -202,14 +211,17 @@ public class JobsDao {
 				job.setShade(cursor.getInt(3));
 				Person person = personDao.getPerson(cursor.getInt(4));
 				job.setDoctor(person);
-				WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
-				for (int i = 0; i < job.getWorkTypes().size(); i++) {
-					job.setWorkTypes(job.getWorkTypes());
-				}
-				job.setPrice(new BigDecimal(cursor.getInt(6)));
-				job.setQuadrent(cursor.getInt(7));
-				job.setPosition(cursor.getInt(8));
+				//	WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
+				//for (int i = 0; i < job.getWorkTypes(); i++) {
+				//		job.setWorkTypes(job.getWorkTypes());
+				//	}
+				job.setPrice(new BigDecimal(cursor.getInt(5)));
+				job.setQuadrent(cursor.getInt(6));
+				job.setPosition(cursor.getInt(7));
+				//job.setWorkTypes(workType.getId().toString());
 				jobs.add(job);
+				job.setWorkTypes(job.getWorkTypes());
+				jobWorkTypeMapDao.insertDetails(job);
 			} while (cursor.moveToNext());
 		}
 

@@ -193,12 +193,12 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		WorkType work2 = new WorkType();
 		WorkType work3 = new WorkType();
 		work1.setName(workType1.getText().toString());
-		work2.setName(workType2.getText().toString());
+		//work2.setName(workType2.getText().toString());
 		workTypes.add(work1);
-		if(!TextUtils.isEmpty(work2.toString()))
-		{
-			workTypes.add(work2);
-		}
+//		if(!TextUtils.isEmpty(work2.toString()))
+//		{
+//			workTypes.add(work2);
+//		}
 		//TODO: Check if empty and if not, add other 2 worktypes in this list
 		job.setWorkTypes(workTypes);
 	}
