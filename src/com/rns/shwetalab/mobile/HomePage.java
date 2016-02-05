@@ -57,6 +57,8 @@ public class HomePage extends Activity {
 
 			@Override
 			public void onClick(View view) {
+				Intent i = new Intent(HomePage.this, AddViewDealer.class);
+				startActivity(i);
 			}
 		});
 

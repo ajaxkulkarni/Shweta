@@ -62,7 +62,6 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
-		job.setWorkTypes(job.getWorkTypes());
 
 		// TODO :Calculate the price based on addition of list of worktypes
 		WorkPersonMap map = new WorkPersonMap();
@@ -71,7 +70,7 @@ public class JobsDao {
 		}
 		map.setPerson(job.getDoctor());
 		map = workPersonMapDao.getWorkPersonMap(map);
-		if (map != null) {
+		if(map != null){
 			for (int i = 0; i < job.getWorkTypes().size(); i++) {
 				total = total.add(job.getPrice());
 			}
@@ -82,8 +81,8 @@ public class JobsDao {
 			for (int i = 0; i < job.getWorkTypes().size(); i++) {
 				//	total = total.add(new BigDecimal(job.getWorkTypes().getDefaultPrice()));
 				//	job.setPrice(total);
-			//	job.setPrice(new BigDecimal("100"));
-				job.setPrice(new BigDecimal(workType.getDefaultPrice().toString()));
+				job.setPrice(new BigDecimal("100"));
+				//	job.setPrice(new BigDecimal(workType.getDefaultPrice().toString()));
 			}
 		}
 
@@ -151,16 +150,11 @@ public class JobsDao {
 
 	public List<Job> getJobsByDate(String date, String personType) 
 	{
-		Job job1 = new Job();
-
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
-		jobWorkTypeMapDao.insertDetails(job1);
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
 			if (job.getDoctor() != null && personType.equals(job.getDoctor().getWorkType())) {
 				jobsByType.add(job);
-
-
 			}
 		}
 		return jobsByType;
@@ -218,13 +212,10 @@ public class JobsDao {
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));
-				//job.setWorkTypes(workType.getId().toString());
-				jobs.add(job);
 				job.setWorkTypes(job.getWorkTypes());
 				jobWorkTypeMapDao.insertDetails(job);
 			} while (cursor.moveToNext());
 		}
-
 		return jobs;
 	}
 

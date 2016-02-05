@@ -190,8 +190,6 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 	private void prepareWorkTypes(Job job) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		WorkType work1 = new WorkType();
-		WorkType work2 = new WorkType();
-		WorkType work3 = new WorkType();
 		work1.setName(workType1.getText().toString());
 		//work2.setName(workType2.getText().toString());
 		workTypes.add(work1);
@@ -227,22 +225,6 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		doctorName.setAdapter(doctorNames);
 	}
 
-//	private void spinner_quad(Spinner sp_docnm2) {
-//
-//		sp_docnm2.setPrompt("Quadrent");
-//		sp_docnm2.setOnItemSelectedListener(this);
-//		List<String> categories = new ArrayList<String>();
-//		categories.add("1");
-//		categories.add("2");
-//		categories.add("3");
-//		categories.add("4");
-//
-//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
-//
-//		sp_docnm2.setAdapter(dataAdapter);
-//	}
-	
-	
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -256,24 +238,6 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 
 	}
 
-//	private void spinner_position(Spinner sp_docnm3) {
-//
-//		sp_docnm3.setOnItemSelectedListener(this);
-//		sp_docnm3.setPrompt("Position");
-//		List<String> categories = new ArrayList<String>();
-//
-//		categories.add("1");
-//		categories.add("2");
-//		categories.add("3");
-//		categories.add("4");
-//		categories.add("5");
-//		categories.add("6");
-//		categories.add("7");
-//		categories.add("8");
-//
-//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_spinner_item, categories);
-//
-//		sp_docnm3.setAdapter(dataAdapter);
-//	}
+
 
 }

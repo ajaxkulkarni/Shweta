@@ -8,8 +8,8 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
-     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -117,6 +117,26 @@
         <activity
             android:name=".ExportDatabase"
             android:label="@string/title_activity_export_database" >
+        </activity>
+        <activity
+            android:name=".BalanceDetails"
+            android:label="@string/title_activity_balance_details" >
+        </activity>
+        <activity
+            android:name=".AddDealer"
+            android:label="@string/title_activity_add_dealer" >
+        </activity>
+        <activity
+            android:name=".DealerJobsList"
+            android:label="@string/title_activity_dealer_jobs_list" >
+        </activity>
+        <activity
+            android:name=".AddViewDealer"
+            android:label="@string/title_activity_add_view_dealer" >
+        </activity>
+        <activity
+            android:name=".ExpandableDealerList"
+            android:label="@string/title_activity_expandable_dealer_list" >
         </activity>
     </application>
 

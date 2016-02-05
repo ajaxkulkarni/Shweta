@@ -191,7 +191,7 @@
             android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Shade"
-            android:inputType="number"
+            android:inputType="text"
             android:padding="10dp" />
 
         <Button
