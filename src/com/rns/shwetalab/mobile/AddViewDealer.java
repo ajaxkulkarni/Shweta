@@ -36,7 +36,7 @@ public class AddViewDealer extends Activity
 		
 		@Override
 		public void onClick(View v) {
-				Intent i = new Intent(AddViewDealer.this,DealerJobsList.class);
+				Intent i = new Intent(AddViewDealer.this,ExpandableDealerList.class);
 				startActivity(i);
 		}
 	});;

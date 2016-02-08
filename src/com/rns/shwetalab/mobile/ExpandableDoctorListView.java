@@ -118,11 +118,10 @@ public class ExpandableDoctorListView extends Activity {
 			List<String> jobDetails = new ArrayList<String>();
 			jobDetails.add("Patient :" + job.getPatientName());
 			if (job.getShade() != null) {
-				jobDetails.add("Shade :" + job.getShade().toString());
+			jobDetails.add("Shade :" + job.getShade().toString());
 			}
 			if (job.getWorkTypes() != null) 
 			{
-				
 				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
 			}
 			if (job.getPrice() != null) {

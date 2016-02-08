@@ -101,34 +101,34 @@ public class ExpandableDealerList extends Activity {
 		listDataChild = new HashMap<String, List<String>>();
 
 		// Adding child data
-		listDataHeader.add("Chumandas Plan");
-		listDataHeader.add("Mango Plan ");
-		listDataHeader.add("Biscuit Plan");
-		listDataHeader.add("KrackJack Plan");
+		listDataHeader.add("Rajesh Mangale");
+		listDataHeader.add("Rohit Wadke");
+		listDataHeader.add("Kunal Karanjkar");
+		listDataHeader.add("Anand Kore");
 		//listDataHeader.add("Marie Gold Plan");
 
 
 		// Adding child data
-		List<String> ChumandasPlan = new ArrayList<String>();
-		ChumandasPlan.add("25 Km Range");
-		ChumandasPlan.add("Rs.4500/-");
+		List<String> Rajesh = new ArrayList<String>();
+		Rajesh.add("ABC");
+		Rajesh.add("Rs.5000/-");
 
-		List<String> BiscuitPlan = new ArrayList<String>();
-		BiscuitPlan.add("15 KM Range");
-		BiscuitPlan.add("Rs.3500/-");
+		List<String> Rohit = new ArrayList<String>();
+		Rohit.add("PQR");
+		Rohit.add("Rs.3500/-");
 
-		List<String> MangoPlan = new ArrayList<String>();
-		MangoPlan.add("20 KM Range");
-		MangoPlan.add("Rs.4000/-");
+		List<String> Kunal = new ArrayList<String>();
+		Kunal.add("XYZ");
+		Kunal.add("Rs.4000/-");
 
-		List<String> KrackJack = new ArrayList<String>();
-		KrackJack.add("10 KM Range");
-		KrackJack.add("Rs.3000/-");
+		List<String> Anand = new ArrayList<String>();
+		Anand.add("LMN");
+		Anand.add("Rs.3000/-");
 
-		listDataChild.put(listDataHeader.get(0), ChumandasPlan); // Header, Child data
-		listDataChild.put(listDataHeader.get(1), MangoPlan);
-		listDataChild.put(listDataHeader.get(2), BiscuitPlan);
-		listDataChild.put(listDataHeader.get(3), KrackJack);
+		listDataChild.put(listDataHeader.get(0), Rajesh); // Header, Child data
+		listDataChild.put(listDataHeader.get(1), Rohit);
+		listDataChild.put(listDataHeader.get(2), Kunal);
+		listDataChild.put(listDataHeader.get(3), Anand);
 	}
 
 }

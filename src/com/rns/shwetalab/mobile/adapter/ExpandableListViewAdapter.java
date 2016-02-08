@@ -81,7 +81,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter
     }
 
     @Override
-    public long getGroupId(int groupPosition) {
+    public long getGroupId(int groupPosition) 
+    {
         return groupPosition;
     }
 
