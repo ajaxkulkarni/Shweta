@@ -41,6 +41,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String WORKTYPE_ID = "worktype_id";
 	
 	
+	public static final String DEALER_TABLE = "dealer";
+	public static final String DEALER_NAME = "dealer_name";
+	public static final String DEALER_MATERIAL = "dealer_material";
+	public static final String DEALER_PRICE = "dealer_price";
+	public static final String DEALER_AMOUNT_PAID = "dealer_amount_paid";
+	public static final String DEALER_TYPE = "type";
+	
+	
+	
+	public static final String CREATE_TABLE_DEALER ="create table" + DEALER_TABLE + "("+ KEY_ID 
+			+ "interger primary key autoincrement," + DEALER_NAME + "text not null, " + DEALER_MATERIAL + "text not null,"
+			+ DEALER_PRICE + "decimal, " + DEALER_AMOUNT_PAID + "decimal)";
+	
 	
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID + " integer not null)";

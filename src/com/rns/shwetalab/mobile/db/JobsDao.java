@@ -62,7 +62,7 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
-
+		job.setWorkTypes(job.getWorkTypes());
 		// TODO :Calculate the price based on addition of list of worktypes
 		WorkPersonMap map = new WorkPersonMap();
 		for (int i = 0; i < job.getWorkTypes().size(); i++) {
@@ -89,6 +89,8 @@ public class JobsDao {
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
 
+		jobWorkTypeMapDao.insertDetails(job);
+		
 		//		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
 		//		if (labJob != null) {
 		//			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
@@ -166,6 +168,12 @@ public class JobsDao {
 				null, null);
 	}
 
+	
+	public List<Job> getJobs()
+	{
+		return iterateJobsCursor(null);
+	}
+	
 	public List<Job> getJobsByMonth(String month) {
 
 		return iterateJobsCursor(queryForMonth(month));
@@ -186,8 +194,6 @@ public class JobsDao {
 	}
 
 	private Cursor queryForMonth(String month) {
-		String date1 = "01-" + ViewMonth.months().get(month) + "-" + "2016";
-		String date2 = "30-" + ViewMonth.months().get(month) + "-" + "2016";
 		openToWrite();
 		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols,
 				DatabaseHelper.JOB_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null,
@@ -202,7 +208,7 @@ public class JobsDao {
 				job.setId(Integer.parseInt(cursor.getString(0)));
 				job.setPatientName(cursor.getString(1));
 				job.setDate(CommonUtil.convertDate(cursor.getString(2)));
-				job.setShade(cursor.getInt(3));
+				job.setShade(cursor.getString(3));
 				Person person = personDao.getPerson(cursor.getInt(4));
 				job.setDoctor(person);
 				//	WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
@@ -212,11 +218,8 @@ public class JobsDao {
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));
-				job.setWorkTypes(job.getWorkTypes());
-				jobWorkTypeMapDao.insertDetails(job);
 			} while (cursor.moveToNext());
 		}
 		return jobs;
 	}
-
 }

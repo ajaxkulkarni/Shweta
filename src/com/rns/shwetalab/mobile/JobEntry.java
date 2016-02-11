@@ -178,7 +178,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		job.setPatientName(patientName.getText().toString());
 		job.setPosition(sp1.getSelectedItemPosition());
 		job.setQuadrent(sp2.getSelectedItemPosition());
-		job.setShade(Integer.valueOf(shade.getText().toString()));
+		job.setShade(shade.getText().toString());
 		Person doctor = new Person();
 		doctor.setName(doctorName.getText().toString());
 		job.setDoctor(doctor);

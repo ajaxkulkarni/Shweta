@@ -172,7 +172,8 @@ public class AdminAddWorkTypeActivity extends Activity {
 			//workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
 			work.setName(workTypeEditText.getText().toString());	
 		}
-		if (!TextUtils.isEmpty(defaultprice.getText())) {
+		if (!TextUtils.isEmpty(defaultprice.getText())) 
+		{
 			work.setDefaultPrice(new BigDecimal(defaultprice.getText().toString()));
 		}
 	}

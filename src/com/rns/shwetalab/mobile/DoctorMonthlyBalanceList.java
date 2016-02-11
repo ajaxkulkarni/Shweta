@@ -35,8 +35,8 @@ public class DoctorMonthlyBalanceList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_doctor__list__amount);
-		Bundle extras = getIntent().getExtras();
-		String month = extras.getString("Month");
+//		Bundle extras = getIntent().getExtras();
+//		String month = extras.getString("Month");
 	
 		
 		objname.add("Rajesh Mangale");

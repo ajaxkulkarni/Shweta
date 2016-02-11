@@ -71,6 +71,8 @@ public class WorkPersonMapDao {
 		if (map.getPrice() != null) {
 			contentValues.put(DatabaseHelper.WORKTYPE_PERSON_PRICE, map.getPrice().toString());
 		}
+		else
+			contentValues.put(DatabaseHelper.WORKTYPE_PERSON_PRICE, work.getDefaultPrice().toString());
 		openToWrite();
 		long val = workPersonMapDb.insert(DatabaseHelper.WORKTYPE_PERSON_TABLE, null, contentValues);
 		Log.d(DatabaseHelper.DATABASE_NAME, "Work type person mapping inserted!! Result :" + val);

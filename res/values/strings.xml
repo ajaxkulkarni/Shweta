@@ -50,5 +50,6 @@
     <string name="title_activity_dealer_jobs_list">DealerJobsList</string>
     <string name="title_activity_add_view_dealer">AddViewDealer</string>
     <string name="title_activity_expandable_dealer_list">ExpandableDealerList</string>
+    <string name="title_activity_jobs_expandable_list_view">JobsExpandableListView</string>
 
 </resources>

@@ -19,14 +19,13 @@ public class BalanceDetails extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_balance_details);
 	
-		add = (Button)findViewById(R.id.addbalance_button);
+		add = (Button)findViewById(R.id.addamountbutton );
 		add.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
 			{
 				Toast.makeText(getApplicationContext(),"Amount Inserted!!",Toast.LENGTH_SHORT).show();
-				
 				Intent i =new  Intent(BalanceDetails.this,DoctorMonthlyBalanceList.class);
 				startActivity(i);
 			}

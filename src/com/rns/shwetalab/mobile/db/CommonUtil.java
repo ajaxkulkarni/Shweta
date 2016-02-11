@@ -14,6 +14,7 @@ public class CommonUtil {
 	public static final String DATE_FORMAT = "dd-MM-yyyy";
 	public static final String TYPE_DOCTOR = "Doctor";
 	public static final String TYPE_LAB = "Lab";
+	public static final String TYPE_DEALER = "Dealer";
 	private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
 	public static String convertDate(Date date) {

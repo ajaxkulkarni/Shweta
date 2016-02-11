@@ -138,6 +138,10 @@
             android:name=".ExpandableDealerList"
             android:label="@string/title_activity_expandable_dealer_list" >
         </activity>
+        <activity
+            android:name=".JobsExpandableListView"
+            android:label="@string/title_activity_jobs_expandable_list_view" >
+        </activity>
     </application>
 
 </manifest>

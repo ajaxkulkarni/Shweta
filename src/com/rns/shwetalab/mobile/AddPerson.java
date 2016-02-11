@@ -38,9 +38,9 @@ public class AddPerson extends Activity {
 		addPersonButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) 
+			{  // validate();
 				preparePerson();
-				validate();
 				personDao.insertDetails(person);
 				CommonUtil.showMessage(AddPerson.this);
 			}
