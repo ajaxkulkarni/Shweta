@@ -46,7 +46,7 @@ public class BalanceSheet extends Activity {
 		doctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(BalanceSheet.this, DoctorMonthlyBalanceList.class);
+				Intent i = new Intent(BalanceSheet.this, JobsExpandableListView.class);
 				i.putExtra("Month", month);
 				i.putExtra("type", CommonUtil.TYPE_DOCTOR);
 				startActivity(i);

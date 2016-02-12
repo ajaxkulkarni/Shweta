@@ -175,8 +175,15 @@ public class JobsDao {
 	}
 	
 	public List<Job> getJobsByMonth(String month) {
-
-		return iterateJobsCursor(queryForMonth(month));
+		List<Job> jobs = iterateJobsCursor(queryForMonth(month));
+		List<Job> jobsByType = new ArrayList<Job>();
+		for (Job job : jobs) {
+			if (job.getDoctor() != null ) {
+				jobsByType.add(job);
+			}
+		}
+		//return iterateJobsCursor(queryForMonth(month));
+		return jobs;
 	}
 
 	public BigDecimal getIncomeForMonth(String month, String personType) {
@@ -184,10 +191,16 @@ public class JobsDao {
 		BigDecimal total = BigDecimal.ZERO;
 		List<Job> jobs = getJobsByMonth(month);
 		for (Job job : jobs) {
-			if (job.getWorkTypes() == null || job.getPrice() == null || job.getDoctor() == null
+//			if (job.getWorkTypes() == null || job.getPrice() == null || job.getDoctor() == null
+//					|| !personType.equals(job.getDoctor().getWorkType())) {
+//				continue;
+//			}
+			
+			if (job.getPrice() == null || job.getDoctor() == null
 					|| !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
+			
 			total = total.add(job.getPrice());
 		}
 		return total;
@@ -218,6 +231,7 @@ public class JobsDao {
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));
+				jobs.add(job);
 			} while (cursor.moveToNext());
 		}
 		return jobs;
