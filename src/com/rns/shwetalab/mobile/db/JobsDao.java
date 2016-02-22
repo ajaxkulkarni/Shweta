@@ -8,7 +8,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Job;
@@ -24,12 +23,11 @@ public class JobsDao {
 	private WorkTypeDao workTypeDao;
 	private WorkPersonMapDao workPersonMapDao;
 	private JobWorkTypeMapDao jobWorkTypeMapDao;
+	private JobLabMapDao jobLabMapDao;
 	private Context context;
-	private WorkType workType;
-	BigDecimal total = BigDecimal.ZERO;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
-			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT,
-			DatabaseHelper.JOB_POSITION };
+	
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE, DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR,
+			DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT, DatabaseHelper.JOB_POSITION };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -37,6 +35,7 @@ public class JobsDao {
 		workTypeDao = new WorkTypeDao(context);
 		workPersonMapDao = new WorkPersonMapDao(context);
 		jobWorkTypeMapDao = new JobWorkTypeMapDao(context);
+		jobLabMapDao = new JobLabMapDao(context);
 	}
 
 	public void openToRead() {
@@ -53,8 +52,7 @@ public class JobsDao {
 		jobsDb.close();
 	}
 
-	public long insertDetails(Job job) 
-	{
+	public long insertDetails(Job job) {
 		Person doctor = personDao.getPerson(job.getDoctor());
 		if (doctor == null) {
 			return -10;
@@ -62,43 +60,44 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
-		job.setWorkTypes(job.getWorkTypes());
-		// TODO :Calculate the price based on addition of list of worktypes
-		WorkPersonMap map = new WorkPersonMap();
-		for (int i = 0; i < job.getWorkTypes().size(); i++) {
-			map.setWorkType(job.getWorkTypes().get(i));
-		}
-		map.setPerson(job.getDoctor());
-		map = workPersonMapDao.getWorkPersonMap(map);
-		if(map != null){
-			for (int i = 0; i < job.getWorkTypes().size(); i++) {
-				total = total.add(job.getPrice());
-			}
-			job.setPrice(total);
-		} 
-		else 
-		{
-			for (int i = 0; i < job.getWorkTypes().size(); i++) {
-				//	total = total.add(new BigDecimal(job.getWorkTypes().getDefaultPrice()));
-				//	job.setPrice(total);
-				job.setPrice(new BigDecimal("100"));
-				//	job.setPrice(new BigDecimal(workType.getDefaultPrice().toString()));
-			}
-		}
-
+		List<WorkType> workTypes = new ArrayList<WorkType>();
+		calculateTotalPrice(job, workTypes);
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
-
+		job.setWorkTypes(workTypes);
+		job.setId(new Long(val).intValue());
 		jobWorkTypeMapDao.insertDetails(job);
-		
-		//		Job labJob = getLabJob(workPersonMapDao.getMapsForWorkType(workType), job);
-		//		if (labJob != null) {
-		//			jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(labJob));
-		//		}
-		//		Log.d(DatabaseHelper.DATABASE_NAME, "Job inserted!! Result :" + val);
+		insertLabJobs(job);
 		Close();
 		return val;
 
+	}
+
+	private void insertLabJobs(Job job) {
+		if (job == null || job.getWorkTypes() == null) {
+			return;
+		}
+		for (WorkType workType : job.getWorkTypes()) {
+			insertLabJob(workPersonMapDao.getMapsForWorkType(workType, CommonUtil.TYPE_LAB), job);
+		}
+	}
+
+	private void calculateTotalPrice(Job job, List<WorkType> workTypes) {
+		BigDecimal total = BigDecimal.ZERO;
+		for (WorkType workType : job.getWorkTypes()) {
+			WorkPersonMap map = new WorkPersonMap();
+			WorkType workTypeDb = workTypeDao.getWorkType(workType);
+			map.setWorkType(workTypeDb);
+			map.setPerson(job.getDoctor());
+			map = workPersonMapDao.getWorkPersonMap(map);
+			if (map != null && map.getPrice() != null) {
+				total = total.add(map.getPrice());
+			} else if (workTypeDb.getDefaultPrice() != null) {
+				total = total.add(workTypeDb.getDefaultPrice());
+			}
+			workTypes.add(workTypeDb);
+		}
+		job.setPrice(total);
 	}
 
 	private ContentValues prepareContentValues(Job job) {
@@ -117,23 +116,23 @@ public class JobsDao {
 		return contentValues;
 	}
 
-	private Job getLabJob(List<WorkPersonMap> mapsForWorkType, Job job) {
+	private void insertLabJob(List<WorkPersonMap> mapsForWorkType, Job job) {
 		for (WorkPersonMap map : mapsForWorkType) {
 			if (map.getPerson() == null) {
 				continue;
 			}
 			if (CommonUtil.TYPE_LAB.equals(map.getPerson().getWorkType())) {
 				Job labJob = new Job();
+				labJob.setId(job.getId());
 				labJob.setDate(job.getDate());
 				labJob.setPatientName(job.getPatientName());
 				labJob.setShade(job.getShade());
 				// labJob.setWorkType(job.getWorkTypes());
 				labJob.setDoctor(map.getPerson());
 				labJob.setPrice(map.getPrice());
-				return labJob;
+				jobLabMapDao.insertDetails(labJob);
 			}
 		}
-		return null;
 	}
 
 	public String[] getWorkTypeNames() {
@@ -150,10 +149,12 @@ public class JobsDao {
 		return names;
 	}
 
-	public List<Job> getJobsByDate(String date, String personType) 
-	{
+	public List<Job> getJobsByDate(String date, String personType) {
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
 		List<Job> jobsByType = new ArrayList<Job>();
+		if(CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) {
+			return getLabJobs(jobs);
+		}
 		for (Job job : jobs) {
 			if (job.getDoctor() != null && personType.equals(job.getDoctor().getWorkType())) {
 				jobsByType.add(job);
@@ -162,27 +163,35 @@ public class JobsDao {
 		return jobsByType;
 	}
 
-	public Cursor queryByDate(String date) {
-		openToWrite();
-		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " = '" + date + "'", null, null,
-				null, null);
+	private List<Job> getLabJobs(List<Job> jobs) {
+		List<Job> labJobs= new ArrayList<Job>();
+		if(jobs == null || jobs.size() == 0) {
+			return labJobs;
+		}
+		for(Job job:jobs) {
+			labJobs.addAll(jobLabMapDao.getLabJobsForJob(job));
+		}
+		return labJobs;
 	}
 
-	
-	public List<Job> getJobs()
-	{
+	public Cursor queryByDate(String date) {
+		openToWrite();
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " = '" + date + "'", null, null, null, null);
+	}
+
+	public List<Job> getJobs() {
 		return iterateJobsCursor(null);
 	}
-	
+
 	public List<Job> getJobsByMonth(String month) {
 		List<Job> jobs = iterateJobsCursor(queryForMonth(month));
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
-			if (job.getDoctor() != null ) {
+			if (job.getDoctor() != null) {
 				jobsByType.add(job);
 			}
 		}
-		//return iterateJobsCursor(queryForMonth(month));
+		// return iterateJobsCursor(queryForMonth(month));
 		return jobs;
 	}
 
@@ -191,16 +200,16 @@ public class JobsDao {
 		BigDecimal total = BigDecimal.ZERO;
 		List<Job> jobs = getJobsByMonth(month);
 		for (Job job : jobs) {
-//			if (job.getWorkTypes() == null || job.getPrice() == null || job.getDoctor() == null
-//					|| !personType.equals(job.getDoctor().getWorkType())) {
-//				continue;
-//			}
-			
-			if (job.getPrice() == null || job.getDoctor() == null
-					|| !personType.equals(job.getDoctor().getWorkType())) {
+			// if (job.getWorkTypes() == null || job.getPrice() == null ||
+			// job.getDoctor() == null
+			// || !personType.equals(job.getDoctor().getWorkType())) {
+			// continue;
+			// }
+
+			if (job.getPrice() == null || job.getDoctor() == null || !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
-			
+
 			total = total.add(job.getPrice());
 		}
 		return total;
@@ -208,9 +217,7 @@ public class JobsDao {
 
 	private Cursor queryForMonth(String month) {
 		openToWrite();
-		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols,
-				DatabaseHelper.JOB_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null,
-				null);
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null, null);
 	}
 
 	private List<Job> iterateJobsCursor(Cursor cursor) {
@@ -224,10 +231,11 @@ public class JobsDao {
 				job.setShade(cursor.getString(3));
 				Person person = personDao.getPerson(cursor.getInt(4));
 				job.setDoctor(person);
-				//	WorkType workType = workTypeDao.getWorkType(cursor.getInt(5));
-				//for (int i = 0; i < job.getWorkTypes(); i++) {
-				//		job.setWorkTypes(job.getWorkTypes());
-				//	}
+				// WorkType workType =
+				// workTypeDao.getWorkType(cursor.getInt(5));
+				// for (int i = 0; i < job.getWorkTypes(); i++) {
+				// job.setWorkTypes(job.getWorkTypes());
+				// }
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));

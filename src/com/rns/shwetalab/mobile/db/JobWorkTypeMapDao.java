@@ -48,7 +48,7 @@ public class JobWorkTypeMapDao {
 		if (job == null || job.getWorkTypes() == null) {
 			return -10;
 		}
-		setWorkTypes(job);
+		//setWorkTypes(job);
 		openToWrite();
 		long val = insertJobWorktypeMap(job);
 		Log.d(DatabaseHelper.DATABASE_NAME, "Work type person mapping inserted!! Result :" + val);

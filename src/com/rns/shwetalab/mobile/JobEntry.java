@@ -3,7 +3,6 @@ package com.rns.shwetalab.mobile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.db.PersonDao;
@@ -32,18 +32,18 @@ import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
-public class JobEntry extends Activity implements OnItemSelectedListener,OnClickListener {
+public class JobEntry extends Activity implements OnItemSelectedListener, OnClickListener {
 
 	private EditText dateSelected;
 	private DatePickerDialog toDatePickerDialog;
 	Button addwork, jobentry;
 	private SimpleDateFormat dateFormatter;
-	
+
 	int count = 0;
 	Spinner sp1, sp2;
 	private AutoCompleteTextView doctorName;
 	private PersonDao personDao;
-	private AutoCompleteTextView workType1,workType2, workType3,workType4;
+	private AutoCompleteTextView workType1, workType2, workType3, workType4;
 	private WorkTypeDao workTypeDao;
 	private JobsDao jobsDao;
 	private EditText patientName, shade;
@@ -61,32 +61,34 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		new WorkPersonMapDao(getApplicationContext());
 		prepareDoctorNames();
 		prepareWorkTypes();
-		
+
 		addwork = (Button) findViewById(R.id.jobentry_buttonadd);
 		jobentry = (Button) findViewById(R.id.jobentrybutton);
-	//	workType2 = (EditText) findViewById(R.id.jobentry_worktype1_editText);
-	//	workType3 = (EditText) findViewById(R.id.jobentry_worktype2_editText);
-		//workType4 = (EditText) findViewById(R.id.jobentry_worktype3_editText);
+		// workType2 = (EditText)
+		// findViewById(R.id.jobentry_worktype1_editText);
+		// workType3 = (EditText)
+		// findViewById(R.id.jobentry_worktype2_editText);
+		// workType4 = (EditText)
+		// findViewById(R.id.jobentry_worktype3_editText);
 		sp1 = (Spinner) findViewById(R.id.spinner_position);
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
 
-		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position , android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position, android.R.layout.simple_spinner_item);
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		sp1.setAdapter(adapter);
-		
-		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Quadrent , android.R.layout.simple_spinner_item);
+
+		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Quadrent, android.R.layout.simple_spinner_item);
 
 		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		sp2.setAdapter(adapter1);
-		
-		//spinner_quad(sp1);
-		//spinner_position(sp2);
+
+		// spinner_quad(sp1);
+		// spinner_position(sp2);
 
 		jobentry.setOnClickListener(new OnClickListener() {
 
@@ -142,14 +144,13 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		});
 
 	}
-	
-	private void setDateTimeField() 
-	{
-		
-		SimpleDateFormat dfDate  = new SimpleDateFormat("dd-M-yyyy");   
+
+	private void setDateTimeField() {
+
+		SimpleDateFormat dfDate = new SimpleDateFormat("dd-M-yyyy");
 		Calendar c = Calendar.getInstance();
 		String date = dfDate.format(c.getTime());
-		dateSelected.setText(date); 
+		dateSelected.setText(date);
 
 		dateSelected.setOnClickListener(this);
 
@@ -161,10 +162,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 				dateSelected.setText(dateFormatter.format(newDate.getTime()));
 			}
 		}, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-		
-		
-		
-		
+
 	}
 
 	@Override
@@ -189,23 +187,27 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 
 	private void prepareWorkTypes(Job job) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
-		WorkType work1 = new WorkType();
-		work1.setName(workType1.getText().toString());
-		//work2.setName(workType2.getText().toString());
-		workTypes.add(work1);
-//		if(!TextUtils.isEmpty(work2.toString()))
-//		{
-//			workTypes.add(work2);
-//		}
-		//TODO: Check if empty and if not, add other 2 worktypes in this list
+		addWorkType(workTypes, workType1);
+		addWorkType(workTypes, workType2);
+		addWorkType(workTypes, workType3);
+		addWorkType(workTypes, workType4);
 		job.setWorkTypes(workTypes);
+	}
+
+	private void addWorkType(List<WorkType> workTypes, AutoCompleteTextView work) {
+		if (TextUtils.isEmpty(work.getText())) {
+			return;
+		}
+		WorkType workType = new WorkType();
+		workType.setName(work.getText().toString());
+		workTypes.add(workType);
 	}
 
 	private void prepareWorkTypes() {
 		workType1 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype_autocomplete);
 		workType2 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype1_editText);
 		workType3 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype2_editText);
-		workType4 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype3_editText); 
+		workType4 = (AutoCompleteTextView) findViewById(R.id.jobentry_worktype3_editText);
 		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_dropdown_item_1line, workTypeDao.getWorkTypeNames());
 		workType1.setThreshold(1);
 		workType2.setThreshold(1);
@@ -225,7 +227,6 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		doctorName.setAdapter(doctorNames);
 	}
 
-
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
@@ -237,7 +238,5 @@ public class JobEntry extends Activity implements OnItemSelectedListener,OnClick
 		// TODO Auto-generated method stub
 
 	}
-
-
 
 }

@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String DATABASE_NAME = "DENTAL";
-	public static final int VERSION = 3;
+	public static final int VERSION = 8;
 	public static final String KEY_ID = "id";
 
 	public static final String PERSON_TABLE = "person";
@@ -40,6 +40,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_ID = "job_id";
 	public static final String WORKTYPE_ID = "worktype_id";
 	
+	public static final String JOB_LABS_TABLE = "labs_table";
+	public static final String LAB_JOB_ID = "job_id";
+	public static final String LAB_ID = "lab_id";
+	public static final String LAB_PRICE = "price";
+	
 	
 	public static final String DEALER_TABLE = "dealer";
 	public static final String DEALER_NAME = "dealer_name";
@@ -50,13 +55,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	
 	
-	public static final String CREATE_TABLE_DEALER ="create table" + DEALER_TABLE + "("+ KEY_ID 
-			+ "interger primary key autoincrement," + DEALER_NAME + "text not null, " + DEALER_MATERIAL + "text not null,"
+	public static final String CREATE_TABLE_DEALER ="create table " + DEALER_TABLE + "("+ KEY_ID 
+			+ " integer primary key autoincrement," + DEALER_NAME + "text not null, " + DEALER_MATERIAL + "text not null,"
 			+ DEALER_PRICE + "decimal, " + DEALER_AMOUNT_PAID + "decimal)";
 	
 	
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID + " integer not null)";
+	
+	public static final String CREATE_TABLE_LAB_WORKTYPES = "create table " + JOB_LABS_TABLE + " (" + KEY_ID
+			+ " integer primary key autoincrement, " + LAB_JOB_ID + " integer not null, " + LAB_ID + " integer not null, " + LAB_PRICE
+			+ " integer)";
 
 	public static final String CREATE_TABLE_PERSON = "create table " + PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + PERSON_NAME + " text not null, " + PERSON_EMAIL
@@ -97,6 +106,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		 */
 		// db.execSQL("ALTER TABLE " + JOB_TABLE + " ADD COLUMN " + JOB_PRICE +
 		// " integer");
+		db.execSQL(CREATE_TABLE_LAB_WORKTYPES);
+		db.execSQL(CREATE_TABLE_JOB_WORKTYPES);
+		db.execSQL(CREATE_TABLE_DEALER);
 		Log.d(DATABASE_NAME, "Upgrading the database from :" + oldVersion + " to :" + newVersion);
 	}
 
