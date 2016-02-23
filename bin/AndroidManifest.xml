@@ -142,6 +142,12 @@
             android:name=".JobsExpandableListView"
             android:label="@string/title_activity_jobs_expandable_list_view" >
         </activity>
+        <activity android:name=".AddViewMarketing" >
+        </activity>
+        <activity
+            android:name=".MarketingDescriptionList"
+            android:label="@string/title_activity_marketing_description_list" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,7 +1,10 @@
-package com.rns.shwetalab.mobile;
+package com.rns.shwetalab.mobile.adapter;
 
 import java.util.HashMap;
 import java.util.List;
+
+import com.rns.shwetalab.mobile.JobsExpandableListView;
+import com.rns.shwetalab.mobile.R;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;

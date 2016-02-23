@@ -103,8 +103,8 @@ public class PersonDao {
 		return val;
 	}
 
-	public String[] getDoctorNames() {
-		List<Person> persons = getAllPeopleByType(CommonUtil.TYPE_DOCTOR);
+	public String[] getDoctorNames(String type) {
+		List<Person> persons = getAllPeopleByType(type);
 		if (persons.size() == 0) {
 			return new String[0];
 		}
@@ -116,7 +116,6 @@ public class PersonDao {
 		names = namesList.toArray(new String[0]);
 		return names;
 	}
-
 	public List<Person> getAll() {
 		openToWrite();
 		Cursor cursor = personDb.query(DatabaseHelper.PERSON_TABLE, cols, null, null, null, null, null);

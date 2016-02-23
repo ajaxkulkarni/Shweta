@@ -123,10 +123,10 @@ public class ExpandableDoctorListView extends Activity {
 			if (job.getShade() != null) {
 			jobDetails.add("Shade :" + job.getShade().toString());
 			}
-//			if (job.getWorkTypes() != null) 
-//			{
-//				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
-//			}
+			if (job.getWorkTypes() != null) 
+			{
+				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
+			}
 			if (job.getPrice() != null) {
 				jobDetails.add("Price :" + job.getPrice().toString());
 			}

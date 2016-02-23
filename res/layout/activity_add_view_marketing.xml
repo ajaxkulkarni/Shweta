@@ -6,7 +6,7 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <Button
-        android:id="@+id/addDealer"
+        android:id="@+id/addMArketingPerson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -14,12 +14,12 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:text="Add Material"
+        android:text="Add FollowUp"
         android:textColor="#FFF"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/viewDealer"
+        android:id="@+id/viewMarketingPerson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:text="View Record"
+        android:text="View FollowUp"
         android:textColor="#FFF"
         android:textStyle="bold" />
 

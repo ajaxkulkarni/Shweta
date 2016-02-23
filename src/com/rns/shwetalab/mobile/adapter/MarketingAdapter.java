@@ -6,6 +6,7 @@ import java.util.List;
 import com.rns.shwetalab.mobile.MarketingList;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.adapter.JobListAdapter.ViewHolder;
+import com.rns.shwetalab.mobile.domain.Marketing;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
@@ -17,17 +18,17 @@ import android.widget.TextView;
 
 public class MarketingAdapter extends BaseAdapter 
 {
-	 private ArrayList<String> name;
+	 private List<Marketing> name;
 	    Activity context;
 	    LayoutInflater inflater;
 
 	
-	public MarketingAdapter(MarketingList marketingList, ArrayList<String> objArrayListName) 
+	public MarketingAdapter(MarketingList marketingList, List<Marketing> list) 
 	{
 	
 		this.context = marketingList;
 		this.inflater = LayoutInflater.from(context);
-		this.name = objArrayListName;
+		this.name = list;
 	}
 
 	@Override
@@ -37,9 +38,12 @@ public class MarketingAdapter extends BaseAdapter
 	}
 
 	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getItem(int position) 
+	{
+		if(name == null || name.size() == 0) {
+			return null;
+		}		
+		return name.get(position);
 	}
 
 	@Override
@@ -65,11 +69,9 @@ public class MarketingAdapter extends BaseAdapter
 	            holder.tv1 = (TextView)view.findViewById(R.id.nametextView);
 	            view.setTag(holder);
 	        }
-
 	        else
 	            holder = (ViewHolder)view.getTag();
-	        	holder.tv1.setText(name.get(arg0));
-
+	        	holder.tv1.setText(name.get(arg0).getMarketing_name());
 	        return view;
 
 	    }

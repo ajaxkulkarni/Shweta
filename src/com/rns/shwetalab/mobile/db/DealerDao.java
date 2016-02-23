@@ -19,10 +19,13 @@ public class DealerDao
 	private SQLiteDatabase dealerDb;
 	private DatabaseHelper dealerHelper;
 	private Context context;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.DEALER_NAME, DatabaseHelper.DEALER_MATERIAL, DatabaseHelper.DEALER_PRICE, DatabaseHelper.DEALER_AMOUNT_PAID };
+	private PersonDao personDao;
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.MATERIAL_NAME, DatabaseHelper.MATERIAL_PRICE, 
+			DatabaseHelper.MATERIAL_AMOUNT_PAID,DatabaseHelper.MATERIAL_DATE,DatabaseHelper.DEALER_ID };
 
 	public DealerDao(Context c) {
 		context = c;
+		personDao = new PersonDao(context);
 	}
 
 	public void openToRead() {
@@ -39,107 +42,65 @@ public class DealerDao
 		dealerDb.close();
 	}
 
-	public long insertDetails(Dealer dealer) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(DatabaseHelper.DEALER_NAME, dealer.getDealer_name());
-		contentValues.put(DatabaseHelper.DEALER_MATERIAL, dealer.getMaterial());
-		contentValues.put(DatabaseHelper.DEALER_PRICE, dealer.getPrice().toString());
-		contentValues.put(DatabaseHelper.DEALER_AMOUNT_PAID, dealer.getAmount_paid().toString());
+	public long insertDetails(Dealer dealer) 
+	{
+		Person dealers = personDao.getPerson(dealer.getDealer());
+		if (dealers == null) {
+			return -10;
+		}
+		dealer.setDealer(dealers);
+		dealer.setMaterial(dealer.getMaterial());
+		dealer.setDate(dealer.getDate());
+		dealer.setAmount_paid(dealer.getAmount_paid());
+		dealer.setPrice(dealer.getPrice());
+
 		openToWrite();
-		long val = dealerDb.insert(DatabaseHelper.DEALER_TABLE, null, contentValues);
-		Log.d(DatabaseHelper.DATABASE_NAME, "Dealer inserted!! Result :" + val);
+		long val = dealerDb.insert(DatabaseHelper.MATERIAL_TABLE, null, prepareContentValues(dealer));
 		Close();
 		return val;
 
 	}
-	
-	public Cursor queryByName(String name) {
-		openToWrite();
-		return dealerDb.query(DatabaseHelper.DEALER_TABLE, cols, DatabaseHelper.DEALER_NAME + " like '" + name + "'", null, null,
-				null, null);
-	}
-	
-	public Dealer  getDealer(Dealer dealer) {
-		if (dealer == null || dealer.getDealer_name() == null) {
-			return null;
-		}
-		Cursor c = queryByName(dealer.getDealer_name());
-		List<Dealer> dealers = iteratePersonCursor(c);
-		if(dealers == null || dealers.size() == 0) {
-			return null;
-		}
-		return dealers.get(0);
 
-	}
-	
-	public Dealer getDealer(Integer id) {
-		Cursor c = queryById(id);
-		List<Dealer> dealer = iteratePersonCursor(c);
-		if(dealer == null || dealer.size() == 0) {
-			return null;
-		}
-		return dealer.get(0);
-
-	}
-	
-	private Cursor queryById(Integer id) {
+	public List<Dealer> getAll() {
 		openToWrite();
-		return dealerDb.query(DatabaseHelper.DEALER_TABLE, cols, DatabaseHelper.KEY_ID + " = " + id , null, null,null, null);
-	}
-	
-	public long updateldetail(int rowId, String material, String price) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(DatabaseHelper.DEALER_NAME, material);
-		contentValues.put(DatabaseHelper.DEALER_PRICE, price);
-		openToWrite();
-		long val = dealerDb.update(DatabaseHelper.DEALER_TABLE, contentValues, DatabaseHelper.KEY_ID + "=" + rowId,
-				null);
-		Close();
-		return val;
+		Cursor cursor = dealerDb.query(DatabaseHelper.MATERIAL_TABLE, cols, null, null, null, null, null);
+		Log.d(DatabaseHelper.DATABASE_NAME, "Records retreived:" + cursor.getCount());
+		return iterateMaterial(cursor);
 	}
 
-	public int deletOneRecord(int rowId) {
-		openToWrite();
-		int val = dealerDb.delete(DatabaseHelper.DEALER_TABLE, DatabaseHelper.KEY_ID + "=" + rowId, null);
-		Close();
-		return val;
-	}
-	
-	public String[] getDoctorNames() {
-		List<Dealer> dealers = getAllPeopleByType(CommonUtil.TYPE_DEALER);
-		if (dealers.size() == 0) {
-			return new String[0];
-		}
-		List<String> namesList = new ArrayList<String>();
-		for (Dealer dealer : dealers) {
-			namesList.add(dealer.getDealer_name());
-		}
-		String[] names = new String[namesList.size()];
-		names = namesList.toArray(new String[0]);
-		return names;
-	}
-	
-	public List<Dealer> getAllPeopleByType(String type) {
-		openToRead();
-		return iteratePersonCursor(dealerDb.query(DatabaseHelper.DEALER_TABLE, cols, DatabaseHelper.DEALER_TYPE + " like '" + type + "'", null, null,null, null));
-	}
-
-	private List<Dealer> iteratePersonCursor(Cursor cursor) {
+	private List<Dealer> iterateMaterial(Cursor cursor) {
 		List<Dealer> dealers = new ArrayList<Dealer>();
 		if (cursor.moveToFirst()) {
 			do {
 				Dealer dealer = new Dealer();
 				dealer.setId(Integer.parseInt(cursor.getString(0)));
-				dealer.setDealer_name(cursor.getString(1));
-				dealer.setMaterial(cursor.getString(2));
-				dealer.setPrice(new BigDecimal(cursor.getString(3)));
-				dealer.setAmount_paid(new BigDecimal(cursor.getString(4)));
+				dealer.setMaterial(cursor.getString(1));
+				dealer.setPrice(new BigDecimal(cursor.getString(2)));
+				dealer.setAmount_paid(new BigDecimal(cursor.getString(3)));
+				dealer.setDate(CommonUtil.convertDate(cursor.getString(4)));
+				Person person = personDao.getPerson(cursor.getInt(5));
+				dealer.setDealer(person);
+				//	dealer.setDate(cursor.);
+
 				dealers.add(dealer);
 			} while (cursor.moveToNext());
 		}
 
 		return dealers;
 	}
-	
+
+
+
+	private ContentValues prepareContentValues(Dealer dealer) 
+	{
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(DatabaseHelper.MATERIAL_NAME, dealer.getMaterial());
+		contentValues.put(DatabaseHelper.MATERIAL_PRICE, dealer.getPrice().toString());
+		contentValues.put(DatabaseHelper.MATERIAL_AMOUNT_PAID, dealer.getAmount_paid().toString());
+		contentValues.put(DatabaseHelper.MATERIAL_DATE, dealer.getDate().toString());
+		contentValues.put(DatabaseHelper.DEALER_ID, dealer.getDealer().getId() );
+		return contentValues;
+
+	}
 	
 }

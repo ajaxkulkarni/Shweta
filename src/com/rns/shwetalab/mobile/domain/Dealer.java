@@ -1,28 +1,38 @@
 package com.rns.shwetalab.mobile.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Dealer 
 {
 	private Integer id;
 	
-	private String dealer_name;
 	private String material;
 	private BigDecimal price;
 	private BigDecimal amount_paid;
+	private Date date;
+	private Person dealer;
 	
+
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Person getDealer() {
+		return dealer;
+	}
+	public void setDealer(Person dealer) {
+		this.dealer = dealer;
+	}
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getDealer_name() {
-		return dealer_name;
-	}
-	public void setDealer_name(String dealer_name) {
-		this.dealer_name = dealer_name;
-	}
+	
 	public String getMaterial() {
 		return material;
 	}
@@ -41,7 +51,5 @@ public class Dealer
 	public void setAmount_paid(BigDecimal amount_paid) {
 		this.amount_paid = amount_paid;
 	}
-	
-	
 
 }

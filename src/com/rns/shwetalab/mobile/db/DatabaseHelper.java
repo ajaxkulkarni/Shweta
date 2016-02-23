@@ -39,33 +39,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_WORKTYPES_TABLE = "worktypes_table";
 	public static final String JOB_ID = "job_id";
 	public static final String WORKTYPE_ID = "worktype_id";
-	
+
 	public static final String JOB_LABS_TABLE = "labs_table";
 	public static final String LAB_JOB_ID = "job_id";
 	public static final String LAB_ID = "lab_id";
 	public static final String LAB_PRICE = "price";
+
+	public static final String MATERIAL_TABLE = "dealer";
+	public static final String MATERIAL_NAME = "material_name";
+	public static final String MATERIAL_PRICE = "material_price";
+	public static final String MATERIAL_AMOUNT_PAID = "material_amount_paid";
+	public static final String MATERIAL_DATE = "material_date";
+	public static final String DEALER_ID = "dealer_id";
+
+	public static final String MARKETING_TABLE = "marketing";
+	public static final String MARKETING_PERSON_NAME = "person_name";
+	public static final String MARKETING_DATE = "follow_up_date";
+	public static final String MARKETING_DESCRIPTION = "follow_up_description";
 	
 	
-	public static final String DEALER_TABLE = "dealer";
-	public static final String DEALER_NAME = "dealer_name";
-	public static final String DEALER_MATERIAL = "dealer_material";
-	public static final String DEALER_PRICE = "dealer_price";
-	public static final String DEALER_AMOUNT_PAID = "dealer_amount_paid";
-	public static final String DEALER_TYPE = "type";
-	
-	
-	
-	public static final String CREATE_TABLE_DEALER ="create table " + DEALER_TABLE + "("+ KEY_ID 
-			+ " integer primary key autoincrement," + DEALER_NAME + "text not null, " + DEALER_MATERIAL + "text not null,"
-			+ DEALER_PRICE + "decimal, " + DEALER_AMOUNT_PAID + "decimal)";
-	
-	
+
+	public static final String CREATE_TABLE_MARKETING = "create table " + MARKETING_TABLE + " (" + KEY_ID
+			+ " integer primary key autoincrement, " + MARKETING_PERSON_NAME + " text not null," + MARKETING_DATE + " date," + MARKETING_DESCRIPTION + " text not null)";
+
+	public static final String CREATE_TABLE_MATERIAL = "create table " + MATERIAL_TABLE + "(" + KEY_ID
+			+ " integer primary key autoincrement, " + MATERIAL_NAME + " text not null, " + MATERIAL_PRICE + " integer,"
+			+ MATERIAL_AMOUNT_PAID + " integer, " + MATERIAL_DATE + " date," + DEALER_ID + " integer not null)";
+
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID + " integer not null)";
+			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID
+			+ " integer not null)";
 	
 	public static final String CREATE_TABLE_LAB_WORKTYPES = "create table " + JOB_LABS_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + LAB_JOB_ID + " integer not null, " + LAB_ID + " integer not null, " + LAB_PRICE
-			+ " integer)";
+			+ " integer primary key autoincrement, " + LAB_JOB_ID + " integer not null, " + LAB_ID
+			+ " integer not null, " + LAB_PRICE + " integer)";
 
 	public static final String CREATE_TABLE_PERSON = "create table " + PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + PERSON_NAME + " text not null, " + PERSON_EMAIL
@@ -80,9 +87,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			+ WORKTYPE_PERSON_WORK_ID + " integer, " + WORKTYPE_PERSON_PRICE + " decimal)";
 
 	public static final String CREATE_TABLE_JOB = "create table " + JOB_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer , "
-			+ JOB_PATIENT_NAME + " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE
-			+ " integer," + JOB_QUADRENT + " integer," + JOB_POSITION + " integer)";
+			+ " integer primary key autoincrement, " + JOB_DOCTOR + " integer , " + JOB_PATIENT_NAME
+			+ " text not null, " + JOB_SHADE + " integer, " + JOB_DATE + " date, " + JOB_PRICE + " integer,"
+			+ JOB_QUADRENT + " integer," + JOB_POSITION + " integer)";
 
 	public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
@@ -94,6 +101,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_WORK_TYPE);
 		db.execSQL(CREATE_TABLE_WORK_TYPE_PERSON);
 		db.execSQL(CREATE_TABLE_JOB);
+		db.execSQL(CREATE_TABLE_MARKETING);
+		db.execSQL(CREATE_TABLE_MATERIAL);
 		Log.d(DATABASE_NAME, "Tables Created!!");
 	}
 
@@ -108,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// " integer");
 		db.execSQL(CREATE_TABLE_LAB_WORKTYPES);
 		db.execSQL(CREATE_TABLE_JOB_WORKTYPES);
-		db.execSQL(CREATE_TABLE_DEALER);
+
 		Log.d(DATABASE_NAME, "Upgrading the database from :" + oldVersion + " to :" + newVersion);
 	}
 

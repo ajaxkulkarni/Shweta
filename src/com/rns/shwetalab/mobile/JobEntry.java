@@ -222,7 +222,8 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 
 	private void prepareDoctorNames() {
 		doctorName = (AutoCompleteTextView) findViewById(R.id.jobentry_docname_autocomplete);
-		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames());
+		String type = CommonUtil.TYPE_DOCTOR;
+		ArrayAdapter<String> doctorNames = new ArrayAdapter<String>(JobEntry.this, android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames(type));
 		doctorName.setThreshold(1);
 		doctorName.setAdapter(doctorNames);
 	}

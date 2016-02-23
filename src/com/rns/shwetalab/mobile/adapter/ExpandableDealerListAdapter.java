@@ -36,7 +36,8 @@ public class ExpandableDealerListAdapter extends BaseExpandableListAdapter
 
 
 	@Override
-	public int getGroupCount() {
+	public int getGroupCount() 
+	{
 		return this.listDataHeader.size();
 	}
 

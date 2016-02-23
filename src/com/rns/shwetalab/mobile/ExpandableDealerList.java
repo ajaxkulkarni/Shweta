@@ -37,7 +37,7 @@ public class ExpandableDealerList extends Activity {
 		expListView = (ExpandableListView) findViewById(R.id.planName_expandableListView);
 
 		// preparing list data
-		prepareListData();
+		//	prepareListData();
 
 		listAdapter = new ExpandableDealerListAdapter(this, listDataHeader, listDataChild);
 
@@ -90,7 +90,7 @@ public class ExpandableDealerList extends Activity {
 				Toast.makeText(getApplicationContext(),
 						listDataHeader.get(groupPosition) + " : "
 								+ listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
-						Toast.LENGTH_SHORT).show();
+								Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -99,12 +99,12 @@ public class ExpandableDealerList extends Activity {
 
 	private void prepareListData() {
 
-		List<Dealer> dealers = dealerDao.getAllPeopleByType(CommonUtil.TYPE_DEALER);
+		List<Dealer> dealers = dealerDao.getAll();
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, List<String>>();
 
 		for (Dealer dealer : dealers) {
-			if (dealer.getDealer_name() == null) {
+			if (dealer.getDealer() == null) {
 				continue;
 			}
 			List<String> dealerDetails = new ArrayList<String>();
@@ -117,38 +117,38 @@ public class ExpandableDealerList extends Activity {
 			if (dealer.getAmount_paid() != null) {
 				dealerDetails.add("Amount Paid:" + dealer.getAmount_paid());
 			}
-			listDataHeader.add(dealer.getDealer_name());
-			listDataChild.put(dealer.getDealer_name(), dealerDetails);
+			listDataHeader.add(dealer.getDealer().toString());
+			listDataChild.put(dealer.getDealer().toString(), dealerDetails);
 		}
 
-//		// Adding child data
-//		listDataHeader.add("Rajesh Mangale");
-//		listDataHeader.add("Rohit Wadke");
-//		listDataHeader.add("Kunal Karanjkar");
-//		listDataHeader.add("Anand Kore");
-//		// listDataHeader.add("Marie Gold Plan");
-//
-//		// Adding child data
-//		List<String> Rajesh = new ArrayList<String>();
-//		Rajesh.add("ABC");
-//		Rajesh.add("Rs.5000/-");
-//
-//		List<String> Rohit = new ArrayList<String>();
-//		Rohit.add("PQR");
-//		Rohit.add("Rs.3500/-");
-//
-//		List<String> Kunal = new ArrayList<String>();
-//		Kunal.add("XYZ");
-//		Kunal.add("Rs.4000/-");
-//
-//		List<String> Anand = new ArrayList<String>();
-//		Anand.add("LMN");
-//		Anand.add("Rs.3000/-");
-//
-//		listDataChild.put(listDataHeader.get(0), Rajesh); // Header, Child data
-//		listDataChild.put(listDataHeader.get(1), Rohit);
-//		listDataChild.put(listDataHeader.get(2), Kunal);
-//		listDataChild.put(listDataHeader.get(3), Anand);
-	}
+		//		// Adding child data
+		//		listDataHeader.add("Rajesh Mangale");
+		//		listDataHeader.add("Rohit Wadke");
+		//		listDataHeader.add("Kunal Karanjkar");
+		//		listDataHeader.add("Anand Kore");
+		//		// listDataHeader.add("Marie Gold Plan");
+		//
+		//		// Adding child data
+		//		List<String> Rajesh = new ArrayList<String>();
+		//		Rajesh.add("ABC");
+		//		Rajesh.add("Rs.5000/-");
+		//
+		//		List<String> Rohit = new ArrayList<String>();
+		//		Rohit.add("PQR");
+		//		Rohit.add("Rs.3500/-");
+		//
+		//		List<String> Kunal = new ArrayList<String>();
+		//		Kunal.add("XYZ");
+		//		Kunal.add("Rs.4000/-");
+		//
+		//		List<String> Anand = new ArrayList<String>();
+		//		Anand.add("LMN");
+		//		Anand.add("Rs.3000/-");
+		//
+		//		listDataChild.put(listDataHeader.get(0), Rajesh); // Header, Child data
+		//		listDataChild.put(listDataHeader.get(1), Rohit);
+		//		listDataChild.put(listDataHeader.get(2), Kunal);
+		//		listDataChild.put(listDataHeader.get(3), Anand);
 
+	}
 }

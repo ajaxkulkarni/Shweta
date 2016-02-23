@@ -25,17 +25,32 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/dealernameeditText"
+        android:id="@+id/dateeditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded"
+        android:drawableRight="@drawable/calender"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date"
+        android:paddingLeft="10dp" >
+    </EditText>
+
+    <AutoCompleteTextView
+        android:id="@+id/dealernameeditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded"
         android:ems="10"
         android:hint="Dealer Name"
         android:padding="10dp" >
-    </EditText>
+    </AutoCompleteTextView>
 
     <EditText
         android:id="@+id/dealermaterialeditText"

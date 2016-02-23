@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,15 +29,28 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-       
-
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/marketdateeditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded"
+            android:drawableRight="@drawable/calender"
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="date"
+            android:paddingLeft="10dp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/marketing_nameeditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded"
             android:ems="10"
             android:hint="Name"
@@ -47,41 +59,31 @@
         </EditText>
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/descriptioneditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded"
             android:ems="10"
-            android:hint="Email Id"
-            android:inputType="textEmailAddress"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:background="@drawable/rounded"
+            android:hint="Description"
+            android:inputType="textMultiLine" >
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded"
-            android:ems="10"
-            android:hint="Contact Number"
-            android:inputType="phone"
-            android:padding="10dp" />
+            <requestFocus />
+        </EditText>
 
         <Button
-            android:id="@+id/AddPersonbutton"
+            android:id="@+id/AddMarketingPersonbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button"
-            android:text="Add Person"
             android:padding="10dp"
+            android:text="Add Person"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

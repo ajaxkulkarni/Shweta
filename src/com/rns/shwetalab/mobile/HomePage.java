@@ -49,7 +49,7 @@ public class HomePage extends Activity {
 		btn_marketing.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(HomePage.this, MarketingPersonDetails.class);
+				Intent i = new Intent(HomePage.this, AddViewMarketing.class);
 				startActivity(i);
 			}
 		});

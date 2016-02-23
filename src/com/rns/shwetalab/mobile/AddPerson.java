@@ -59,6 +59,13 @@ public class AddPerson extends Activity {
 				person.setWorkType(CommonUtil.TYPE_LAB);
 			}
 		});
+		dealer.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				person.setWorkType(CommonUtil.TYPE_DEALER);
+			}
+		});
+		
 	}
 
 	private void preparePerson() {

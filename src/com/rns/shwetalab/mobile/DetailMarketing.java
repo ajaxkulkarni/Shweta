@@ -23,16 +23,22 @@ public class DetailMarketing extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	//	setContentView(R.layout.activity_detail_marketing);
+		//	setContentView(R.layout.activity_detail_marketing);
 
-		
+
 		ScrollView scrl=new ScrollView(this);
 		final LinearLayout ll=new LinearLayout(this);
 		ll.setOrientation(LinearLayout.VERTICAL);
 		scrl.addView(ll);
+		final TextView nametext = new TextView(DetailMarketing.this);  
 		final EditText editText = new EditText(DetailMarketing.this);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
 		lp.setMargins(20, 20, 20,20);
+
+		LinearLayout.LayoutParams tv = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+		tv.setMargins(30, 10, 30, 0);
+
+
 		editText.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded));
 		editText.setHint("Enter Your Message"); 
 		editText.setLayoutParams(lp);
@@ -43,10 +49,10 @@ public class DetailMarketing extends Activity
 		add_btn.setTextColor(Color.parseColor("#FFFFFF"));
 		//msg = (EditText)findViewById(R.id.messageeditText);
 		//send = (ImageView)findViewById(R.id.sendbutton);
-		
+		nametext.setText(getIntent().getExtras().getString("name"));
 		ll.addView(editText);
 		ll.addView(add_btn);
-		
+		ll.addView(nametext);
 		// ll.addView(add_btn);
 		add_btn.setOnClickListener(new OnClickListener() {
 
@@ -54,10 +60,10 @@ public class DetailMarketing extends Activity
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				i++;
-//				TextView tv=new TextView(getApplicationContext());
-//				tv.setText("Number"+i);
-//				ll.addView(tv);
-			
+				//				TextView tv=new TextView(getApplicationContext());
+				//				tv.setText("Number"+i);
+				//				ll.addView(tv);
+
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
 				lp.setMargins(10, 20, 20,10);
 				EditText et=new EditText(DetailMarketing.this);
@@ -72,4 +78,3 @@ public class DetailMarketing extends Activity
 	}
 
 }
-
