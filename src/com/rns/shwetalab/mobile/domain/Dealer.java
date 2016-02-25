@@ -12,8 +12,14 @@ public class Dealer
 	private BigDecimal amount_paid;
 	private Date date;
 	private Person dealer;
-	
+	private String Name;
 
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
 	public Date getDate() {
 		return date;
 	}

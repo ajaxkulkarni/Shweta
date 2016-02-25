@@ -52,5 +52,8 @@
     <string name="title_activity_expandable_dealer_list">ExpandableDealerList</string>
     <string name="title_activity_jobs_expandable_list_view">JobsExpandableListView</string>
     <string name="title_activity_marketing_description_list">MarketingDescriptionList</string>
+    <string name="title_activity_dealer_amount_details">DealerAmountDetails</string>
+    <string name="title_activity_add_view_description">AddViewDescription</string>
+    <string name="title_activity_add_description">AddDescription</string>
 
 </resources>

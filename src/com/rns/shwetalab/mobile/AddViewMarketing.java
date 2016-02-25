@@ -17,10 +17,8 @@ public class AddViewMarketing extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_view_marketing);
-
 		add = (Button)findViewById(R.id.addMArketingPerson);
 		view = (Button)findViewById(R.id.viewMarketingPerson);
-
 		add.setOnClickListener(new OnClickListener() 
 		{
 			@Override

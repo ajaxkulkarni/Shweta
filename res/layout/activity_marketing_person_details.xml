@@ -59,7 +59,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/descriptioneditText"
+            android:id="@+id/contact_no_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -68,12 +68,25 @@
             android:ems="10"
             android:padding="10dp"
             android:background="@drawable/rounded"
-            android:hint="Description"
-            android:inputType="textMultiLine" >
-
-            <requestFocus />
+            android:hint="Contact Number"
+            android:inputType="phone" >
         </EditText>
 
+         <EditText
+            android:id="@+id/email_id_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:padding="10dp"
+            android:background="@drawable/rounded"
+            android:hint="Email Id"
+            android:inputType="textEmailSubject" >
+        </EditText>
+        
+        
         <Button
             android:id="@+id/AddMarketingPersonbutton"
             android:layout_width="match_parent"

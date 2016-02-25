@@ -158,7 +158,9 @@ public class AdminAddWorkTypeActivity extends Activity {
 			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
 			if (!TextUtils.isEmpty(editText.getText().toString())) {
 				map.setPrice(new BigDecimal(editText.getText().toString()));
+				map.setWorkType(work);
 			}
+			
 			maps.add(map);
 		}
 		return maps;
@@ -167,10 +169,12 @@ public class AdminAddWorkTypeActivity extends Activity {
 	private void prepareWorkType() 
 	{
 		work = new WorkType();
+		WorkPersonMap map = new WorkPersonMap();
 		if (!TextUtils.isEmpty(workTypeEditText.getText())) 
 		{
 			//workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
-			work.setName(workTypeEditText.getText().toString());	
+			work.setName(workTypeEditText.getText().toString());
+			
 		}
 		if (!TextUtils.isEmpty(defaultprice.getText())) 
 		{

@@ -11,7 +11,7 @@ import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.domain.Dealer;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -29,54 +29,51 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddDealer extends Activity implements OnClickListener,OnItemSelectedListener
-{
+@SuppressLint("SimpleDateFormat")
+public class AddDealer extends Activity implements OnClickListener, OnItemSelectedListener {
 
 	private DatePickerDialog toDatePickerDialog;
-	EditText material,price,amount_paid,date;
+	EditText material, price, amount_paid, date;
 	Button add;
 	private PersonDao personDao;
 	AutoCompleteTextView dealername;
 	Dealer dealer;
 	private SimpleDateFormat dateFormatter;
 	DealerDao dealerDao;
-
+	BigDecimal ap, mp;
+	int result;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_dealer);
 		dateFormatter = new SimpleDateFormat(CommonUtil.DATE_FORMAT, Locale.US);
-		date =(EditText)findViewById(R.id.dateeditText);
-		
-		material = (EditText)findViewById(R.id.dealermaterialeditText);
-		price = (EditText)findViewById(R.id.dealerpriceeditText);
-		amount_paid = (EditText)findViewById(R.id.dealerpaideditText);
+		date = (EditText) findViewById(R.id.dateeditText);
+
+		material = (EditText) findViewById(R.id.dealermaterialeditText);
+		price = (EditText) findViewById(R.id.dealerpriceeditText);
+		amount_paid = (EditText) findViewById(R.id.dealerpaideditText);
 		personDao = new PersonDao(getApplicationContext());
 		dealerDao = new DealerDao(getApplicationContext());
-		add = (Button)findViewById(R.id.dealerAddbutton);
+		add = (Button) findViewById(R.id.dealerAddbutton);
 		setDateTimeField();
 		prepareDealerNames();
-		add.setOnClickListener(new OnClickListener() 
-		{
+		add.setOnClickListener(new OnClickListener() {
+
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 				dealerDao.insertDetails(prepareMaterial());
 				CommonUtil.showMessage(AddDealer.this);
 			}
 		});
 	}
 
+	private void setDateTimeField() {
 
-	private void setDateTimeField() 
-	{
-
-		SimpleDateFormat dfDate  = new SimpleDateFormat("dd-M-yyyy");   
+		SimpleDateFormat dfDate = new SimpleDateFormat("dd-M-yyyy");
 		Calendar c = Calendar.getInstance();
 		String date1 = dfDate.format(c.getTime());
-		date.setText(date1); 
+		date.setText(date1);
 
 		date.setOnClickListener(this);
 
@@ -89,9 +86,6 @@ public class AddDealer extends Activity implements OnClickListener,OnItemSelecte
 			}
 		}, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-
-
-
 	}
 
 	private Dealer prepareMaterial() {
@@ -100,23 +94,23 @@ public class AddDealer extends Activity implements OnClickListener,OnItemSelecte
 		dealer.setMaterial(material.getText().toString());
 		dealer.setPrice(new BigDecimal(price.getText().toString()));
 		dealer.setAmount_paid(new BigDecimal(amount_paid.getText().toString()));
+		dealer.setName(dealername.getText().toString());
 		Person dealers = new Person();
 		dealers.setName(dealername.getText().toString());
 		dealer.setDealer(dealers);
+
 		return dealer;
 
 	}
 
-
-
 	private void prepareDealerNames() {
-		dealername = (AutoCompleteTextView)findViewById(R.id.dealernameeditText);
+		dealername = (AutoCompleteTextView) findViewById(R.id.dealernameeditText);
 		String type = CommonUtil.TYPE_DEALER;
-		ArrayAdapter<String> dealerNames = new ArrayAdapter<String>(AddDealer.this, android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames(type));
+		ArrayAdapter<String> dealerNames = new ArrayAdapter<String>(AddDealer.this,
+				android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames(type));
 		dealername.setThreshold(1);
 		dealername.setAdapter(dealerNames);
 	}
-
 
 	private void validate() {
 		if (TextUtils.isEmpty(dealername.getText())) {
@@ -134,20 +128,16 @@ public class AddDealer extends Activity implements OnClickListener,OnItemSelecte
 
 	}
 
-
 	@Override
-	public void onClick(View v) 
-	{
+	public void onClick(View v) {
 		toDatePickerDialog.show();
 	}
-
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {

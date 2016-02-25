@@ -1,5 +1,6 @@
 package com.rns.shwetalab.mobile;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +31,7 @@ import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class JobEntry extends Activity implements OnItemSelectedListener, OnClickListener {
@@ -46,6 +48,8 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 	private AutoCompleteTextView workType1, workType2, workType3, workType4;
 	private WorkTypeDao workTypeDao;
 	private JobsDao jobsDao;
+	private WorkType worktype;
+	private WorkPersonMap workPersonMap;
 	private EditText patientName, shade;
 
 	@Override
@@ -76,15 +80,10 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position, android.R.layout.simple_spinner_item);
-
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 		sp1.setAdapter(adapter);
-
 		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Quadrent, android.R.layout.simple_spinner_item);
-
 		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 		sp2.setAdapter(adapter1);
 
 		// spinner_quad(sp1);

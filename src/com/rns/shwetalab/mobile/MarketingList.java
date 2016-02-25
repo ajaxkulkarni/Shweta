@@ -32,7 +32,7 @@ public class MarketingList extends Activity {
 
 		lv = (ListView) findViewById(R.id.marketinglistView);
 		marketingDAO = new MarketingDao(this);
-		final MarketingAdapter Adapter = new MarketingAdapter(MarketingList.this, marketingDAO.getAll());
+		final MarketingAdapter Adapter = new MarketingAdapter(MarketingList.this, marketingDAO.queryForAll());
 		lv.setAdapter(Adapter);
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -42,7 +42,7 @@ public class MarketingList extends Activity {
 
 				Marketing marketing  = (Marketing)Adapter.getItem(position);
 				String personname = marketing.getMarketing_name();
-				Intent i = new Intent(MarketingList.this, MarketingDescriptionList.class);
+				Intent i = new Intent(MarketingList.this, AddViewDescription.class);
 				i.putExtra("personname", personname);
 				startActivity(i);
 			}

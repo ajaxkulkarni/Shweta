@@ -40,20 +40,19 @@ public class MarketingPersonDetails extends Activity implements OnClickListener
 		setContentView(R.layout.activity_marketing_person_details);
 		dateFormatter = new SimpleDateFormat(CommonUtil.DATE_FORMAT, Locale.US);
 		name = (EditText)findViewById(R.id.marketing_nameeditText);
-		
 		date = (EditText)findViewById(R.id.marketdateeditText);
-		description = (EditText)findViewById(R.id.descriptioneditText);
+		contact = (EditText)findViewById(R.id.contact_no_editText);
+		email = (EditText)findViewById(R.id.email_id_editText);
 		setDateTimeField();
+	//	prepareDealerNames();
 		marketing = new Marketing();
 		marketingDao = new MarketingDao(getApplicationContext());
 		add = (Button)findViewById(R.id.AddMarketingPersonbutton);
 		add.setOnClickListener(new OnClickListener() 
 		{
-
 			@Override
 			public void onClick(View v) 
 			{
-				//preparedealer();
 				marketingDao.insertDetails(preparedealer());
 				CommonUtil.showMessage(MarketingPersonDetails.this);
 			}
@@ -63,9 +62,21 @@ public class MarketingPersonDetails extends Activity implements OnClickListener
 	{
 		marketing.setMarketing_name(name.getText().toString());
 		marketing.setDate(CommonUtil.convertDate(date.getText().toString()));
-		marketing.setDescription(description.getText().toString()); 
+		marketing.setContact(contact.getText().toString());
+		marketing.setEmail(email.getText().toString());
 		return marketing;
 	}
+
+
+//	private void prepareDealerNames() {
+//		dealername = (AutoCompleteTextView) findViewById(R.id.dealernameeditText);
+//		String type = CommonUtil.TYPE_DEALER;
+//		ArrayAdapter<String> dealerNames = new ArrayAdapter<String>(AddDealer.this,
+//				android.R.layout.simple_dropdown_item_1line, personDao.getDoctorNames(type));
+//		dealername.setThreshold(1);
+//		dealername.setAdapter(dealerNames);
+//	}
+
 	
 	
 	private void setDateTimeField() 

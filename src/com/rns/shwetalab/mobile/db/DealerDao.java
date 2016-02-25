@@ -2,11 +2,15 @@ package com.rns.shwetalab.mobile.db;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.rns.shwetalab.mobile.domain.Dealer;
+import com.rns.shwetalab.mobile.domain.Marketing;
 import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +25,7 @@ public class DealerDao
 	private Context context;
 	private PersonDao personDao;
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.MATERIAL_NAME, DatabaseHelper.MATERIAL_PRICE, 
-			DatabaseHelper.MATERIAL_AMOUNT_PAID,DatabaseHelper.MATERIAL_DATE,DatabaseHelper.DEALER_ID };
+			DatabaseHelper.MATERIAL_AMOUNT_PAID,DatabaseHelper.MATERIAL_DATE,DatabaseHelper.DEALER_ID,DatabaseHelper.DEALER_NAME };
 
 	public DealerDao(Context c) {
 		context = c;
@@ -53,7 +57,7 @@ public class DealerDao
 		dealer.setDate(dealer.getDate());
 		dealer.setAmount_paid(dealer.getAmount_paid());
 		dealer.setPrice(dealer.getPrice());
-
+		dealer.setName(dealer.getName());
 		openToWrite();
 		long val = dealerDb.insert(DatabaseHelper.MATERIAL_TABLE, null, prepareContentValues(dealer));
 		Close();
@@ -77,18 +81,24 @@ public class DealerDao
 				dealer.setMaterial(cursor.getString(1));
 				dealer.setPrice(new BigDecimal(cursor.getString(2)));
 				dealer.setAmount_paid(new BigDecimal(cursor.getString(3)));
-				dealer.setDate(CommonUtil.convertDate(cursor.getString(4)));
+		//		dealer.setDate(cursor.getString(4).toString());
 				Person person = personDao.getPerson(cursor.getInt(5));
+				dealer.setName(cursor.getString(6));
 				dealer.setDealer(person);
-				//	dealer.setDate(cursor.);
-
 				dealers.add(dealer);
 			} while (cursor.moveToNext());
 		}
-
 		return dealers;
 	}
 
+	
+	public long updateAmount(Dealer dealer) {
+		if (dealer == null) {
+			return -10;
+		}
+		openToWrite();
+		return dealerDb.update(DatabaseHelper.MATERIAL_TABLE, prepareContentValues(dealer), DatabaseHelper.KEY_ID + " = ?", new String[] { String.valueOf(dealer.getId()) });
+	}
 
 
 	private ContentValues prepareContentValues(Dealer dealer) 
@@ -97,10 +107,29 @@ public class DealerDao
 		contentValues.put(DatabaseHelper.MATERIAL_NAME, dealer.getMaterial());
 		contentValues.put(DatabaseHelper.MATERIAL_PRICE, dealer.getPrice().toString());
 		contentValues.put(DatabaseHelper.MATERIAL_AMOUNT_PAID, dealer.getAmount_paid().toString());
-		contentValues.put(DatabaseHelper.MATERIAL_DATE, dealer.getDate().toString());
+	//	contentValues.put(DatabaseHelper.MATERIAL_DATE, CommonUtil.convertDate(dealer.getDate()));
 		contentValues.put(DatabaseHelper.DEALER_ID, dealer.getDealer().getId() );
+		contentValues.put(DatabaseHelper.DEALER_NAME, dealer.getName().toString());
 		return contentValues;
 
+	}
+	
+	
+	public List<Dealer> getDealerName(String name) {
+		List<Dealer> dealer = iterateMaterial(queryByName(name));
+		List<Dealer> materilas = new ArrayList<Dealer>();
+		for (Dealer dealers : dealer) {
+			if (dealers.getDealer().getName() != null) {
+				materilas.add(dealers);
+			}
+		}
+		return dealer;
+	}
+	@SuppressLint("NewApi")
+	public Cursor queryByName (String name) {
+		openToWrite();
+		return dealerDb.query(true,DatabaseHelper.MATERIAL_TABLE, cols, DatabaseHelper.DEALER_NAME + " like '" + name + "'", null, null,
+				null, null, null, null);
 	}
 	
 }

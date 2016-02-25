@@ -9,20 +9,21 @@ import com.rns.shwetalab.mobile.domain.Dealer;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Marketing;
 import com.rns.shwetalab.mobile.domain.WorkType;
-
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+@SuppressLint("NewApi")
 public class MarketingDao {
 	private SQLiteDatabase marketingDb;
 	private DatabaseHelper dealerHelper;
 	private Context context;
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.MARKETING_PERSON_NAME,DatabaseHelper.MARKETING_DATE,
-			DatabaseHelper.MARKETING_DESCRIPTION };
+			DatabaseHelper.MARKETING_CONTACT,DatabaseHelper.MARKETING_EMAIL };
 
 	public MarketingDao(Context c) {
 		context = c;
@@ -56,23 +57,33 @@ public class MarketingDao {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(DatabaseHelper.MARKETING_PERSON_NAME, marketing.getMarketing_name());
 		contentValues.put(DatabaseHelper.MARKETING_DATE, CommonUtil.convertDate(marketing.getDate()));
-		contentValues.put(DatabaseHelper.MARKETING_DESCRIPTION, marketing.getDescription());
+		contentValues.put(DatabaseHelper.MARKETING_CONTACT, marketing.getContact());
+		contentValues.put(DatabaseHelper.MARKETING_EMAIL, marketing.getEmail());
 		return contentValues;
 
 	}
 	public List<Marketing> getAll() {
 		openToWrite();
-		Cursor cursor = marketingDb.query(DatabaseHelper.MARKETING_TABLE, cols, null, null, null, null, null);
+		Cursor cursor = marketingDb.query(DatabaseHelper.MARKETING_TABLE, cols, null, null, null, null, null, null);
+		//	Cursor cursor = marketingDb.query(true, table, columns, selection, selectionArgs, groupBy, having, orderBy, limit, cancellationSignal)(DatabaseHelper.MARKETING_TABLE, cols, null, null, null, null, null);
 		Log.d(DatabaseHelper.DATABASE_NAME, "Records retreived:" + cursor.getCount());
 		return iterateMarketingName(cursor);
 	}
 
-	public Cursor queryByName(String name) {
+	public List<Marketing>  queryForAll() {
 		openToWrite();
-		return marketingDb.query(DatabaseHelper.MARKETING_TABLE, cols, DatabaseHelper.MARKETING_PERSON_NAME + " like '" + name + "'", null, null,
-				null, null);
+		Cursor cursor = marketingDb.query(true,DatabaseHelper.MARKETING_TABLE, cols,null, null, null,
+				null, null, null, null);
+
+		return iterateMarketingName(cursor);
 	}
-	
+
+	public Cursor queryByName (String name) {
+		openToWrite();
+		return marketingDb.query(true,DatabaseHelper.MARKETING_TABLE, cols, DatabaseHelper.MARKETING_PERSON_NAME + " like '" + name + "'", null, null,
+				null, null, null, null);
+	}
+
 	public List<Marketing> getMarketingName(String name) {
 		List<Marketing> market = iterateMarketingName(queryByName(name));
 		List<Marketing> marketing = new ArrayList<Marketing>();
@@ -83,8 +94,8 @@ public class MarketingDao {
 		}
 		return market;
 	}
-	
-	
+
+
 	private List<Marketing> iterateMarketingName(Cursor cursor) {
 		List<Marketing> marketings = new ArrayList<Marketing>();
 		if (cursor.moveToFirst()) {
@@ -94,7 +105,8 @@ public class MarketingDao {
 				marketing.setMarketing_name(cursor.getString(1));
 				//marketing.setDate(CommonUtil.convertDate(cursor.getString(2)));
 				marketing.setDate(CommonUtil.convertDate(cursor.getString(2)));
-				marketing.setDescription(cursor.getString(3));
+				marketing.setContact(cursor.getString(3));
+				marketing.setEmail(cursor.getString(4));
 				marketings.add(marketing);
 			} while (cursor.moveToNext());
 		}

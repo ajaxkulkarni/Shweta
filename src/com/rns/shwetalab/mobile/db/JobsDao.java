@@ -25,7 +25,7 @@ public class JobsDao {
 	private JobWorkTypeMapDao jobWorkTypeMapDao;
 	private JobLabMapDao jobLabMapDao;
 	private Context context;
-	
+
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE, DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR,
 			DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT, DatabaseHelper.JOB_POSITION };
 

@@ -51,20 +51,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String MATERIAL_AMOUNT_PAID = "material_amount_paid";
 	public static final String MATERIAL_DATE = "material_date";
 	public static final String DEALER_ID = "dealer_id";
+	public static final String DEALER_NAME = "dealer_name";
 
 	public static final String MARKETING_TABLE = "marketing";
 	public static final String MARKETING_PERSON_NAME = "person_name";
 	public static final String MARKETING_DATE = "follow_up_date";
-	public static final String MARKETING_DESCRIPTION = "follow_up_description";
+	public static final String MARKETING_CONTACT = "person_contact_no";
+	public static final String MARKETING_EMAIL = "person_email_id";
 	
 	
 
 	public static final String CREATE_TABLE_MARKETING = "create table " + MARKETING_TABLE + " (" + KEY_ID
-			+ " integer primary key autoincrement, " + MARKETING_PERSON_NAME + " text not null," + MARKETING_DATE + " date," + MARKETING_DESCRIPTION + " text not null)";
+			+ " integer primary key autoincrement, " + MARKETING_PERSON_NAME + " text not null," + MARKETING_DATE +
+			" date," + MARKETING_CONTACT + " integer not null," + MARKETING_EMAIL + " text not null)";
 
 	public static final String CREATE_TABLE_MATERIAL = "create table " + MATERIAL_TABLE + "(" + KEY_ID
 			+ " integer primary key autoincrement, " + MATERIAL_NAME + " text not null, " + MATERIAL_PRICE + " integer,"
-			+ MATERIAL_AMOUNT_PAID + " integer, " + MATERIAL_DATE + " date," + DEALER_ID + " integer not null)";
+			+ MATERIAL_AMOUNT_PAID + " integer, " + MATERIAL_DATE + " date," + DEALER_ID + " integer not null," + DEALER_NAME + " text not null)";
 
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID

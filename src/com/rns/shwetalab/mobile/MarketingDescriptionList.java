@@ -64,7 +64,7 @@ public class MarketingDescriptionList extends Activity
 		{
 			if(marketing.getMarketing_name()!= null)
 			{
-				map.put(marketing.getDate(), marketing.getDescription().toString());
+			//	map.put(marketing.getDate(), marketing.getDescription().toString());
 
 			}
 			else
