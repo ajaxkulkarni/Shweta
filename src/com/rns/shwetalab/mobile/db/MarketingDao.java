@@ -1,20 +1,16 @@
 package com.rns.shwetalab.mobile.db;
 
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rns.shwetalab.mobile.domain.Dealer;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Marketing;
-import com.rns.shwetalab.mobile.domain.WorkType;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.rns.shwetalab.mobile.domain.Marketing;
 
 @SuppressLint("NewApi")
 public class MarketingDao {
@@ -72,8 +68,7 @@ public class MarketingDao {
 
 	public List<Marketing>  queryForAll() {
 		openToWrite();
-		Cursor cursor = marketingDb.query(true,DatabaseHelper.MARKETING_TABLE, cols,null, null, null,
-				null, null, null, null);
+		Cursor cursor = marketingDb.query(DatabaseHelper.MARKETING_TABLE, cols, null, null, null, null, null);
 
 		return iterateMarketingName(cursor);
 	}

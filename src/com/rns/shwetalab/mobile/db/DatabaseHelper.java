@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String DATABASE_NAME = "DENTAL";
-	public static final int VERSION = 8;
+	public static final int VERSION = 9;
 	public static final String KEY_ID = "id";
 
 	public static final String PERSON_TABLE = "person";
@@ -106,6 +106,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_JOB);
 		db.execSQL(CREATE_TABLE_MARKETING);
 		db.execSQL(CREATE_TABLE_MATERIAL);
+		db.execSQL(CREATE_TABLE_LAB_WORKTYPES);
+		db.execSQL(CREATE_TABLE_JOB_WORKTYPES);
 		Log.d(DATABASE_NAME, "Tables Created!!");
 	}
 

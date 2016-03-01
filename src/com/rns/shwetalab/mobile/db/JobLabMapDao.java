@@ -11,8 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class JobLabMapDao {
 

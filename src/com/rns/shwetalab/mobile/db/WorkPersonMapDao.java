@@ -44,6 +44,10 @@ public class WorkPersonMapDao {
 	}
 
 	public long insertDetails(List<WorkPersonMap> list) {
+		if(list == null || list.size() == 0) {
+			return 0;
+		}
+	
 		for (WorkPersonMap map : list) {
 			insertDetails(map);
 		}
