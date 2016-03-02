@@ -44,7 +44,7 @@
             android:paddingLeft="10dp" >
         </EditText>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/marketing_nameeditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:hint="Name"
             android:inputType="textPersonName"
             android:padding="10dp" >
-        </EditText>
+        </AutoCompleteTextView>
 
         <EditText
             android:id="@+id/contact_no_editText"
@@ -65,28 +65,27 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:ems="10"
-            android:padding="10dp"
             android:background="@drawable/rounded"
+            android:ems="10"
             android:hint="Contact Number"
-            android:inputType="phone" >
+            android:inputType="phone"
+            android:padding="10dp" >
         </EditText>
 
-         <EditText
+        <EditText
             android:id="@+id/email_id_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:ems="10"
-            android:padding="10dp"
             android:background="@drawable/rounded"
+            android:ems="10"
             android:hint="Email Id"
-            android:inputType="textEmailSubject" >
+            android:inputType="textEmailSubject"
+            android:padding="10dp" >
         </EditText>
-        
-        
+
         <Button
             android:id="@+id/AddMarketingPersonbutton"
             android:layout_width="match_parent"

@@ -9,26 +9,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#80CBC4"
-        android:gravity="center"
         android:orientation="horizontal"
-        android:padding="20dp" >
+        android:padding="10dp" >
 
         <TextView
             android:id="@+id/market_personname_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="RAJESH"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/addperson_imageView"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/addperson" />
+            android:layout_gravity="right"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/addperson_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/addperson" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Add Person"
+                android:textColor="#FFF" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView

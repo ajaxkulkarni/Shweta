@@ -29,17 +29,14 @@ public class MarketingList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_marketing_list);
-
 		lv = (ListView) findViewById(R.id.marketinglistView);
 		marketingDAO = new MarketingDao(this);
 		final MarketingAdapter Adapter = new MarketingAdapter(MarketingList.this, marketingDAO.queryForAll());
 		lv.setAdapter(Adapter);
-
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
-
 				Marketing marketing  = (Marketing)Adapter.getItem(position);
 				String personname = marketing.getMarketing_name();
 				Intent i = new Intent(MarketingList.this, AddViewDescription.class);

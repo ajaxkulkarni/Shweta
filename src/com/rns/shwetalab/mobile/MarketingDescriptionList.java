@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rns.shwetalab.mobile.adapter.MarketingDescriptionListAdapter;
+import com.rns.shwetalab.mobile.db.DescriptionDao;
 import com.rns.shwetalab.mobile.db.MarketingDao;
 import com.rns.shwetalab.mobile.domain.Marketing;
 
@@ -27,6 +28,8 @@ public class MarketingDescriptionList extends Activity
 	ListView lv;
 	ImageView addperson;
 	MarketingDao marketingDao;
+	DescriptionDao descriptionDao;
+
 
 	Map<Date, String> map = new HashMap<Date, String>();
 	@Override
@@ -37,39 +40,28 @@ public class MarketingDescriptionList extends Activity
 		name = (TextView)findViewById(R.id.market_personname_textView);
 		addperson = (ImageView)findViewById(R.id.addperson_imageView);
 		Bundle extras = getIntent().getExtras();
-		String names = extras.getString("personname").toUpperCase();
+		String names = extras.getString("Name");
 		name.setText(names);
 
 		addperson.setOnClickListener(new OnClickListener() 
 		{
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v){
 				Intent i =new Intent(MarketingDescriptionList.this,AddPerson.class);
 				startActivity(i);
 			}
 		});
-
+		descriptionDao = new DescriptionDao(this);
 		lv = (ListView)findViewById(R.id.marketing_description_listView);
-		prepareList(names);
+		//		prepareList(names);
 		//marketingDao = new MarketingDao(this);
-		final MarketingDescriptionListAdapter Adapter = new MarketingDescriptionListAdapter(MarketingDescriptionList.this,map);
-		lv.setAdapter(Adapter);
-	}
-
-	private void prepareList(String data2) 
-	{
-		marketingDao = new MarketingDao(this);
-		List<Marketing> market = marketingDao.getMarketingName(data2);
-		for(Marketing marketing : market)
+		final MarketingDescriptionListAdapter Adapter = new MarketingDescriptionListAdapter(MarketingDescriptionList.this, descriptionDao.getPersonName(names));
+		if(Adapter.getCount()!=0)
 		{
-			if(marketing.getMarketing_name()!= null)
-			{
-			//	map.put(marketing.getDate(), marketing.getDescription().toString());
-
-			}
-			else
-				Toast.makeText(getApplicationContext(), "No data Available",Toast.LENGTH_SHORT).show();
+			lv.setAdapter(Adapter);
 		}
+		else
+			Toast.makeText(getApplicationContext(),"No Description Available!",Toast.LENGTH_SHORT).show();
 
 	}
 }

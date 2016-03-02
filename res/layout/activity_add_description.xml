@@ -25,23 +25,36 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/followupdateeditText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="100dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/rounded"
+        android:drawableRight="@drawable/calender"
+        android:ems="10"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/desceditText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded"
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine"
-        android:padding="20dp" >
+        android:padding="15dp" >
 
         <requestFocus />
     </EditText>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/adddescbutton1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -51,7 +64,7 @@
         android:background="@drawable/button"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Button"
+        android:text="Add"
         android:textColor="#FFF"
         android:textSize="17sp"
         android:textStyle="bold" />

@@ -25,6 +25,7 @@
     <string name="title_activity_detail_marketing">DetailMarketing</string>
     <string name="title_activity_marketing_person_details">MarketingPersonDetails</string>
     <string name="title_activity_export_database">ExportDatabase</string>
+    
 
     <string-array name="Quadrent">
         <item>Select Quadrent</item>

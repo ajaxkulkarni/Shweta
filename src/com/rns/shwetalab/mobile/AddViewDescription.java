@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class AddViewDescription extends Activity 
 {
-	
+
 	TextView name;
 	Button add,view;
 
@@ -24,7 +24,6 @@ public class AddViewDescription extends Activity
 		Bundle extras = getIntent().getExtras();
 		final String names = extras.getString("personname").toUpperCase();
 		name.setText(names);
-		
 		add.setOnClickListener(new OnClickListener() 
 		{
 			@Override
@@ -33,10 +32,16 @@ public class AddViewDescription extends Activity
 				Intent i = new Intent(AddViewDescription.this,AddDescription.class);
 				i.putExtra("Name",names);
 				startActivity(i);
-				
 			}
 		});
-		
-		
+		view.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) {
+				Intent i =new Intent(AddViewDescription.this,MarketingDescriptionList.class);
+				i.putExtra("Name",names);
+				startActivity(i);
+			}
+		});
 	}
 }

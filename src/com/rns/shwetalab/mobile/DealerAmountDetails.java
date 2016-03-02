@@ -28,6 +28,7 @@ public class DealerAmountDetails extends Activity {
 	private Button pay;
 	private int result;
 	private TextView name;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

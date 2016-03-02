@@ -59,6 +59,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String MARKETING_CONTACT = "person_contact_no";
 	public static final String MARKETING_EMAIL = "person_email_id";
 	
+	public static final String DESCRIPTION_TABLE = "description";
+	public static final String DESC_PERSON_NAME = "person_name";
+	public static final String DESCRIPTION_DATE = "follow_date";
+	public static final String DESCRIPTION_DATA = "descripiotn_data";
+	
+	
+	public static final String CREATE_TABLE_DESCRIPTION = "create table " + DESCRIPTION_TABLE + " (" + KEY_ID
+			+ " integer primary key autoincrement, " + DESC_PERSON_NAME + " text not null, " + DESCRIPTION_DATA
+			+ " text not null," + DESCRIPTION_DATE + " date)";
 	
 
 	public static final String CREATE_TABLE_MARKETING = "create table " + MARKETING_TABLE + " (" + KEY_ID
@@ -108,6 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_MATERIAL);
 		db.execSQL(CREATE_TABLE_LAB_WORKTYPES);
 		db.execSQL(CREATE_TABLE_JOB_WORKTYPES);
+		db.execSQL(CREATE_TABLE_DESCRIPTION);
 		Log.d(DATABASE_NAME, "Tables Created!!");
 	}
 
