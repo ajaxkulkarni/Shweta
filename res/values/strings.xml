@@ -25,7 +25,6 @@
     <string name="title_activity_detail_marketing">DetailMarketing</string>
     <string name="title_activity_marketing_person_details">MarketingPersonDetails</string>
     <string name="title_activity_export_database">ExportDatabase</string>
-    
 
     <string-array name="Quadrent">
         <item>Select Quadrent</item>
@@ -56,5 +55,6 @@
     <string name="title_activity_dealer_amount_details">DealerAmountDetails</string>
     <string name="title_activity_add_view_description">AddViewDescription</string>
     <string name="title_activity_add_description">AddDescription</string>
+    <string name="title_activity_monthly_dealer_list">MonthlyDealerList</string>
 
 </resources>

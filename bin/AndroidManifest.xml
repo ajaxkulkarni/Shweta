@@ -160,6 +160,10 @@
             android:name=".AddDescription"
             android:label="@string/title_activity_add_description" >
         </activity>
+        <activity
+            android:name=".MonthlyDealerList"
+            android:label="@string/title_activity_monthly_dealer_list" >
+        </activity>
     </application>
 
 </manifest>

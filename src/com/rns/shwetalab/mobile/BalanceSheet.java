@@ -2,6 +2,8 @@ package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
 
+import org.w3c.dom.Text;
+
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.DealerDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
@@ -19,7 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class BalanceSheet extends Activity {
-	TextView doctorPrice, labPrice, doctor, lab,dealerprice;
+	TextView doctorPrice, labPrice, doctor, lab,dealerprice,dealers;
 	WorkType worktype;
 	WorkPersonMap workpersonmap;
 	private JobsDao jobsDao;
@@ -47,8 +49,21 @@ public class BalanceSheet extends Activity {
 		totalPrice = (TextView) findViewById(R.id.activity_billingsheettotal_textView);
 		totalPrice.setText(gain.subtract(labDues).add(dealer).toString());
 		next = (Button) findViewById(R.id.balancesheet_submit_button);
-
+		dealers = (TextView)findViewById(R.id.activity_billingsheetdealertextView);
 		doctor = (TextView) findViewById(R.id.activity_billingsheetdoctortextView);
+		
+		dealers.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				Intent i = new Intent(BalanceSheet.this, MonthlyDealerList.class);
+				i.putExtra("Month", month);
+				i.putExtra("type", CommonUtil.TYPE_DEALER);
+				startActivity(i);
+			}
+		}); 
+		
 		doctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -69,7 +69,7 @@ public class PersonDao {
 		return persons.get(0);
 
 	}
-	
+
 	public Person getPerson(Integer id) {
 		Cursor c = queryById(id);
 		List<Person> persons = iteratePersonCursor(c);
@@ -84,6 +84,9 @@ public class PersonDao {
 		openToWrite();
 		return personDb.query(DatabaseHelper.PERSON_TABLE, cols, DatabaseHelper.KEY_ID + " = " + id , null, null,null, null);
 	}
+
+
+
 
 	public long updateldetail(int rowId, String fname, String lname) {
 		ContentValues contentValues = new ContentValues();

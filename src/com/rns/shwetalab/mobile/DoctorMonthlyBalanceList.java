@@ -20,16 +20,15 @@ import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobLabMapDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.Person;
 
 public class DoctorMonthlyBalanceList extends Activity {
 
 	private JobsDao jobsDao;
 	private ListView lv;
 	private Map<String, BigDecimal> map = new HashMap<String, BigDecimal>();
-
-	private ArrayList<String> objname = new ArrayList<String>();
-	private ArrayList<String> objprice = new ArrayList<String>();
 
 	private JobLabMapDao JobLabMapDao;
 
@@ -44,18 +43,21 @@ public class DoctorMonthlyBalanceList extends Activity {
 		DoctorListAdapter Adapter = new DoctorListAdapter(this, map);
 		lv.setAdapter(Adapter);
 
-//		lv.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
-//				String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
-//				i.putExtra("Month", month);
-//				i.putExtra("Name", name);
-//				startActivity(i);
-//
-//			}
-//		});
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
+					String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
+				i.putExtra("Month", month);
+				
+				//	i.putExtra("Name", name);
+				i.putExtra("Id", id);
+			//	i.putExtra("Id",person_id);
+				startActivity(i);
+
+			}
+		});
 
 	}
 

@@ -67,7 +67,7 @@ public class DealerDao
 
 	}
 
-	
+
 	private ContentValues prepareContentValues(Dealer dealer) 
 	{
 		ContentValues contentValues = new ContentValues();
@@ -80,7 +80,7 @@ public class DealerDao
 		return contentValues;
 
 	}
-	
+
 	public List<Dealer> getAll() {
 		openToWrite();
 		Cursor cursor = dealerDb.query(DatabaseHelper.MATERIAL_TABLE, cols, null, null, null, null, null);
@@ -117,7 +117,7 @@ public class DealerDao
 	}
 
 
-	
+
 
 
 	public List<Dealer> getDealerName(String name) {
@@ -155,11 +155,10 @@ public class DealerDao
 		List<Dealer> dealers = iterateMaterial(queryForMonth(month));
 		List<Dealer> jobsByType = new ArrayList<Dealer>();
 		for (Dealer dealer : dealers) {
-			if (dealer.getDealer() != null) {
+			if (dealer.getDealer() != null){
 				jobsByType.add(dealer);
 			}
 		}
-		// return iterateJobsCursor(queryForMonth(month));
 		return dealers;
 	}
 	private Cursor queryForMonth(String month) {
