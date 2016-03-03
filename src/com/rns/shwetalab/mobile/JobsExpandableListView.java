@@ -36,7 +36,8 @@ public class JobsExpandableListView extends Activity
 		expListView = (ExpandableListView) findViewById(R.id.jobsexpandableListView);
 		Bundle extras = getIntent().getExtras();
 		String month = extras.getString("Month");
-		prepareListData(month);
+		String name = extras.getString("Name");
+		prepareListData(month,name);
 		joblistAdapter = new JobsExpandableListViewAdapter(this, listDataHeader, listDataChild);
 		expListView.setAdapter(joblistAdapter);
 		expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -47,7 +48,6 @@ public class JobsExpandableListView extends Activity
 		});
 
 		expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
 			@Override
 			public void onGroupExpand(int groupPosition) {
 			}
@@ -57,13 +57,11 @@ public class JobsExpandableListView extends Activity
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-
 			}
 		});
 
 		// Listview on child click listener
 		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 			//	Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader.get(groupPosition), Toast.LENGTH_SHORT).show();
@@ -72,7 +70,6 @@ public class JobsExpandableListView extends Activity
 		});
 
 		expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
 			@Override
 			public void onGroupExpand(int groupPosition) {
 			//	Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
@@ -103,10 +100,10 @@ public class JobsExpandableListView extends Activity
 		
 	}
 	
-	private void prepareListData(String month) 
+	private void prepareListData(String month, String name) 
 	{
 		jobsDao = new JobsDao(this);
-		List<Job> jobs = jobsDao.getJobsByMonth(month);
+		List<Job> jobs = jobsDao.getJobsByMonthName(month,name);
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, List<String>>();
 		for (Job job : jobs) {
@@ -114,9 +111,7 @@ public class JobsExpandableListView extends Activity
 				continue;
 			}
 			List<String> jobDetails = new ArrayList<String>();
-			
 			jobDetails.add("Case Id :" + job.getId());
-			
 			jobDetails.add("Patient :" + job.getPatientName());
 			if (job.getShade() != null) {
 			jobDetails.add("Shade :" + job.getShade().toString());

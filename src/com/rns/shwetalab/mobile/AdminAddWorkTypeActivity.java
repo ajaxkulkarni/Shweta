@@ -160,7 +160,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 				map.setPrice(new BigDecimal(editText.getText().toString()));
 				map.setWorkType(work);
 			}
-			
 			maps.add(map);
 		}
 		return maps;
@@ -174,7 +173,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 		{
 			//workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
 			work.setName(workTypeEditText.getText().toString());
-			
 		}
 		if (!TextUtils.isEmpty(defaultprice.getText())) 
 		{

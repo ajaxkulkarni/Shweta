@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Dealer;
+import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Marketing;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -19,7 +21,7 @@ import android.util.Log;
 
 public class DealerDao 
 {
-	
+
 	private SQLiteDatabase dealerDb;
 	private DatabaseHelper dealerHelper;
 	private Context context;
@@ -65,6 +67,20 @@ public class DealerDao
 
 	}
 
+	
+	private ContentValues prepareContentValues(Dealer dealer) 
+	{
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(DatabaseHelper.MATERIAL_NAME, dealer.getMaterial());
+		contentValues.put(DatabaseHelper.MATERIAL_PRICE, dealer.getPrice().toString());
+		contentValues.put(DatabaseHelper.MATERIAL_AMOUNT_PAID, dealer.getAmount_paid().toString());
+		contentValues.put(DatabaseHelper.MATERIAL_DATE, CommonUtil.convertDate(dealer.getDate()));
+		contentValues.put(DatabaseHelper.DEALER_ID, dealer.getDealer().getId() );
+		contentValues.put(DatabaseHelper.DEALER_NAME, dealer.getName().toString());
+		return contentValues;
+
+	}
+	
 	public List<Dealer> getAll() {
 		openToWrite();
 		Cursor cursor = dealerDb.query(DatabaseHelper.MATERIAL_TABLE, cols, null, null, null, null, null);
@@ -81,7 +97,7 @@ public class DealerDao
 				dealer.setMaterial(cursor.getString(1));
 				dealer.setPrice(new BigDecimal(cursor.getString(2)));
 				dealer.setAmount_paid(new BigDecimal(cursor.getString(3)));
-		//		dealer.setDate(cursor.getString(4).toString());
+				dealer.setDate(CommonUtil.convertDate(cursor.getString(4)));
 				Person person = personDao.getPerson(cursor.getInt(5));
 				dealer.setName(cursor.getString(6));
 				dealer.setDealer(person);
@@ -91,7 +107,7 @@ public class DealerDao
 		return dealers;
 	}
 
-	
+
 	public long updateAmount(Dealer dealer) {
 		if (dealer == null) {
 			return -10;
@@ -101,20 +117,9 @@ public class DealerDao
 	}
 
 
-	private ContentValues prepareContentValues(Dealer dealer) 
-	{
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(DatabaseHelper.MATERIAL_NAME, dealer.getMaterial());
-		contentValues.put(DatabaseHelper.MATERIAL_PRICE, dealer.getPrice().toString());
-		contentValues.put(DatabaseHelper.MATERIAL_AMOUNT_PAID, dealer.getAmount_paid().toString());
-	//	contentValues.put(DatabaseHelper.MATERIAL_DATE, CommonUtil.convertDate(dealer.getDate()));
-		contentValues.put(DatabaseHelper.DEALER_ID, dealer.getDealer().getId() );
-		contentValues.put(DatabaseHelper.DEALER_NAME, dealer.getName().toString());
-		return contentValues;
+	
 
-	}
-	
-	
+
 	public List<Dealer> getDealerName(String name) {
 		List<Dealer> dealer = iterateMaterial(queryByName(name));
 		List<Dealer> materilas = new ArrayList<Dealer>();
@@ -131,5 +136,37 @@ public class DealerDao
 		return dealerDb.query(true,DatabaseHelper.MATERIAL_TABLE, cols, DatabaseHelper.DEALER_NAME + " like '" + name + "'", null, null,
 				null, null, null, null);
 	}
-	
+
+
+	public BigDecimal getIncomeForMonth(String month, String personType) {
+		// int value = Integer.parseInt(month);
+		BigDecimal total = BigDecimal.ZERO;
+		List<Dealer> jobs = getJobsByMonth(month);
+		for (Dealer job : jobs) {
+			if (job.getPrice() == null || job.getDealer() == null
+					|| !personType.equals(job.getDealer().getWorkType())) {
+				continue;
+			}
+			total = total.add(job.getPrice());
+		}
+		return total;
+	}
+	public List<Dealer> getJobsByMonth(String month) {
+		List<Dealer> dealers = iterateMaterial(queryForMonth(month));
+		List<Dealer> jobsByType = new ArrayList<Dealer>();
+		for (Dealer dealer : dealers) {
+			if (dealer.getDealer() != null) {
+				jobsByType.add(dealer);
+			}
+		}
+		// return iterateJobsCursor(queryForMonth(month));
+		return dealers;
+	}
+	private Cursor queryForMonth(String month) {
+		openToWrite();
+		return dealerDb.query(DatabaseHelper.MATERIAL_TABLE, cols,
+				DatabaseHelper.MATERIAL_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null,
+				null);
+	}
+
 }

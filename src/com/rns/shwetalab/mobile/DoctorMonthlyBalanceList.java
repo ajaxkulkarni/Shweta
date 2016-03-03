@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
@@ -37,28 +38,24 @@ public class DoctorMonthlyBalanceList extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_doctor__list__amount);
 		Bundle extras = getIntent().getExtras();
-		String month = extras.getString("Month");
-
-		objname.add("Ajinkya");
-		objprice.add("1000");
-		
+		final String month = extras.getString("Month");
 		prepareListData(month);
 		lv = (ListView) findViewById(R.id.doctor_listView);
-		DoctorListAdapter Adapter = new DoctorListAdapter(this, objname, objprice);
+		DoctorListAdapter Adapter = new DoctorListAdapter(this, map);
 		lv.setAdapter(Adapter);
 
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == 0) {
-					Intent i = new Intent(DoctorMonthlyBalanceList.this, BalanceDetails.class);
-
-					startActivity(i);
-				}
-
-			}
-		});
+//		lv.setOnItemClickListener(new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
+//				String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
+//				i.putExtra("Month", month);
+//				i.putExtra("Name", name);
+//				startActivity(i);
+//
+//			}
+//		});
 
 	}
 
@@ -69,16 +66,17 @@ public class DoctorMonthlyBalanceList extends Activity {
 		List<Job> jobs = jobsDao.getJobsByMonth(month);
 		map = new HashMap<String, BigDecimal>();
 		if (CommonUtil.TYPE_LAB.equals(personType)) {
-			//return getLabJobsPrice(jobs);
+			getLabJobsPrice(jobs);
 		} else {
-			//return getDoctorsJobPrice(personType, jobs);
+			getDoctorsJobPrice(personType, jobs);
 		}
 	}
 
 	private void getDoctorsJobPrice(String personType, List<Job> jobs) {
 		BigDecimal total = BigDecimal.ZERO;
 		for (Job job : jobs) {
-			if (job.getDoctor() == null || job.getWorkTypes() == null || job.getPrice() == null || !personType.equals(job.getDoctor().getWorkType())) {
+			if (job.getDoctor() == null || job.getPrice() == null
+					|| !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
 			if (map.get(job.getDoctor().getName()) == null) {

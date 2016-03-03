@@ -78,7 +78,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
-
+		 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp1.setAdapter(adapter);

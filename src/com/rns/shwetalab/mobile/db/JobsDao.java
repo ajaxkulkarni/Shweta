@@ -26,8 +26,9 @@ public class JobsDao {
 	private JobLabMapDao jobLabMapDao;
 	private Context context;
 
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE, DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR,
-			DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT, DatabaseHelper.JOB_POSITION };
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
+			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT,
+			DatabaseHelper.JOB_POSITION };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -152,7 +153,7 @@ public class JobsDao {
 	public List<Job> getJobsByDate(String date, String personType) {
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
 		List<Job> jobsByType = new ArrayList<Job>();
-		if(CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) {
+		if (CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) {
 			return getLabJobs(jobs);
 		}
 		for (Job job : jobs) {
@@ -164,11 +165,11 @@ public class JobsDao {
 	}
 
 	private List<Job> getLabJobs(List<Job> jobs) {
-		List<Job> labJobs= new ArrayList<Job>();
-		if(jobs == null || jobs.size() == 0) {
+		List<Job> labJobs = new ArrayList<Job>();
+		if (jobs == null || jobs.size() == 0) {
 			return labJobs;
 		}
-		for(Job job:jobs) {
+		for (Job job : jobs) {
 			labJobs.addAll(jobLabMapDao.getLabJobsForJob(job));
 		}
 		return labJobs;
@@ -176,7 +177,8 @@ public class JobsDao {
 
 	public Cursor queryByDate(String date) {
 		openToWrite();
-		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " = '" + date + "'", null, null, null, null);
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " = '" + date + "'", null, null,
+				null, null);
 	}
 
 	public List<Job> getJobs() {
@@ -194,30 +196,48 @@ public class JobsDao {
 		// return iterateJobsCursor(queryForMonth(month));
 		return jobs;
 	}
+	
+	public List<Job> getJobsByMonthName(String month,String name) {
+		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,name));
+		List<Job> jobsByType = new ArrayList<Job>();
+		for (Job job : jobs) {
+			if (job.getDoctor() != null) {
+				jobsByType.add(job);
+			}
+		}
+		// return iterateJobsCursor(queryForMonth(month));
+		return jobs;
+	}
 
+	
+	
+	
 	public BigDecimal getIncomeForMonth(String month, String personType) {
 		// int value = Integer.parseInt(month);
 		BigDecimal total = BigDecimal.ZERO;
 		List<Job> jobs = getJobsByMonth(month);
 		for (Job job : jobs) {
-			// if (job.getWorkTypes() == null || job.getPrice() == null ||
-			// job.getDoctor() == null
-			// || !personType.equals(job.getDoctor().getWorkType())) {
-			// continue;
-			// }
-
-			if (job.getPrice() == null || job.getDoctor() == null || !personType.equals(job.getDoctor().getWorkType())) {
+			if (job.getPrice() == null || job.getDoctor() == null
+					|| !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
-
 			total = total.add(job.getPrice());
 		}
 		return total;
 	}
 
+	private Cursor queryForMonthName(String month, String name) {
+		openToWrite();
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-"
+				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR +" = " + name ,
+				null, null, null, null);
+	}
+
 	private Cursor queryForMonth(String month) {
 		openToWrite();
-		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null, null);
+		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols,
+				DatabaseHelper.JOB_DATE + " LIKE '%-" + ViewMonth.months().get(month) + "-2016'", null, null, null,
+				null);
 	}
 
 	private List<Job> iterateJobsCursor(Cursor cursor) {
