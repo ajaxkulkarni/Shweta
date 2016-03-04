@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.rns.shwetalab.mobile.adapter.DealersListAdapter;
 import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.DealerDao;
@@ -37,20 +38,20 @@ public class MonthlyDealerList extends Activity
 		lv.setAdapter(Adapter);
 
 	}
-	
-	
+
+
 	private void prepareListData(String month) {
 		String personType = getIntent().getStringExtra("type");
 		dealerDao = new DealerDao(this);
-		
+
 		List<Dealer> dealers = dealerDao.getJobsByMonth(month);
 		map = new HashMap<String, BigDecimal>();
-		
-			getDoctorsJobPrice(personType, dealers);
-		
+
+		getDealerMaterialPrice(personType, dealers);
+
 	}
-	
-	private void getDoctorsJobPrice(String personType, List<Dealer> dealers) 
+
+	private void getDealerMaterialPrice(String personType, List<Dealer> dealers) 
 	{
 		BigDecimal total = BigDecimal.ZERO;
 		for (Dealer dealer : dealers) {
@@ -59,15 +60,15 @@ public class MonthlyDealerList extends Activity
 				continue;
 			}
 			if (map.get(dealer.getDealer().getName()) == null) {
-				map.put(dealer.getDealer().getName(), dealer.getPrice());
+				map.put(dealer.getDealer().getName(), dealer.getBalance());
 			} else {
 				total = map.get(dealer.getDealer().getName());
 				if (total == null) {
 					continue;
 				}
-				map.put(dealer.getDealer().getName(), total.add(dealer.getPrice()));
+				map.put(dealer.getDealer().getName(), total.add(dealer.getBalance()));
 			}
 		}
 	}
-	
+
 }

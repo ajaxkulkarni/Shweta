@@ -71,7 +71,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-			//	Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader.get(groupPosition), Toast.LENGTH_SHORT).show();
+				//	Toast.makeText(getApplicationContext(), "Group Clicked " + listDataHeader.get(groupPosition), Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -80,7 +80,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-			//	Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
+				//	Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -98,8 +98,8 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
-//						Toast.LENGTH_SHORT).show();
+				//				Toast.makeText(getApplicationContext(), listDataHeader.get(groupPosition) + " : " + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
+				//						Toast.LENGTH_SHORT).show();
 
 				return false;
 			}
@@ -115,27 +115,31 @@ public class ExpandableDoctorListView extends Activity {
 			if (job.getDoctor() == null) {
 				continue;
 			}
-			List<String> jobDetails = new ArrayList<String>();
-			jobDetails.add("Case Id :" + job.getId());
-			jobDetails.add("Patient :" + job.getPatientName());
-			if (job.getShade() != null) {
-			jobDetails.add("Shade :" + job.getShade().toString());
-			}
-			if (job.getWorkTypes() != null) 
-			{
-				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
-			}
-			if (job.getPrice() != null) {
-				jobDetails.add("Price :" + job.getPrice().toString());
-			}
-			if (job.getQuadrent() != null) {
-				jobDetails.add("Tooth Quadrent :" + job.getQuadrent().toString());
-			}
-			if (job.getPosition() != null) {
-				jobDetails.add("Tooth Position :" + job.getPosition().toString());
-			}
-			listDataHeader.add(job.getDoctor().getName());
-			listDataChild.put(job.getDoctor().getName(), jobDetails);
+			
+				List<String> jobDetails = new ArrayList<String>();
+				jobDetails.add("Case Id :" + job.getId());
+				jobDetails.add("Patient :" + job.getPatientName());
+				if (job.getShade() != null) {
+					jobDetails.add("Shade :" + job.getShade().toString());
+				}
+				if (job.getWorkTypes() != null) 
+				{
+					jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
+				}
+				if (job.getPrice() != null) {
+					jobDetails.add("Price :" + job.getPrice().toString());
+				}
+				if (job.getQuadrent() != null) {
+					jobDetails.add("Tooth Quadrent :" + job.getQuadrent().toString());
+				}
+				if (job.getPosition() != null) {
+					jobDetails.add("Tooth Position :" + job.getPosition().toString());
+				}
+				listDataHeader.add(job.getDoctor().getName());
+				listDataChild.put(job.getDoctor().getName(), jobDetails);
+				
+			
+
 		}
 	}
 }

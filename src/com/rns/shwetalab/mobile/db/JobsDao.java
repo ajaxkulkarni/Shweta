@@ -152,16 +152,19 @@ public class JobsDao {
 
 	public List<Job> getJobsByDate(String date, String personType) {
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
-		List<Job> jobsByType = new ArrayList<Job>();
-		if (CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) {
+		List<Job> jobsByTypes = new ArrayList<Job>();
+		if (CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) 
+		{
 			return getLabJobs(jobs);
 		}
-		for (Job job : jobs) {
+		for (Job job : jobs) 
+		{
+			
 			if (job.getDoctor() != null && personType.equals(job.getDoctor().getWorkType())) {
-				jobsByType.add(job);
+				jobsByTypes.add(job);
 			}
 		}
-		return jobsByType;
+		return jobsByTypes;
 	}
 
 	private List<Job> getLabJobs(List<Job> jobs) {
@@ -197,8 +200,8 @@ public class JobsDao {
 		return jobs;
 	}
 	
-	public List<Job> getJobsByMonthName(String month,String name) {
-		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,name));
+	public List<Job> getJobsByMonthName(String month,Integer id) {
+		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,id));
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
 			if (job.getDoctor() != null) {
@@ -226,10 +229,10 @@ public class JobsDao {
 		return total;
 	}
 
-	private Cursor queryForMonthName(String month, String name) {
+	private Cursor queryForMonthName(String month, Integer id) {
 		openToWrite();
 		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-"
-				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR +" = " + name ,
+				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR +" = " + id ,
 				null, null, null, null);
 	}
 

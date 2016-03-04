@@ -1,9 +1,12 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,7 +43,9 @@ public class HomePage extends Activity {
 		btn_admin.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View view) {
+			public void onClick(View view) 
+			{
+				
 				Log.d("ddfd", "dfd");
 				Intent i = new Intent(getApplicationContext(), AdminLogin.class);
 				startActivity(i);

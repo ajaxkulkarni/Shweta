@@ -1,6 +1,7 @@
 package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -42,6 +43,7 @@ public class AddDealer extends Activity implements OnClickListener, OnItemSelect
 	DealerDao dealerDao;
 	BigDecimal ap, mp;
 	int result;
+	BigDecimal total;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,15 @@ public class AddDealer extends Activity implements OnClickListener, OnItemSelect
 		Person dealers = new Person();
 		dealers.setName(dealername.getText().toString());
 		dealer.setDealer(dealers);
-
+		mp = new BigDecimal(price.getText().toString());
+		ap = new BigDecimal(amount_paid.getText().toString());
+		result = mp.compareTo(ap);
+		if (result == 0) {
+			dealer.setBalance(new BigDecimal(BigInteger.ZERO));
+		} else if (result == 1) {
+			total = mp.subtract(ap);
+			dealer.setBalance(total);
+		}
 		return dealer;
 
 	}

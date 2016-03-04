@@ -52,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String MATERIAL_DATE = "material_date";
 	public static final String DEALER_ID = "dealer_id";
 	public static final String DEALER_NAME = "dealer_name";
+	public static final String DEALER_BALANCE = "dealer_balance";
 
 	public static final String MARKETING_TABLE = "marketing";
 	public static final String MARKETING_PERSON_NAME = "person_name";
@@ -76,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_MATERIAL = "create table " + MATERIAL_TABLE + "(" + KEY_ID
 			+ " integer primary key autoincrement, " + MATERIAL_NAME + " text not null, " + MATERIAL_PRICE + " integer,"
-			+ MATERIAL_AMOUNT_PAID + " integer, " + MATERIAL_DATE + " date," + DEALER_ID + " integer not null," + DEALER_NAME + " text not null)";
+			+ MATERIAL_AMOUNT_PAID + " integer, " + MATERIAL_DATE + " date," + DEALER_ID + " integer not null," + DEALER_NAME + " text not null," + DEALER_BALANCE + " integer)";
 
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID

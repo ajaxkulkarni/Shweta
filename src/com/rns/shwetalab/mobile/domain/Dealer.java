@@ -13,7 +13,15 @@ public class Dealer
 	private Date date;
 	private Person dealer;
 	private String Name;
-
+	private BigDecimal  balance;
+	
+	
+	public BigDecimal getBalance() {
+		return balance;
+	}
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
 	public String getName() {
 		return Name;
 	}

@@ -27,7 +27,7 @@ public class DealerDao
 	private Context context;
 	private PersonDao personDao;
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.MATERIAL_NAME, DatabaseHelper.MATERIAL_PRICE, 
-			DatabaseHelper.MATERIAL_AMOUNT_PAID,DatabaseHelper.MATERIAL_DATE,DatabaseHelper.DEALER_ID,DatabaseHelper.DEALER_NAME };
+			DatabaseHelper.MATERIAL_AMOUNT_PAID,DatabaseHelper.MATERIAL_DATE,DatabaseHelper.DEALER_ID,DatabaseHelper.DEALER_NAME,DatabaseHelper.DEALER_BALANCE };
 
 	public DealerDao(Context c) {
 		context = c;
@@ -60,6 +60,7 @@ public class DealerDao
 		dealer.setAmount_paid(dealer.getAmount_paid());
 		dealer.setPrice(dealer.getPrice());
 		dealer.setName(dealer.getName());
+		dealer.setBalance(dealer.getBalance());
 		openToWrite();
 		long val = dealerDb.insert(DatabaseHelper.MATERIAL_TABLE, null, prepareContentValues(dealer));
 		Close();
@@ -77,6 +78,7 @@ public class DealerDao
 		contentValues.put(DatabaseHelper.MATERIAL_DATE, CommonUtil.convertDate(dealer.getDate()));
 		contentValues.put(DatabaseHelper.DEALER_ID, dealer.getDealer().getId() );
 		contentValues.put(DatabaseHelper.DEALER_NAME, dealer.getName().toString());
+		contentValues.put(DatabaseHelper.DEALER_BALANCE,dealer.getBalance().toString());
 		return contentValues;
 
 	}
@@ -100,6 +102,7 @@ public class DealerDao
 				dealer.setDate(CommonUtil.convertDate(cursor.getString(4)));
 				Person person = personDao.getPerson(cursor.getInt(5));
 				dealer.setName(cursor.getString(6));
+				dealer.setBalance(new BigDecimal(cursor.getString(7)));
 				dealer.setDealer(person);
 				dealers.add(dealer);
 			} while (cursor.moveToNext());
@@ -115,9 +118,6 @@ public class DealerDao
 		openToWrite();
 		return dealerDb.update(DatabaseHelper.MATERIAL_TABLE, prepareContentValues(dealer), DatabaseHelper.KEY_ID + " = ?", new String[] { String.valueOf(dealer.getId()) });
 	}
-
-
-
 
 
 	public List<Dealer> getDealerName(String name) {

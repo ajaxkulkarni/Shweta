@@ -8,8 +8,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -21,46 +25,59 @@ public class ExportDatabase extends Activity
 
 {
 	public static final String DATABASE_NAME = "DENTAL";
-	Button registerBtn,exportBtn,importBtn;
-	
+	Button registerBtn,exportBtn,importBtn,logout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_export_database);
 
-	
-	exportBtn = (Button) findViewById(R.id.Exportbutton);
-	importBtn = (Button) findViewById(R.id.Importbutton);
-	
-	
-	exportBtn.setOnClickListener(new OnClickListener() {
 
-		@Override
-		public void onClick(View arg0) {
+		exportBtn = (Button) findViewById(R.id.Exportbutton);
+		importBtn = (Button) findViewById(R.id.Importbutton);
+		logout = (Button)findViewById(R.id.logoutbutton);
 
-			try {
-				exportDB();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+		logout.setOnClickListener(new OnClickListener() 
+		{
+
+			@Override
+			public void onClick(View v) 
+			{
+				CommonUtil.logout(ExportDatabase.this);
+				Toast.makeText(ExportDatabase.this,"Logout Successfull",Toast.LENGTH_SHORT).show();
+				finish();			
 			}
-		}
-	});
-
-	importBtn.setOnClickListener(new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-
-			importdb();
-		}
+		});
 
 
-	});
-	
+		exportBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				try {
+					exportDB();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		importBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				importdb();
+			}
+
+
+		});
+
 	}
-	
+
 	@SuppressLint("SdCardPath")
 	public static void backupDatabase() throws IOException {
 		//Open your local db as the input stream
@@ -118,7 +135,7 @@ public class ExportDatabase extends Activity
 		File sdCard = Environment.getExternalStorageDirectory();	
 		File directory = new File(sdCard.getAbsolutePath() + "/backup-folder");
 		String fileDBPath =	DATABASE_NAME;
-		
+
 		File folder = Environment.getDataDirectory();
 
 		//String fileName = folder.getPath() + "/backup-folder/"+DATABASE_NAME+".db";
@@ -134,10 +151,10 @@ public class ExportDatabase extends Activity
 
 				File backupDB = new File(directory, fileDBPath);
 
-				
-				
+
+
 				copyFile(backupDB, myFile);
-				
+
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -146,17 +163,17 @@ public class ExportDatabase extends Activity
 
 	}
 
-	
-	 void copyFile(File src, File dst) throws IOException {
-	       FileChannel inChannel = new FileInputStream(src).getChannel();
-	       FileChannel outChannel = new FileOutputStream(dst).getChannel();
-	       try {
-	          inChannel.transferTo(0, inChannel.size(), outChannel);
-	       } finally {
-	          if (inChannel != null)
-	             inChannel.close();
-	          if (outChannel != null)
-	             outChannel.close();
-	       }
-	    }	
+
+	void copyFile(File src, File dst) throws IOException {
+		FileChannel inChannel = new FileInputStream(src).getChannel();
+		FileChannel outChannel = new FileOutputStream(dst).getChannel();
+		try {
+			inChannel.transferTo(0, inChannel.size(), outChannel);
+		} finally {
+			if (inChannel != null)
+				inChannel.close();
+			if (outChannel != null)
+				outChannel.close();
+		}
+	}	
 }

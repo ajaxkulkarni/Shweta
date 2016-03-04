@@ -25,6 +25,7 @@ public class DealerAmountDetails extends Activity {
 	private Dealer dealer;
 	private DealerDao dealerDao;
 	private BigDecimal bp, mp, ap, total;
+	BigDecimal balance;
 	private Button pay;
 	private int result;
 	private TextView name;
@@ -84,7 +85,10 @@ public class DealerAmountDetails extends Activity {
 		if (dealer != null) {
 			bp = new BigDecimal(balance_amount.getText().toString());
 			total = bp.add(new BigDecimal(amount_paid.getText().toString()));
+			balance = new BigDecimal(balance_amount.getText().toString());
+			BigDecimal bal = new BigDecimal(material_price.getText().toString()).subtract(total);
 			dealer.setAmount_paid(total);
+			dealer.setBalance(bal);
 		} else
 			Toast.makeText(getApplicationContext(), "Dealer is null!!", Toast.LENGTH_SHORT).show();
 	}

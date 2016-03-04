@@ -47,14 +47,14 @@ public class DoctorMonthlyBalanceList extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
-					String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
-				i.putExtra("Month", month);
-				
-				//	i.putExtra("Name", name);
-				i.putExtra("Id", id);
-			//	i.putExtra("Id",person_id);
-				startActivity(i);
+//				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
+//					String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
+//				i.putExtra("Month", month);
+//				
+//				//	i.putExtra("Name", name);
+//				i.putExtra("Id", id);
+//			//	i.putExtra("Id",person_id);
+//				startActivity(i);
 
 			}
 		});
