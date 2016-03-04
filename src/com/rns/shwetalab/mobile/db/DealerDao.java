@@ -2,22 +2,17 @@ package com.rns.shwetalab.mobile.db;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.rns.shwetalab.mobile.ViewMonth;
-import com.rns.shwetalab.mobile.domain.Dealer;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Marketing;
-import com.rns.shwetalab.mobile.domain.Person;
-import com.rns.shwetalab.mobile.domain.WorkType;
-
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.rns.shwetalab.mobile.ViewMonth;
+import com.rns.shwetalab.mobile.domain.Dealer;
+import com.rns.shwetalab.mobile.domain.Person;
 
 public class DealerDao 
 {
@@ -130,11 +125,11 @@ public class DealerDao
 		}
 		return dealer;
 	}
-	@SuppressLint("NewApi")
+	
 	public Cursor queryByName (String name) {
 		openToWrite();
-		return dealerDb.query(true,DatabaseHelper.MATERIAL_TABLE, cols, DatabaseHelper.DEALER_NAME + " like '" + name + "'", null, null,
-				null, null, null, null);
+		return dealerDb.query(DatabaseHelper.MATERIAL_TABLE, cols, DatabaseHelper.DEALER_NAME + " like '" + name + "'", null, null,
+				null, null);
 	}
 
 
