@@ -5,20 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.rns.shwetalab.mobile.adapter.DealersListAdapter;
-import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.DealerDao;
-import com.rns.shwetalab.mobile.db.JobLabMapDao;
-import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.domain.Dealer;
-import com.rns.shwetalab.mobile.domain.Job;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
+
+import com.rns.shwetalab.mobile.db.DealerDao;
+import com.rns.shwetalab.mobile.domain.Dealer;
 
 public class MonthlyDealerList extends Activity 
 {
@@ -34,8 +26,8 @@ public class MonthlyDealerList extends Activity
 		final String month = extras.getString("Month");
 		prepareListData(month);
 		lv = (ListView) findViewById(R.id.monthlydealerslistView);
-		DealersListAdapter Adapter = new DealersListAdapter(this, map);
-		lv.setAdapter(Adapter);
+		//DealersListAdapter Adapter = new DealersListAdapter(this, map);
+		//lv.setAdapter(Adapter);
 
 	}
 

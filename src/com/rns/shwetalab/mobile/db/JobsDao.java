@@ -215,7 +215,7 @@ public class JobsDao {
 	
 	
 	
-	public BigDecimal getIncomeForMonth(String month, String personType) {
+	public BigDecimal getDoctorIncomeForMonth(String month, String personType) {
 		// int value = Integer.parseInt(month);
 		BigDecimal total = BigDecimal.ZERO;
 		List<Job> jobs = getJobsByMonth(month);
@@ -254,11 +254,7 @@ public class JobsDao {
 				job.setShade(cursor.getString(3));
 				Person person = personDao.getPerson(cursor.getInt(4));
 				job.setDoctor(person);
-				// WorkType workType =
-				// workTypeDao.getWorkType(cursor.getInt(5));
-				// for (int i = 0; i < job.getWorkTypes(); i++) {
-				// job.setWorkTypes(job.getWorkTypes());
-				// }
+				job.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));

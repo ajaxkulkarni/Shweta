@@ -60,7 +60,7 @@ public class JobWorkTypeMapDao {
 	private long insertJobWorktypeMap(Job job) {
 		long val = 0;
 		for (WorkType workType : job.getWorkTypes()) {
-			val = jobMapDb.insert(DatabaseHelper.WORKTYPE_PERSON_TABLE, null, prepareContentValues(job, workType));
+			val = jobMapDb.insert(DatabaseHelper.JOB_WORKTYPES_TABLE, null, prepareContentValues(job, workType));
 		}
 		return val;
 	}
@@ -92,12 +92,11 @@ public class JobWorkTypeMapDao {
 	public List<WorkType> getWorktypesForJob(Job job) {
 		List<WorkType> worktypes = new ArrayList<WorkType>();
 		Cursor cursor = queryByJob(job);
-		do {
+		while (cursor.moveToNext()) {
 			WorkType worktype = new WorkType();
 			worktype = workTypeDao.getWorkType(Integer.parseInt(cursor.getString(2)));
 			worktypes.add(worktype);
-		} while (cursor.moveToNext());
-
+		}
 		return worktypes;
 	}
 

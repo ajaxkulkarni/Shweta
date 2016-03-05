@@ -97,7 +97,7 @@ public class DealerDao
 				dealer.setDate(CommonUtil.convertDate(cursor.getString(4)));
 				Person person = personDao.getPerson(cursor.getInt(5));
 				dealer.setName(cursor.getString(6));
-				dealer.setBalance(new BigDecimal(cursor.getString(7)));
+				dealer.setBalance(new BigDecimal(cursor.getDouble(7)));
 				dealer.setDealer(person);
 				dealers.add(dealer);
 			} while (cursor.moveToNext());

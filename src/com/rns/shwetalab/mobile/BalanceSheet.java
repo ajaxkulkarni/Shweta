@@ -6,6 +6,7 @@ import org.w3c.dom.Text;
 
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.DealerDao;
+import com.rns.shwetalab.mobile.db.JobLabMapDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -21,13 +22,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class BalanceSheet extends Activity {
-	TextView doctorPrice, labPrice, doctor, lab,dealerprice,dealers;
-	WorkType worktype;
-	WorkPersonMap workpersonmap;
+	private TextView doctorPrice, labPrice, doctor, lab,dealerprice,dealers;
+	private WorkType worktype;
+	private WorkPersonMap workpersonmap;
 	private JobsDao jobsDao;
 	private DealerDao dealerDao;
-	Button next;
+	private Button next;
 	private TextView totalPrice;
+	private JobLabMapDao JobLabMapDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +37,14 @@ public class BalanceSheet extends Activity {
 		setContentView(R.layout.activity_balance_sheet);
 		jobsDao = new JobsDao(this);
 		dealerDao = new DealerDao(this);
+		JobLabMapDao = new JobLabMapDao(this);
 		Bundle extras = getIntent().getExtras();
 		final String month = extras.getString("Month");
 		doctorPrice = (TextView) findViewById(R.id.activity_billingsheet_doctor_textView);
-		BigDecimal gain = jobsDao.getIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
+		BigDecimal gain = jobsDao.getDoctorIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
 		doctorPrice.setText(gain.toString());
 		labPrice = (TextView) findViewById(R.id.activity_billingsheetlab_textView);
-		BigDecimal labDues = jobsDao.getIncomeForMonth(month, CommonUtil.TYPE_LAB);
+		BigDecimal labDues = JobLabMapDao.getLabIncomeForMonth(jobsDao.getJobsByMonth(month));
 		labPrice.setText(labDues.toString());
 		dealerprice = (TextView)findViewById(R.id.activity_billingsheetdealer_textView);
 		BigDecimal dealer = dealerDao.getIncomeForMonth(month, CommonUtil.TYPE_DEALER);

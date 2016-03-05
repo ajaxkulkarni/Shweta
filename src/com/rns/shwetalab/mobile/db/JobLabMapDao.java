@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Job;
 
 public class JobLabMapDao {
@@ -86,6 +87,23 @@ public class JobLabMapDao {
 			labJobs.add(labJob);
 		} 
 		return labJobs;
+	}
+
+	public BigDecimal getLabIncomeForMonth(List<Job> jobs) {
+		if(jobs == null || jobs.size() == 0) {
+			return BigDecimal.ZERO;
+		}
+		BigDecimal total = BigDecimal.ZERO;
+		for(Job job: jobs) {
+			List<Job> labJobs = getLabJobsForJob(job);
+			for(Job labjob: labJobs) {
+				if(labjob.getPrice() == null) {
+					continue;
+				}
+				total = total.add(labjob.getPrice());
+			}
+		}
+		return total;
 	}
 
 }

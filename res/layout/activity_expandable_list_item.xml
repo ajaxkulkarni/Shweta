@@ -7,7 +7,70 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/lblListItem"
+        android:id="@+id/lbl_case_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_works"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_quadrant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:padding="20dp"
+        android:text="asd"
+        android:textSize="17dip" />
+    
+    <TextView
+        android:id="@+id/lbl_shade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"

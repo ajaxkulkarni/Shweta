@@ -81,15 +81,20 @@ public class DoctorMonthlyBalanceList extends Activity {
 					|| !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
-			if (map.get(job.getDoctor().getName()) == null) {
-				map.put(job.getDoctor().getName(), job.getPrice());
-			} else {
-				total = map.get(job.getDoctor().getName());
-				if (total == null) {
-					continue;
-				}
-				map.put(job.getDoctor().getName(), total.add(job.getPrice()));
+			calculatePrice(job);
+		}
+	}
+
+	private void calculatePrice(Job job) {
+		BigDecimal total =  BigDecimal.ZERO;
+		if (map.get(job.getDoctor().getName()) == null) {
+			map.put(job.getDoctor().getName(), job.getPrice());
+		} else {
+			total = map.get(job.getDoctor().getName());
+			if (total == null) {
+				return;
 			}
+			map.put(job.getDoctor().getName(), total.add(job.getPrice()));
 		}
 	}
 
@@ -101,7 +106,7 @@ public class DoctorMonthlyBalanceList extends Activity {
 				if (labJob.getPrice() == null) {
 					continue;
 				}
-				total = total.add(labJob.getPrice());
+				calculatePrice(labJob);
 			}
 		}
 		return total;
