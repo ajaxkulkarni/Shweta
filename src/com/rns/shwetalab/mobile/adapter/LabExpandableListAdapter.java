@@ -1,24 +1,30 @@
 package com.rns.shwetalab.mobile.adapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.rns.shwetalab.mobile.JobsExpandableListView;
-import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.WorkType;
-
-import android.app.ExpandableListActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter 
+import com.rns.shwetalab.mobile.LabExpandableList;
+import com.rns.shwetalab.mobile.R;
+import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
+/**
+ * Created by Rajesh on 8/27/2015.
+ */
+public class LabExpandableListAdapter extends BaseExpandableListAdapter
 {
 
 	private Context context;
@@ -35,12 +41,12 @@ public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter
 	//        this.listDataChild = listDataChild;
 	//	}
 
-	public JobsExpandableListViewAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
+	public LabExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 	}
 
-	public JobsExpandableListViewAdapter(Context context, List<Job> jobs) {
+	public LabExpandableListAdapter(Context context, List<Job> jobs) {
 		this.context = context;
 		this.jobs = jobs;
 	}

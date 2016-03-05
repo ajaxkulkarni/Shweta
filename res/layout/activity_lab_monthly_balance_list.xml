@@ -8,28 +8,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#19B5FE"
-        android:orientation="vertical" >
+        android:background="#80CBC4"
+        android:gravity="center"
+        android:padding="20dp" >
 
         <TextView
-            android:id="@+id/expandablejobslist_textview"
-            android:layout_width="match_parent"
+            android:id="@+id/doctorlist_textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="My Jobs"
+            android:text="LABS LIST"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <ExpandableListView
-        android:id="@+id/labjobsexpandableListView"
+    <ListView
+        android:id="@+id/lab_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:cacheColorHint="#d24d57">
-    </ExpandableListView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+    </ListView>
 
 </LinearLayout>

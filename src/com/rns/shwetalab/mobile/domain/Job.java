@@ -15,9 +15,16 @@ public class Job {
 	private List<WorkType> workTypes;
 	private WorkPersonMap workPersonMap;
 	private BigDecimal price;
+	private String doctor_name;
 	
 	
 	
+	public String getDoctor_name() {
+		return doctor_name;
+	}
+	public void setDoctor_name(String doctor_name) {
+		this.doctor_name = doctor_name;
+	}
 	public Integer getQuadrent() {
 		return quadrent;
 	}

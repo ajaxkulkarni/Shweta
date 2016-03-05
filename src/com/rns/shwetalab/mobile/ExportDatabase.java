@@ -34,10 +34,16 @@ public class ExportDatabase extends Activity
 		setContentView(R.layout.activity_export_database);
 
 
+		
+		
 		exportBtn = (Button) findViewById(R.id.Exportbutton);
 		importBtn = (Button) findViewById(R.id.Importbutton);
 		logout = (Button)findViewById(R.id.logoutbutton);
 
+		if (CommonUtil.FLAG != 1) {
+			logout.setVisibility(View.GONE);
+		}
+		
 		logout.setOnClickListener(new OnClickListener() 
 		{
 

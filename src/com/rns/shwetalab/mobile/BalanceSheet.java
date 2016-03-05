@@ -81,7 +81,7 @@ public class BalanceSheet extends Activity {
 		lab.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(BalanceSheet.this, DoctorMonthlyBalanceList.class);
+				Intent i = new Intent(BalanceSheet.this, LabMonthlyBalanceList.class);
 				i.putExtra("Month", month);
 				i.putExtra("type", CommonUtil.TYPE_LAB);
 				startActivity(i);

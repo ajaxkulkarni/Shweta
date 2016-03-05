@@ -26,6 +26,7 @@ public class CommonUtil {
 	public static final String USERNAME = "admin";
 	public static final String PASSWORD = "admin";
 	public static final String LABNAME = "shwetalab";
+	public static Integer FLAG = 0;
 	private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 	static AlertDialog alertDialog;
 
@@ -111,6 +112,7 @@ public class CommonUtil {
 		SharedPreferences settings = context.getSharedPreferences(CommonUtil.LABNAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putString("logged in", "logged in");
+		CommonUtil.FLAG = 1;
 		editor.commit();
 	}
 	
@@ -118,16 +120,8 @@ public class CommonUtil {
 		SharedPreferences settings = context.getSharedPreferences(CommonUtil.LABNAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.remove("logged in");
+		FLAG = 0;
 		editor.commit();
 		
 	}
-	public static void alreadylogin(Context context)
-	{
-		SharedPreferences settings = context.getSharedPreferences(CommonUtil.LABNAME, 0);
-		if (settings.getString("logged in", "").toString().equals("logged in")) {
-			
-		}
-		
-	}
-	
 }

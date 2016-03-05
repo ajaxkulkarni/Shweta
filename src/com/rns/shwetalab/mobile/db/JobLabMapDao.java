@@ -85,6 +85,7 @@ public class JobLabMapDao {
 			labJob.setDoctor(personDao.getPerson(cursor.getInt(2)));
 			labJob.setPrice(new BigDecimal(cursor.getDouble(3)));
 			labJobs.add(labJob);
+			labJob.setDoctor_name(job.getDoctor_name());
 		} 
 		return labJobs;
 	}

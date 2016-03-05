@@ -2,13 +2,10 @@ package com.rns.shwetalab.mobile.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.rns.shwetalab.mobile.MarketingList;
 import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.adapter.JobListAdapter.ViewHolder;
 import com.rns.shwetalab.mobile.domain.Marketing;
 import com.rns.shwetalab.mobile.domain.WorkType;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;

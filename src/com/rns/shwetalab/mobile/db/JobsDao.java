@@ -28,7 +28,7 @@ public class JobsDao {
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
 			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT,
-			DatabaseHelper.JOB_POSITION };
+			DatabaseHelper.JOB_POSITION ,DatabaseHelper.JOB_DOCTOR_NAME};
 
 	public JobsDao(Context c) {
 		context = c;
@@ -61,12 +61,14 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
+		job.setDoctor_name(job.getDoctor_name());
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		calculateTotalPrice(job, workTypes);
 		openToWrite();
 		long val = jobsDb.insert(DatabaseHelper.JOB_TABLE, null, prepareContentValues(job));
 		job.setWorkTypes(workTypes);
 		job.setId(new Long(val).intValue());
+		
 		jobWorkTypeMapDao.insertDetails(job);
 		insertLabJobs(job);
 		Close();
@@ -114,6 +116,7 @@ public class JobsDao {
 		}
 		contentValues.put(DatabaseHelper.JOB_QUADRENT, job.getQuadrent());
 		contentValues.put(DatabaseHelper.JOB_POSITION, job.getPosition());
+		contentValues.put(DatabaseHelper.JOB_DOCTOR_NAME, job.getDoctor_name());
 		return contentValues;
 	}
 
@@ -200,8 +203,8 @@ public class JobsDao {
 		return jobs;
 	}
 	
-	public List<Job> getJobsByMonthName(String month,Integer id) {
-		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,id));
+	public List<Job> getJobsByMonthName(String month,String name) {
+		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,name));
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
 			if (job.getDoctor() != null) {
@@ -229,10 +232,10 @@ public class JobsDao {
 		return total;
 	}
 
-	private Cursor queryForMonthName(String month, Integer id) {
+	private Cursor queryForMonthName(String month, String name) {
 		openToWrite();
 		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-"
-				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR +" = " + id ,
+				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR_NAME +" = '" + name +"'",
 				null, null, null, null);
 	}
 
@@ -258,6 +261,7 @@ public class JobsDao {
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));
+				job.setDoctor_name(cursor.getString(8));
 				jobs.add(job);
 			} while (cursor.moveToNext());
 		}

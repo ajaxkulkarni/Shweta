@@ -5,22 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
+import com.rns.shwetalab.mobile.adapter.LabListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobLabMapDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.Job;
 
-public class DoctorMonthlyBalanceList extends Activity {
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+
+public class LabMonthlyBalanceList extends Activity {
+
 
 	private JobsDao jobsDao;
 	private ListView lv;
@@ -28,17 +32,19 @@ public class DoctorMonthlyBalanceList extends Activity {
 
 	private JobLabMapDao JobLabMapDao;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_doctor__list__amount);
+		setContentView(R.layout.activity_lab_monthly_balance_list);
+		
 		Bundle extras = getIntent().getExtras();
 		final String month = extras.getString("Month");
 		final String type = extras.getString("type");
 		prepareListData(month);
 		
-		lv = (ListView) findViewById(R.id.doctor_listView);
-		DoctorListAdapter Adapter = new DoctorListAdapter(this, map);
+		lv = (ListView) findViewById(R.id.lab_listView);
+		LabListAdapter Adapter = new LabListAdapter(this, map);
 		lv.setAdapter(Adapter);
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -46,11 +52,11 @@ public class DoctorMonthlyBalanceList extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				String name = ((TextView)view.findViewById(R.id.doctorListName_textView)).getText().toString();
-				Intent i = new Intent(DoctorMonthlyBalanceList.this,JobsExpandableListView.class);
+				Intent i = new Intent(LabMonthlyBalanceList.this,LabExpandableList.class);
 				i.putExtra("Name", name);
 				i.putExtra("Month",month);
 				i.putExtra("Type", type);
-				startActivity(i);
+			//	startActivity(i);
 
 			}
 		});
@@ -110,6 +116,7 @@ public class DoctorMonthlyBalanceList extends Activity {
 				}
 				calculatePrice(labJob);
 			}
-		}
+		}	
+		
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.rns.shwetalab.mobile.adapter.ExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
+import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -34,12 +35,22 @@ public class JobsExpandableListView extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jobs_expandable_list_view);
 		expListView = (ExpandableListView) findViewById(R.id.jobsexpandableListView);
+		jobsDao = new JobsDao(getApplicationContext());
 		Bundle extras = getIntent().getExtras();
 		String month = extras.getString("Month");
 		String name = extras.getString("Name");
-		prepareListData(month,name);
-		joblistAdapter = new JobsExpandableListViewAdapter(this, listDataHeader, listDataChild);
+		String type = extras.getString("Type");
+	//	prepareListData(month,name);
+	//	if(type==CommonUtil.TYPE_DOCTOR)
+		
+		joblistAdapter = new JobsExpandableListViewAdapter(this, jobsDao.getJobsByMonthName(month,name));
 		expListView.setAdapter(joblistAdapter);
+		
+//		else
+//		{
+//			joblistAdapter = new JobsExpandableListViewAdapter(this, jobsDao.getLabJobsByMonth(month,name));
+//			expListView.setAdapter(joblistAdapter);	
+//		}
 		expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -93,39 +104,35 @@ public class JobsExpandableListView extends Activity
 	private void prepareListData(String month, String name) 
 	{
 		jobsDao = new JobsDao(this);
-		List<Job> jobs = jobsDao.getJobsByMonth(month);
+		List<Job> jobs = jobsDao.getJobsByMonthName(month,name);
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, List<String>>();
 		for (Job job : jobs) {
 			if (job.getDoctor() == null) {
 				continue;
 			}
-			List<Job> jobslist = jobsDao.getJobsByMonthName(month,job.getId());
-			for (Job joblist : jobslist) {
-				if (joblist.getDoctor() == null) {
-					continue;
-				}
-				List<String> jobDetails = new ArrayList<String>();
-				jobDetails.add("Patient :" + joblist.getPatientName());
-				if (joblist.getShade() != null) {
-					jobDetails.add("Shade :" + joblist.getShade().toString());
-				}
-				if (joblist.getWorkTypes() != null) 
-				{
-					jobDetails.add("Work :" + ((WorkType) joblist.getWorkTypes()).getName());
-				}
-				if (joblist.getPrice() != null) {
-					jobDetails.add("Price :" + joblist.getPrice().toString());
-				}
-				if (joblist.getQuadrent() != null) {
-					jobDetails.add("Tooth Quadrent :" + joblist.getQuadrent().toString());
-				}
-				if (joblist.getPosition() != null) {
-					jobDetails.add("Tooth Position :" + joblist.getPosition().toString());
-				}
-				listDataHeader.add(joblist.getDate().toString());
-				listDataChild.put(joblist.getDoctor().getName(), jobDetails);
+
+			List<String> jobDetails = new ArrayList<String>();
+			jobDetails.add("Patient :" + job.getPatientName());
+			if (job.getShade() != null) {
+				jobDetails.add("Shade :" + job.getShade().toString());
 			}
+			if (job.getWorkTypes() != null) 
+			{
+				jobDetails.add("Work :" + ((WorkType) job.getWorkTypes()).getName());
+			}
+			if (job.getPrice() != null) {
+				jobDetails.add("Price :" + job.getPrice().toString());
+			}
+			if (job.getQuadrent() != null) {
+				jobDetails.add("Tooth Quadrent :" + job.getQuadrent().toString());
+			}
+			if (job.getPosition() != null) {
+				jobDetails.add("Tooth Position :" + job.getPosition().toString());
+			}
+			listDataHeader.add(job.getDate().toString());
+			listDataChild.put(job.getDoctor().getName(), jobDetails);
 		}
 	}
+
 }

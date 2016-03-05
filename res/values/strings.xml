@@ -56,5 +56,6 @@
     <string name="title_activity_add_view_description">AddViewDescription</string>
     <string name="title_activity_add_description">AddDescription</string>
     <string name="title_activity_monthly_dealer_list">MonthlyDealerList</string>
+    <string name="title_activity_lab_monthly_balance_list">LabMonthlyBalanceList</string>
 
 </resources>
