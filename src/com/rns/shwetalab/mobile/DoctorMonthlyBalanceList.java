@@ -1,28 +1,22 @@
 package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.LabeledIntent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobLabMapDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.Person;
 
 public class DoctorMonthlyBalanceList extends Activity {
 
@@ -47,15 +41,6 @@ public class DoctorMonthlyBalanceList extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//				Intent i = new Intent(DoctorMonthlyBalanceList.this, JobsExpandableListView.class);
-//					String name = ((TextView) view.findViewById(R.id.doctorListName_textView)).getText().toString();
-//				i.putExtra("Month", month);
-//				
-//				//	i.putExtra("Name", name);
-//				i.putExtra("Id", id);
-//			//	i.putExtra("Id",person_id);
-//				startActivity(i);
-
 			}
 		});
 
@@ -75,10 +60,11 @@ public class DoctorMonthlyBalanceList extends Activity {
 	}
 
 	private void getDoctorsJobPrice(String personType, List<Job> jobs) {
-		BigDecimal total = BigDecimal.ZERO;
+		if(jobs == null || jobs.size() == 0) {
+			return;
+		}
 		for (Job job : jobs) {
-			if (job.getDoctor() == null || job.getPrice() == null
-					|| !personType.equals(job.getDoctor().getWorkType())) {
+			if (job.getDoctor() == null || job.getPrice() == null || !personType.equals(job.getDoctor().getWorkType())) {
 				continue;
 			}
 			calculatePrice(job);
@@ -86,7 +72,7 @@ public class DoctorMonthlyBalanceList extends Activity {
 	}
 
 	private void calculatePrice(Job job) {
-		BigDecimal total =  BigDecimal.ZERO;
+		BigDecimal total = BigDecimal.ZERO;
 		if (map.get(job.getDoctor().getName()) == null) {
 			map.put(job.getDoctor().getName(), job.getPrice());
 		} else {
@@ -98,10 +84,15 @@ public class DoctorMonthlyBalanceList extends Activity {
 		}
 	}
 
-	private Object getLabJobsPrice(List<Job> jobs) {
-		BigDecimal total = BigDecimal.ZERO;
+	private void getLabJobsPrice(List<Job> jobs) {
+		if(jobs == null || jobs.size() == 0) {
+			return;
+		}
 		for (Job job : jobs) {
 			List<Job> labJobs = JobLabMapDao.getLabJobsForJob(job);
+			if(labJobs == null || labJobs.size() == 0) {
+				continue;
+			}
 			for (Job labJob : labJobs) {
 				if (labJob.getPrice() == null) {
 					continue;
@@ -109,6 +100,5 @@ public class DoctorMonthlyBalanceList extends Activity {
 				calculatePrice(labJob);
 			}
 		}
-		return total;
 	}
 }

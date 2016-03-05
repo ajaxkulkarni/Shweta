@@ -265,4 +265,22 @@ public class JobsDao {
 	}
 
 	
+	public List<Job> getLabJobsByMonth(String month) {
+		List<Job> jobs = getJobsByMonth(month);
+		List<Job> totalLabJobs = new ArrayList<Job>();
+		if(jobs == null || jobs.size() == 0) {
+			return totalLabJobs;
+		}
+		for(Job job: jobs) {
+			List<Job> labJobs = jobLabMapDao.getLabJobsForJob(job);
+			if(labJobs == null || labJobs.size() == 0) {
+				continue;
+			}
+			for(Job labJob:labJobs) {
+				totalLabJobs.add(labJob);
+			}
+		}
+		return totalLabJobs;
+	}
+	
 }
