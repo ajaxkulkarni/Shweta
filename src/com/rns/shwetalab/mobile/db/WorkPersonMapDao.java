@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -185,6 +186,26 @@ public class WorkPersonMapDao {
 			}
 		}
 		return typeMaps;
+	}
+
+	public List<WorkPersonMap> getWorkId(Integer id) 
+	{
+		// TODO Auto-generated method stub
+		
+		List<WorkPersonMap> mapDao = iterateWorkPersonMaps(workIdbyName(id));
+		List<WorkPersonMap> personMapDaos = new ArrayList<WorkPersonMap>();
+		if(mapDao!=null)
+		{
+			personMapDaos.addAll( mapDao);
+		}
+		return personMapDaos;
+	}
+
+	private Cursor workIdbyName(Integer id) 
+	{
+		openToWrite();
+		return workPersonMapDb.query(DatabaseHelper.WORKTYPE_PERSON_TABLE, cols, DatabaseHelper.WORKTYPE_PERSON_PERSON_ID + " = " + id, null, null, null, null);
+		 
 	}
 
 }

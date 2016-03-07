@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.domain.Job;
@@ -85,6 +84,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
+	
 
 	private String prepareWorks(Job job) {
 		if(job.getWorkTypes() == null || job.getWorkTypes().size() == 0) {

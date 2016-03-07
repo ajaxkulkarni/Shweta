@@ -12,12 +12,16 @@ import android.util.Log;
 
 import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class JobLabMapDao {
 
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase jobMapDb;
 	private Context context;
+	private JobWorkTypeMapDao jobWorkTypeMapDao;
+	private WorkPersonMapDao workPersonMapDao;
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.LAB_JOB_ID, DatabaseHelper.LAB_ID, DatabaseHelper.LAB_PRICE};
 	private PersonDao personDao;
 	private JobsDao jobsDao;
@@ -25,6 +29,8 @@ public class JobLabMapDao {
 	public JobLabMapDao(Context c) {
 		context = c;
 		personDao = new PersonDao(c);
+		jobWorkTypeMapDao = new JobWorkTypeMapDao(c);
+		workPersonMapDao = new WorkPersonMapDao(c);
 		//jobsDao = new JobsDao(c);
 	}
 
@@ -82,12 +88,22 @@ public class JobLabMapDao {
 			labJob.setQuadrent(job.getQuadrent());
 			labJob.setShade(job.getShade());
 			labJob.setId(job.getId());
+		//	labJob.setWorkTypes(getWorkTypeId(job));
+			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
 			labJob.setDoctor(personDao.getPerson(cursor.getInt(2)));
 			labJob.setPrice(new BigDecimal(cursor.getDouble(3)));
 			labJobs.add(labJob);
-			//labJob.setDoctor_name(job.getDoctor_name());
 		} 
 		return labJobs;
+	}
+
+	private List<WorkPersonMap> getWorkTypeId(Job job) 
+	{
+		List<WorkPersonMap> jobs = workPersonMapDao.getWorkId(job.getDoctor().getId());
+//		job = new Job();
+//		jobs
+		//WorkType type = jobs;
+		return null;
 	}
 
 	public BigDecimal getLabIncomeForMonth(List<Job> jobs) {
