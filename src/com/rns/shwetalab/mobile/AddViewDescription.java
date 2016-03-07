@@ -23,6 +23,8 @@ public class AddViewDescription extends Activity
 		view = (Button)findViewById(R.id.viewdescriptionbutton);
 		Bundle extras = getIntent().getExtras();
 		final String names = extras.getString("personname").toUpperCase();
+		final String email = extras.getString("email");
+		final String phone = extras.getString("contact");
 		name.setText(names);
 		add.setOnClickListener(new OnClickListener() 
 		{
@@ -40,6 +42,8 @@ public class AddViewDescription extends Activity
 			public void onClick(View v) {
 				Intent i =new Intent(AddViewDescription.this,MarketingDescriptionList.class);
 				i.putExtra("Name",names);
+				i.putExtra("Email",email);
+				i.putExtra("Phone",phone);
 				startActivity(i);
 			}
 		});

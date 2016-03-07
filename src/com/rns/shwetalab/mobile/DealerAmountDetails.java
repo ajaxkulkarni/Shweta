@@ -29,7 +29,6 @@ public class DealerAmountDetails extends Activity {
 	private Button pay;
 	private int result;
 	private TextView name;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,10 @@ public class DealerAmountDetails extends Activity {
 		amount_paid = (EditText) findViewById(R.id.material_amount_paid_editText);
 		balance_amount = (EditText) findViewById(R.id.material_balance_amount_editText);
 		pay = (Button) findViewById(R.id.pay_balance_button1);
+
+		material_price.setEnabled(false);
+		amount_paid.setEnabled(false);
+
 		dealerDao = new DealerDao(getApplicationContext());
 		Bundle extras = getIntent().getExtras();
 		String names = extras.getString("Name");

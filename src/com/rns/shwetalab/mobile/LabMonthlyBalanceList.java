@@ -56,7 +56,7 @@ public class LabMonthlyBalanceList extends Activity {
 				i.putExtra("Name", name);
 				i.putExtra("Month",month);
 				i.putExtra("Type", type);
-			//	startActivity(i);
+				startActivity(i);
 
 			}
 		});

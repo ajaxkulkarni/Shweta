@@ -25,7 +25,9 @@ public class AddPersonWork extends Activity
 			@Override
 			public void onClick(View v) 
 			{
+				String value = "1";
 				Intent i = new Intent(AddPersonWork.this,AddPerson.class);
+				i.putExtra("Value", value);
 				startActivity(i);
 			}
 		});

@@ -40,14 +40,22 @@ public class MarketingDescriptionList extends Activity
 		name = (TextView)findViewById(R.id.market_personname_textView);
 		addperson = (ImageView)findViewById(R.id.addperson_imageView);
 		Bundle extras = getIntent().getExtras();
-		String names = extras.getString("Name");
+		final String names = extras.getString("Name");
+		final String email = extras.getString("Email");
+		final String phone = extras.getString("Phone");
 		name.setText(names);
 
 		addperson.setOnClickListener(new OnClickListener() 
 		{
 			@Override
-			public void onClick(View v){
+			public void onClick(View v)
+			{
+				String value = "0";
 				Intent i =new Intent(MarketingDescriptionList.this,AddPerson.class);
+				i.putExtra("Name", names);
+				i.putExtra("Email", email);
+				i.putExtra("Phone", phone);
+				i.putExtra("Value", value);
 				startActivity(i);
 			}
 		});

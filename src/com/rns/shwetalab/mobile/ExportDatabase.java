@@ -13,6 +13,7 @@ import com.rns.shwetalab.mobile.db.CommonUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,25 +33,26 @@ public class ExportDatabase extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_export_database);
-
-
 		
 		
+//		if(CommonUtil.FLAG!=1)
+//		{
+//			CommonUtil.showNotLogin(ExportDatabase.this, "Not Logged in");
+//		}
 		exportBtn = (Button) findViewById(R.id.Exportbutton);
 		importBtn = (Button) findViewById(R.id.Importbutton);
 		logout = (Button)findViewById(R.id.logoutbutton);
-
-		if (CommonUtil.FLAG != 1) {
-			logout.setVisibility(View.GONE);
-		}
+		
+		
 		
 		logout.setOnClickListener(new OnClickListener() 
 		{
-
 			@Override
 			public void onClick(View v) 
 			{
 				CommonUtil.logout(ExportDatabase.this);
+				CommonUtil.FLAG=0;
+				logout.setVisibility(View.GONE);
 				Toast.makeText(ExportDatabase.this,"Logout Successfull",Toast.LENGTH_SHORT).show();
 				finish();			
 			}
@@ -182,4 +184,14 @@ public class ExportDatabase extends Activity
 				outChannel.close();
 		}
 	}	
+	
+	@Override
+	public void onBackPressed() 
+	{
+		
+		Intent i = new Intent(ExportDatabase.this,HomePage.class);
+		startActivity(i);
+		super.onBackPressed();
+	}
+	
 }

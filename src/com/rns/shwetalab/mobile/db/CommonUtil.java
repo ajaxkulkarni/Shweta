@@ -124,4 +124,18 @@ public class CommonUtil {
 		editor.commit();
 		
 	}
+	public static void showNotLogin(final Context context, String message) {
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setTitle("Shweta Dental Lab");
+		alertDialogBuilder.setMessage(message).setCancelable(false).setPositiveButton("Done", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) 
+			{
+				alertDialog.dismiss();
+			}
+		});
+		 alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+	
 }

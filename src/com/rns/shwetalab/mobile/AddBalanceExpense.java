@@ -1,5 +1,7 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +20,11 @@ public class AddBalanceExpense extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_balance_expense);
 
+//		if(CommonUtil.FLAG!=1)
+//		{
+//			CommonUtil.showNotLogin(AddBalanceExpense.this, "Not Logged in");
+//		}
+		
 		init();
 
 		balance.setOnClickListener(new OnClickListener() {
@@ -51,4 +58,14 @@ public class AddBalanceExpense extends Activity
 		expense = (Button)findViewById(R.id.addexpense_button);
 
 	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+		
+		Intent i = new Intent(AddBalanceExpense.this,HomePage.class);
+		startActivity(i);
+		super.onBackPressed();
+	}
+	
 }

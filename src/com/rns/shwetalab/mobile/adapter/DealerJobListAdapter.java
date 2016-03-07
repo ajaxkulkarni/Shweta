@@ -52,7 +52,7 @@ public class DealerJobListAdapter extends BaseAdapter
 	
 	public class ViewHolder
     {
-        TextView tv1;
+        TextView tv1,tv2;
     }
 
 	@Override
@@ -66,13 +66,13 @@ public class DealerJobListAdapter extends BaseAdapter
 	            holder = new ViewHolder();
 	            view = inflater.inflate(R.layout.activity_dealerlist_adapter, null);
 	            holder.tv1 = (TextView)view.findViewById(R.id.dealersnametextView);
-	            //holder.tv2 = (TextView)view.findViewById(R.id.doctorListAmount_textView);
+	            holder.tv2 = (TextView)view.findViewById(R.id.dealersbalancetextView);
 	            view.setTag(holder);
 	        }
 	        else
 	            holder = (ViewHolder)view.getTag();
 	        	holder.tv1.setText(name.get(arg0).getDealer().getName());
-	        	
+	        	holder.tv2.setText(name.get(arg0).getBalance().toString());
 	        return view;
 	}
 

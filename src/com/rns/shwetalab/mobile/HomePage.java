@@ -35,17 +35,23 @@ public class HomePage extends Activity {
 		btn_bill.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(HomePage.this, AddBalanceExpense.class);
-				startActivity(i);
+				SharedPreferences settings = getSharedPreferences(CommonUtil.LABNAME, 0);
+				if (settings.getString("logged in", "").toString().equals("logged in")) 
+				{
+					Intent intent = new Intent(HomePage.this, AddBalanceExpense.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					CommonUtil.showNotLogin(HomePage.this,"Not Logged in");
 			}
 		});
 
 		btn_admin.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View view) 
-			{
-				
+			public void onClick(View view) {
+
 				Log.d("ddfd", "dfd");
 				Intent i = new Intent(getApplicationContext(), AdminLogin.class);
 				startActivity(i);
@@ -54,16 +60,31 @@ public class HomePage extends Activity {
 		btn_marketing.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(HomePage.this, AddViewMarketing.class);
-				startActivity(i);
+				SharedPreferences settings = getSharedPreferences(CommonUtil.LABNAME, 0);
+				if (settings.getString("logged in", "").toString().equals("logged in")) 
+				{
+					Intent intent = new Intent(HomePage.this, AddViewMarketing.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					CommonUtil.showNotLogin(HomePage.this,"Not Logged in");
+				
 			}
 		});
 		btn_dealer.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(HomePage.this, AddViewDealer.class);
-				startActivity(i);
+				SharedPreferences settings = getSharedPreferences(CommonUtil.LABNAME, 0);
+				if (settings.getString("logged in", "").toString().equals("logged in")) 
+				{
+					Intent intent = new Intent(HomePage.this, AddViewDealer.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					CommonUtil.showNotLogin(HomePage.this,"Not Logged in");
 			}
 		});
 
@@ -80,9 +101,15 @@ public class HomePage extends Activity {
 
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(HomePage.this, ExportDatabase.class);
-				startActivity(i);
-
+				SharedPreferences settings = getSharedPreferences(CommonUtil.LABNAME, 0);
+				if (settings.getString("logged in", "").toString().equals("logged in")) 
+				{
+					Intent intent = new Intent(HomePage.this, ExportDatabase.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					CommonUtil.showNotLogin(HomePage.this,"Not Logged in");
 			}
 		});
 
@@ -120,5 +147,15 @@ public class HomePage extends Activity {
 		alertDialog.show();
 
 	}
+	
+	private void alreadylogin() {
+		SharedPreferences settings = getSharedPreferences(CommonUtil.LABNAME, 0);
+		if (settings.getString("logged in", "").toString().equals("logged in")) {
+			Intent intent = new Intent(HomePage.this, AddPersonWork.class);
+			startActivity(intent);
+			finish();
+		}
+	}
+	
 
 }

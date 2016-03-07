@@ -1,5 +1,7 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,12 @@ public class AddViewMarketing extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_view_marketing);
+		
+//		if(CommonUtil.FLAG!=1)
+//		{
+//			CommonUtil.showNotLogin(AddViewMarketing.this, "Not Logged in");
+//		}
+		
 		add = (Button)findViewById(R.id.addMArketingPerson);
 		view = (Button)findViewById(R.id.viewMarketingPerson);
 		add.setOnClickListener(new OnClickListener() 
@@ -39,4 +47,14 @@ public class AddViewMarketing extends Activity
 		});
 
 	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+		
+		Intent i = new Intent(AddViewMarketing.this,HomePage.class);
+		startActivity(i);
+		super.onBackPressed();
+	}
+	
 }

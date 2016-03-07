@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract.Contacts.Data;
 
 import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Job;
@@ -28,7 +29,7 @@ public class JobsDao {
 
 	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_PATIENT_NAME, DatabaseHelper.JOB_DATE,
 			DatabaseHelper.JOB_SHADE, DatabaseHelper.JOB_DOCTOR, DatabaseHelper.JOB_PRICE, DatabaseHelper.JOB_QUADRENT,
-			DatabaseHelper.JOB_POSITION ,DatabaseHelper.JOB_DOCTOR_NAME};
+			DatabaseHelper.JOB_POSITION };
 
 	public JobsDao(Context c) {
 		context = c;
@@ -61,7 +62,7 @@ public class JobsDao {
 		job.setDoctor(doctor);
 		job.setQuadrent(job.getQuadrent());
 		job.setPosition(job.getPosition());
-		job.setDoctor_name(job.getDoctor_name());
+		
 		List<WorkType> workTypes = new ArrayList<WorkType>();
 		calculateTotalPrice(job, workTypes);
 		openToWrite();
@@ -116,7 +117,7 @@ public class JobsDao {
 		}
 		contentValues.put(DatabaseHelper.JOB_QUADRENT, job.getQuadrent());
 		contentValues.put(DatabaseHelper.JOB_POSITION, job.getPosition());
-		contentValues.put(DatabaseHelper.JOB_DOCTOR_NAME, job.getDoctor_name());
+		
 		return contentValues;
 	}
 
@@ -191,11 +192,14 @@ public class JobsDao {
 		return iterateJobsCursor(null);
 	}
 
-	public List<Job> getJobsByMonth(String month) {
+	public List<Job> getJobsByMonth(String month) 
+	{
+		
 		List<Job> jobs = iterateJobsCursor(queryForMonth(month));
 		List<Job> jobsByType = new ArrayList<Job>();
 		for (Job job : jobs) {
-			if (job.getDoctor() != null) {
+			if (job.getDoctor() != null) 
+			{
 				jobsByType.add(job);
 			}
 		}
@@ -203,16 +207,25 @@ public class JobsDao {
 		return jobs;
 	}
 	
-	public List<Job> getJobsByMonthName(String month,String name) {
-		List<Job> jobs = iterateJobsCursor(queryForMonthName(month,name));
+	public List<Job> getJobsByMonthName(String month,String names) 
+	{
+		
+		List<Job> jobs = iterateJobsCursor(queryForMonth(month));
 		List<Job> jobsByType = new ArrayList<Job>();
-		for (Job job : jobs) {
-			if (job.getDoctor() != null) {
+		
+		
+		for (Job job : jobs) 
+		{if(jobs == null || jobs.size() == 0) 
+		{
+			continue;
+		}
+			
+			if ( job.getDoctor().getName().equals(names)) {
 				jobsByType.add(job);
 			}
 		}
 		// return iterateJobsCursor(queryForMonth(month));
-		return jobs;
+		return jobsByType;
 	}
 
 	
@@ -230,13 +243,6 @@ public class JobsDao {
 			total = total.add(job.getPrice());
 		}
 		return total;
-	}
-
-	private Cursor queryForMonthName(String month, String name) {
-		openToWrite();
-		return jobsDb.query(DatabaseHelper.JOB_TABLE, cols, DatabaseHelper.JOB_DATE + " LIKE '%-"
-				+ ViewMonth.months().get(month) + "-2016'" + " AND " + DatabaseHelper.JOB_DOCTOR_NAME +" = '" + name +"'",
-				null, null, null, null);
 	}
 
 	private Cursor queryForMonth(String month) {
@@ -261,7 +267,7 @@ public class JobsDao {
 				job.setPrice(new BigDecimal(cursor.getInt(5)));
 				job.setQuadrent(cursor.getInt(6));
 				job.setPosition(cursor.getInt(7));
-				job.setDoctor_name(cursor.getString(8));
+				
 				jobs.add(job);
 			} while (cursor.moveToNext());
 		}
@@ -269,7 +275,9 @@ public class JobsDao {
 	}
 
 	
-	public List<Job> getLabJobsByMonth(String month) {
+	public List<Job> getLabJobsByMonth(String month, String name) 
+	{
+		//int id = getNameById(name);
 		List<Job> jobs = getJobsByMonth(month);
 		List<Job> totalLabJobs = new ArrayList<Job>();
 		if(jobs == null || jobs.size() == 0) {
@@ -277,14 +285,21 @@ public class JobsDao {
 		}
 		for(Job job: jobs) {
 			List<Job> labJobs = jobLabMapDao.getLabJobsForJob(job);
-			if(labJobs == null || labJobs.size() == 0) {
+			if(labJobs == null || labJobs.size() == 0) 
+			{
 				continue;
 			}
-			for(Job labJob:labJobs) {
+			for(Job labJob:labJobs) 
+			{
+				if(labJob.getDoctor().getName().equals(name))
+				{	
 				totalLabJobs.add(labJob);
+				}
 			}
 		}
 		return totalLabJobs;
 	}
+
+	
 	
 }

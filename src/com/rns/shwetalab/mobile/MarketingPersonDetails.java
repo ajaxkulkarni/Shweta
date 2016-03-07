@@ -49,8 +49,10 @@ public class MarketingPersonDetails extends Activity implements OnClickListener 
 		add = (Button) findViewById(R.id.AddMarketingPersonbutton);
 		add.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) 
+			{
 				marketingDao.insertDetails(preparemarketperson());
+				
 				CommonUtil.showMessage(MarketingPersonDetails.this);
 			}
 		});

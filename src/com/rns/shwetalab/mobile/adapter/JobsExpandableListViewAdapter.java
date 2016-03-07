@@ -114,7 +114,7 @@ public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter
 	}
 	@Override
 	public String getGroup(int groupPosition) {
-		return jobs.get(groupPosition).getDoctor() != null ? jobs.get(groupPosition).getDoctor_name() : "";
+		return jobs.get(groupPosition).getDoctor() != null ? jobs.get(groupPosition).getDoctor().getName() : "";
 	}
 
 

@@ -39,8 +39,12 @@ public class MarketingList extends Activity {
 			{
 				Marketing marketing  = (Marketing)Adapter.getItem(position);
 				String personname = marketing.getMarketing_name();
+				String email = marketing.getEmail();
+				String contact = marketing.getContact();
 				Intent i = new Intent(MarketingList.this, AddViewDescription.class);
 				i.putExtra("personname", personname);
+				i.putExtra("email", email);
+				i.putExtra("contact", contact);
 				startActivity(i);
 			}
 		});

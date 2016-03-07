@@ -45,7 +45,7 @@ public class LabExpandableList extends Activity
 		String name = extras.getString("Name");
 		String type = extras.getString("Type");
 
-		joblistAdapter = new LabExpandableListAdapter(this, jobsDao.getLabJobsByMonth(month));
+		joblistAdapter = new LabExpandableListAdapter(this, jobsDao.getLabJobsByMonth(month,name));
 		expListView.setAdapter(joblistAdapter);
 		
 		 objLv = (ListView) findViewById(R.id.Job_listView);

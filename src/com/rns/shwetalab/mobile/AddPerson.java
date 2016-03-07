@@ -30,6 +30,25 @@ public class AddPerson extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_person);
 		person = new Person();
+		Bundle extras = getIntent().getExtras();
+		 String value = extras.getString("Value");
+		String names = extras.getString("Name");
+		String email = extras.getString("Email");
+		String phone = extras.getString("Phone");
+		nameEditText = (EditText) findViewById(R.id.add_person_activity_name_editText);
+		emailEditText = (EditText) findViewById(R.id.add_person_activity_email_editText);
+		phoneEditText = (EditText) findViewById(R.id.add_person_activity_phone_editText);
+		if (value.equals("0")) 
+		{
+			nameEditText.setText(names.toString());
+			emailEditText.setText(email.toString());
+			phoneEditText.setText(phone);
+		} else if(value.equals("1"))
+		{
+			nameEditText.setText("");
+			emailEditText.setText("");
+			phoneEditText.setText("");
+		}
 		personDao = new PersonDao(getApplicationContext());
 		doctor = (RadioButton) findViewById(R.id.docotorradio);
 		lab = (RadioButton) findViewById(R.id.labradio);
@@ -38,8 +57,7 @@ public class AddPerson extends Activity {
 		addPersonButton.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{  // validate();
+			public void onClick(View v) { // validate();
 				preparePerson();
 				personDao.insertDetails(person);
 				CommonUtil.showMessage(AddPerson.this);
@@ -65,13 +83,11 @@ public class AddPerson extends Activity {
 				person.setWorkType(CommonUtil.TYPE_DEALER);
 			}
 		});
-		
+
 	}
 
 	private void preparePerson() {
-		nameEditText = (EditText) findViewById(R.id.add_person_activity_name_editText);
-		emailEditText = (EditText) findViewById(R.id.add_person_activity_email_editText);
-		phoneEditText = (EditText) findViewById(R.id.add_person_activity_phone_editText);
+
 		person.setName(nameEditText.getText().toString());
 		person.setEmail(emailEditText.getText().toString());
 		person.setPhone(phoneEditText.getText().toString());

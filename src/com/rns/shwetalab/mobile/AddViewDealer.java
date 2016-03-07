@@ -1,5 +1,7 @@
 package com.rns.shwetalab.mobile;
 
+import com.rns.shwetalab.mobile.db.CommonUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,11 @@ public class AddViewDealer extends Activity
 		add = (Button)findViewById(R.id.addDealer);
 		view = (Button)findViewById(R.id.viewDealer);
 		
+//		if(CommonUtil.FLAG!=1)
+//		{
+//			CommonUtil.showNotLogin(AddViewDealer.this, "Not Logged in");
+//		}
+		
 		add.setOnClickListener(new OnClickListener() 
 			{
 			
@@ -39,9 +46,19 @@ public class AddViewDealer extends Activity
 				Intent i = new Intent(AddViewDealer.this,DealerJobsList.class);
 				startActivity(i);
 		}
-	});;
+	});
 
 		
 		
 	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+		
+		Intent i = new Intent(AddViewDealer.this,HomePage.class);
+		startActivity(i);
+		super.onBackPressed();
+	}
+	
 }
