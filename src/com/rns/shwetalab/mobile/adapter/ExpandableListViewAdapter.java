@@ -1,5 +1,6 @@
 package com.rns.shwetalab.mobile.adapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +13,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 /**
@@ -27,7 +31,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
 	private List<Job> jobs;
 
-	public ExpandableListViewAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
+	public ExpandableListViewAdapter(Context context, List<String> listDataHeader,
+			HashMap<String, List<String>> listChildData) {
 		this._context = context;
 		// this.jobTitles = listDataHeader;
 		// this._listDataChild = listChildData;
@@ -51,7 +56,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView,
+			ViewGroup parent) {
 
 		// final String childText = (String) getChild(groupPosition,
 		// childPosition);
@@ -59,7 +65,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		Job job = (Job) getChild(groupPosition, childPosition);
 
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater infalInflater = (LayoutInflater) this._context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.activity_expandable_list_item, null);
 		}
 
@@ -72,9 +79,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 			price.setText("Price :" + job.getPrice().toString());
 		}
 		TextView date = (TextView) convertView.findViewById(R.id.lbl_date);
-		date.setText("Date :" +  CommonUtil.convertDate(job.getDate()));
+		date.setText("Date :" + CommonUtil.convertDate(job.getDate()));
 		TextView workTypes = (TextView) convertView.findViewById(R.id.lbl_works);
-		workTypes.setText("Works :" +  prepareWorks(job));
+		workTypes.setText("Works :" + prepareWorks(job));
 		TextView quandrant = (TextView) convertView.findViewById(R.id.lbl_quadrant);
 		quandrant.setText("Quandrant :" + job.getQuadrent());
 		TextView position = (TextView) convertView.findViewById(R.id.lbl_position);
@@ -84,17 +91,34 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	
-
 	private String prepareWorks(Job job) {
-		if(job.getWorkTypes() == null || job.getWorkTypes().size() == 0) {
+		StringBuilder builder = new StringBuilder();
+		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(_context);
+		JobWorkTypeMapDao jobWorkTypeMapDao = new JobWorkTypeMapDao(_context);
+		List<WorkType> works = jobWorkTypeMapDao.getWorktypesForJob(job);
+		if (works == null || works.size() == 0) {
 			return "";
 		}
-		StringBuilder builder = new StringBuilder();
-		for(WorkType workType:job.getWorkTypes()) {
-			builder.append(workType.getName()).append(",");
+
+		if (job.getDoctor().getWorkType().equals(CommonUtil.TYPE_LAB)) {
+			List<WorkPersonMap> work = new ArrayList<WorkPersonMap>();
+			for (WorkType workType : works) {
+				List<WorkPersonMap> jobs = workPersonMapDao.getWorkTypeById(workType, CommonUtil.TYPE_LAB,
+						job.getDoctor().getId());
+				{
+					work.addAll(jobs);
+					builder.append(work.get(0).getWorkType().getName());
+					break;
+				}
+			}
 		}
-		builder.replace(builder.lastIndexOf(","), builder.lastIndexOf(","), "");
+
+		else {
+			for (WorkType workType : job.getWorkTypes()) {
+				builder.append(workType.getName()).append(",");
+
+			}
+		}
 		return builder.toString();
 	}
 
@@ -125,7 +149,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		String headerTitle = getGroup(groupPosition);
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater infalInflater = (LayoutInflater) this._context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.activity_expandable_list_group, null);
 		}
 

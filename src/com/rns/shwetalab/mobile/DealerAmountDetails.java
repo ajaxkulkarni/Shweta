@@ -39,7 +39,7 @@ public class DealerAmountDetails extends Activity {
 		amount_paid = (EditText) findViewById(R.id.material_amount_paid_editText);
 		balance_amount = (EditText) findViewById(R.id.material_balance_amount_editText);
 		pay = (Button) findViewById(R.id.pay_balance_button1);
-
+			
 		material_price.setEnabled(false);
 		amount_paid.setEnabled(false);
 

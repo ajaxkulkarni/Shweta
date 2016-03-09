@@ -168,6 +168,10 @@
             android:name=".LabMonthlyBalanceList"
             android:label="@string/title_activity_lab_monthly_balance_list" >
         </activity>
+        <activity
+            android:name=".DoctorAmountDetails"
+            android:label="@string/title_activity_doctor_amount_details" >
+        </activity>
     </application>
 
 </manifest>

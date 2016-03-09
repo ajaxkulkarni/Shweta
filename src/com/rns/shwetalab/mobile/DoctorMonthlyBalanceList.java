@@ -5,22 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.rns.shwetalab.mobile.adapter.DoctorListAdapter;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobLabMapDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.Job;
 
-public class DoctorMonthlyBalanceList extends Activity {
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class DoctorMonthlyBalanceList extends Activity 
+{
 
 	private JobsDao jobsDao;
 	private ListView lv;
@@ -41,15 +44,20 @@ public class DoctorMonthlyBalanceList extends Activity {
 		DoctorListAdapter Adapter = new DoctorListAdapter(this, map);
 		lv.setAdapter(Adapter);
 
+		
+		
+		
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				String name = ((TextView)view.findViewById(R.id.doctorListName_textView)).getText().toString();
+				String price = ((TextView)view.findViewById(R.id.doctorListAmount_textView)).getText().toString();
 				Intent i = new Intent(DoctorMonthlyBalanceList.this,JobsExpandableListView.class);
 				i.putExtra("Name", name);
 				i.putExtra("Month",month);
 				i.putExtra("Type", type);
+				i.putExtra("Price", price);
 				startActivity(i);
 
 			}

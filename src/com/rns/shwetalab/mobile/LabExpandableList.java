@@ -9,14 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rns.shwetalab.mobile.adapter.LabExpandableListAdapter;
 import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.JobsDao;
+import com.rns.shwetalab.mobile.domain.Job;
 
 public class LabExpandableList extends Activity 
 {
@@ -28,8 +31,9 @@ public class LabExpandableList extends Activity
 	private JobsDao jobsDao;
 	private String dateSelected;
 	TextView date;
-	
+	int id;
 	ListView objLv;
+	ImageView pay;
 	ArrayList<String> objArrayListName = new ArrayList<String>();	
 
 	@Override
@@ -37,14 +41,16 @@ public class LabExpandableList extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_job_list);
-
+		pay = (ImageView)findViewById(R.id.lab_addpayment_imageView);
 		expListView = (ExpandableListView) findViewById(R.id.labjobsexpandableListView);
 		jobsDao = new JobsDao(getApplicationContext());
 		Bundle extras = getIntent().getExtras();
 		String month = extras.getString("Month");
 		String name = extras.getString("Name");
 		String type = extras.getString("Type");
-
+		final String price = extras.getString("Price");
+		prepareListData(month, name);
+		
 		joblistAdapter = new LabExpandableListAdapter(this, jobsDao.getLabJobsByMonth(month,name));
 		expListView.setAdapter(joblistAdapter);
 		
@@ -52,8 +58,31 @@ public class LabExpandableList extends Activity
 
 //	        LabExpandableListAdapter Adapter = new LabExpandableListAdapter(this, jobsDao.getJobsByMonthName(month,name));
 //	        objLv.setAdapter(Adapter);
+		 pay = (ImageView)findViewById(R.id.lab_addpayment_imageView);
 
+		 
+		 pay.setOnClickListener(new OnClickListener() 
+			{
+				@Override
+				public void onClick(View v) 
+				{   
+					
+					
+					
+			//		Toast.makeText(JobsExpandableListView.this, "data inserted" , Toast.LENGTH_SHORT).show();
+					Intent i = new Intent(LabExpandableList.this,DoctorAmountDetails.class);
+					
+					i.putExtra("Price", price);
+					i.putExtra("ID", id);
+			//		i.putExtra("Data",new Gson().toJson(id));
+					startActivity(i);
+					
+				}
 
+				
+			});
+		 
+		 
 	        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 				@Override
 				public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -101,6 +130,19 @@ public class LabExpandableList extends Activity
 				}
 			});
 
+	}
+	private void prepareListData(String month, String name) 
+	{
+		jobsDao = new JobsDao(this);
+		List<Job> jobs = jobsDao.getLabJobsByMonth(month,name);
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<String>>();
+		for (Job job : jobs) {
+			if (job.getDoctor() == null) {
+				continue;
+			}
+			id = job.getDoctor().getId();
+		}
 	}
 
 	

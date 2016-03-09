@@ -35,7 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_PRICE = "price";
 	public static final String JOB_QUADRENT = "quadrent";
 	public static final String JOB_POSITION = "position";
-	
 
 	public static final String JOB_WORKTYPES_TABLE = "worktypes_table";
 	public static final String JOB_ID = "job_id";
@@ -45,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String LAB_JOB_ID = "job_id";
 	public static final String LAB_ID = "lab_id";
 	public static final String LAB_PRICE = "price";
+	
 
 	public static final String MATERIAL_TABLE = "dealer";
 	public static final String MATERIAL_NAME = "material_name";
@@ -66,6 +66,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String DESCRIPTION_DATE = "follow_date";
 	public static final String DESCRIPTION_DATA = "descripiotn_data";
 	
+	public static final String BALANCE_AMOUNT_TABLE = "balance_amount";
+	public static final String BALANCE_PERSON_ID = "person_id";
+	public static final String BALANCE_AMOUNT_PAID = "amount_paid";
+	public static final String BALANCE_AMOUNT_MONTH = "amount_month";
+	public static final String BALANCE_AMOUNT_YEAR = "amount_year";
+	
+	
+	public static final String CREATE_TABLE_BALANCE_AMOUNT = "create table " + BALANCE_AMOUNT_TABLE + " (" + KEY_ID
+			+ " integer primary key autoincrement, " + BALANCE_PERSON_ID + " integer, " + BALANCE_AMOUNT_PAID
+			+ " integer," + BALANCE_AMOUNT_MONTH + " integer," + BALANCE_AMOUNT_YEAR + " integer)";
 	
 	public static final String CREATE_TABLE_DESCRIPTION = "create table " + DESCRIPTION_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + DESC_PERSON_NAME + " text not null, " + DESCRIPTION_DATA
@@ -120,6 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_LAB_WORKTYPES);
 		db.execSQL(CREATE_TABLE_JOB_WORKTYPES);
 		db.execSQL(CREATE_TABLE_DESCRIPTION);
+		db.execSQL(CREATE_TABLE_BALANCE_AMOUNT);
 		Log.d(DATABASE_NAME, "Tables Created!!");
 	}
 

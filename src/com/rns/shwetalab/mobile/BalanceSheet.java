@@ -30,7 +30,7 @@ public class BalanceSheet extends Activity {
 	private Button next;
 	private TextView totalPrice;
 	private JobLabMapDao JobLabMapDao;
-
+	final String price = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +41,7 @@ public class BalanceSheet extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final String month = extras.getString("Month");
 		doctorPrice = (TextView) findViewById(R.id.activity_billingsheet_doctor_textView);
-		BigDecimal gain = jobsDao.getDoctorIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
+		final BigDecimal gain = jobsDao.getDoctorIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
 		doctorPrice.setText(gain.toString());
 		labPrice = (TextView) findViewById(R.id.activity_billingsheetlab_textView);
 		BigDecimal labDues = JobLabMapDao.getLabIncomeForMonth(jobsDao.getJobsByMonth(month));
@@ -72,6 +72,7 @@ public class BalanceSheet extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(BalanceSheet.this, DoctorMonthlyBalanceList.class);
 				i.putExtra("Month", month);
+				i.putExtra("Price", doctorPrice.getText().toString());
 				i.putExtra("type", CommonUtil.TYPE_DOCTOR);
 				startActivity(i);
 			}

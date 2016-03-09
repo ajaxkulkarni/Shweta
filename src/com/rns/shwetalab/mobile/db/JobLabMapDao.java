@@ -88,23 +88,15 @@ public class JobLabMapDao {
 			labJob.setQuadrent(job.getQuadrent());
 			labJob.setShade(job.getShade());
 			labJob.setId(job.getId());
-		//	labJob.setWorkTypes(getWorkTypeId(job));
-			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
+//			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
 			labJob.setDoctor(personDao.getPerson(cursor.getInt(2)));
 			labJob.setPrice(new BigDecimal(cursor.getDouble(3)));
 			labJobs.add(labJob);
+			
 		} 
 		return labJobs;
 	}
-
-	private List<WorkPersonMap> getWorkTypeId(Job job) 
-	{
-		List<WorkPersonMap> jobs = workPersonMapDao.getWorkId(job.getDoctor().getId());
-//		job = new Job();
-//		jobs
-		//WorkType type = jobs;
-		return null;
-	}
+	
 
 	public BigDecimal getLabIncomeForMonth(List<Job> jobs) {
 		if(jobs == null || jobs.size() == 0) {

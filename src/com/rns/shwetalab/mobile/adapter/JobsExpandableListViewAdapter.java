@@ -3,19 +3,21 @@ package com.rns.shwetalab.mobile.adapter;
 import java.util.HashMap;
 import java.util.List;
 
-import com.rns.shwetalab.mobile.JobsExpandableListView;
+import com.rns.shwetalab.mobile.DealerAmountDetails;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
-import android.app.ExpandableListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter 
@@ -72,7 +74,7 @@ public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter
 			LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.activity_expandable_list_item, null);
 		}
-
+	//	Button pay = (Button)convertView.findViewById(R.id.paybutton);
 		TextView caseId = (TextView) convertView.findViewById(R.id.lbl_case_id);
 		caseId.setText("Case ID :" + job.getId());
 		TextView patientName = (TextView) convertView.findViewById(R.id.lbl_patient);
@@ -132,13 +134,27 @@ public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter
 
 
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) 
+	{
+		//Button pay;
+		
 		String headerTitle = getGroup(groupPosition);
-		if (convertView == null) {
+		if (convertView == null) 
+		{
 			LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.activity_expandable_list_group, null);
 		}
-
+		//pay = (Button)convertView.findViewById(R.id.paybutton);
+//		pay.setOnClickListener(new OnClickListener() 
+//		{
+//			
+//			@Override
+//			public void onClick(View v) 
+//			{
+//				Intent i = new Intent(JobsExpandableListViewAdapter.this,DealerAmountDetails.class);
+//				start
+//			}
+//		});
 		TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
 		lblListHeader.setTypeface(null, Typeface.BOLD);
 		lblListHeader.setText(headerTitle);

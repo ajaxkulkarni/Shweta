@@ -187,6 +187,26 @@ public class WorkPersonMapDao {
 		}
 		return typeMaps;
 	}
+	
+	
+	public List<WorkPersonMap> getWorkTypeById(WorkType workType, String personType, Integer id) {
+		if (workType == null) {
+			return null;
+		}
+		List<WorkPersonMap> maps = iterateWorkPersonMaps(workIdbyName(id));
+	//	List<WorkPersonMap> maps = iterateWorkPersonMaps(queryByWorkType(work.getId()));
+		List<WorkPersonMap> typeMaps = new ArrayList<WorkPersonMap>();
+		for (WorkPersonMap map : maps) {
+			if (map.getPerson() != null && map.getPerson().getWorkType()!=null && map.getPerson().getWorkType().equals(personType)) {
+				typeMaps.add(map);
+			}
+		}
+		return typeMaps;
+	}
+	
+	
+	
+	
 
 	public List<WorkPersonMap> getWorkId(Integer id) 
 	{

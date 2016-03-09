@@ -72,17 +72,7 @@ public class JobWorkTypeMapDao {
 		return contentValues;
 	}
 
-	private void setWorkTypes(Job job) {
-		if (job.getWorkTypes() == null || job.getWorkTypes().size() == 0) {
-			return;
-		}
-		List<WorkType> workTypes = new ArrayList<WorkType>();
-		for (WorkType workType : job.getWorkTypes()) {
-			workTypes.add(workTypeDao.getWorkType(workType));
-		}
-		job.setWorkTypes(workTypes);
-	}
-
+	
 	private Cursor queryByJob(Job job) {
 		openToWrite();
 		return jobMapDb.query(DatabaseHelper.JOB_WORKTYPES_TABLE, cols, DatabaseHelper.JOB_ID + " = " + job.getId(), null, null, null, null);

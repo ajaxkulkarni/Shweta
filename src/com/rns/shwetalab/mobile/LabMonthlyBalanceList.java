@@ -51,11 +51,13 @@ public class LabMonthlyBalanceList extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
+				String price = ((TextView)view.findViewById(R.id.doctorListAmount_textView)).getText().toString();
 				String name = ((TextView)view.findViewById(R.id.doctorListName_textView)).getText().toString();
 				Intent i = new Intent(LabMonthlyBalanceList.this,LabExpandableList.class);
 				i.putExtra("Name", name);
 				i.putExtra("Month",month);
 				i.putExtra("Type", type);
+				i.putExtra("Price", price);
 				startActivity(i);
 
 			}

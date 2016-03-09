@@ -15,11 +15,17 @@ public class Job {
 	private List<WorkType> workTypes;
 	private WorkPersonMap workPersonMap;
 	private BigDecimal price;
+	private BigDecimal balance;
 	
 	
 	
 	
-	
+	public BigDecimal getBalance() {
+		return balance;
+	}
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
 	public Integer getQuadrent() {
 		return quadrent;
 	}
