@@ -18,6 +18,7 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,12 +36,10 @@ public class JobsExpandableListView extends Activity {
 	private String dateSelected;
 	List<Integer> balance_data;
 	private BalanceAmountDao amountDao;
-	TextView date, bal;
+	public TextView date, bal, pay_bal_text;
 	ImageView pay;
 	int id = 0;
-	// final Calendar localCalendar =
-	// Calendar.getInstance(TimeZone.getDefault());
-	// Balance_Amount balanceamount;
+	int a;
 	int total, current_month, current_year;
 
 	@Override
@@ -48,7 +47,8 @@ public class JobsExpandableListView extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jobs_expandable_list_view);
 		expListView = (ExpandableListView) findViewById(R.id.jobsexpandableListView);
-		
+		bal = (TextView) findViewById(R.id.paid_textView);
+		pay_bal_text = (TextView) findViewById(R.id.doctor_pay_balance_textView1);
 		final Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		amountDao = new BalanceAmountDao(getApplicationContext());
 		jobsDao = new JobsDao(getApplicationContext());
@@ -62,7 +62,7 @@ public class JobsExpandableListView extends Activity {
 		current_month = localCalendar.get(Calendar.MONTH) + 1;
 		current_year = localCalendar.get(Calendar.YEAR);
 		// if(type==CommonUtil.TYPE_DOCTOR)
-
+		// bal.setText("HEllo");
 		pay = (ImageView) findViewById(R.id.addpayment_imageView);
 
 		pay.setOnClickListener(new OnClickListener() {
@@ -138,29 +138,6 @@ public class JobsExpandableListView extends Activity {
 
 	}
 
-	private void getbalance(String price) 
-	{
-		bal = (TextView) findViewById(R.id.doctoramountpaid_textView);
-		List<Balance_Amount> amountbalance = new ArrayList<Balance_Amount>();
-		balance_data = new ArrayList<Integer>();
-		amountbalance = amountDao.getDealerName(id);
-		if (amountbalance.isEmpty()) {
-			bal.setText(price);
-			// balanceamountdao.insertDetails(prepare_balance_amount_details());
-		} else 
-		{
-			for (Balance_Amount amount : amountbalance) 
-			{
-				if (amount.getPerson_id() == id) 
-				{
-			//		bal.setText(amount.getAmount_paid());
-			//		bal.setText(amount.getAmount_paid());
-				} else
-					bal.setText(price);
-			}
-		}
-	}
-
 	private void prepareListData(String month, String name) {
 		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
@@ -174,4 +151,20 @@ public class JobsExpandableListView extends Activity {
 		}
 	}
 
+	private void getbalance(String price) {
+
+		List<Balance_Amount> amountbalance = new ArrayList<Balance_Amount>();
+		// balance_data = new ArrayList<Integer>();
+		amountbalance = amountDao.getDealerName(id);
+
+		if (amountbalance.isEmpty()) {
+			bal.setText("" + price);
+		} else
+			total = Integer.parseInt(price) - amountbalance.get(amountbalance.size() - 1).getAmount_paid();
+		bal.setText("" + total);
+		if (total == 0) {
+			pay.setVisibility(View.GONE);
+			pay_bal_text.setVisibility(View.GONE);
+		}
+	}
 }

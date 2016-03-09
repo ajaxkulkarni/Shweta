@@ -4,7 +4,6 @@ public class Balance_Amount
 {
 	private Integer person_id;
 	private Integer id; 
-	
 	private Integer amount_paid;
 	private Integer month;
 	private Integer year;

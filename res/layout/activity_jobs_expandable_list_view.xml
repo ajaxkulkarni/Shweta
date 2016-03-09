@@ -17,13 +17,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="left"
             android:padding="15dp"
             android:text="My Jobs"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
-         <LinearLayout
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -38,13 +39,13 @@
                 android:src="@drawable/pay" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/doctor_pay_balance_textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Pay Balance"
-                android:gravity="center"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Pay Balance"
                 android:textColor="#FFF" />
         </LinearLayout>
     </LinearLayout>
@@ -63,7 +64,7 @@
             android:text="Balance Left - " />
 
         <TextView
-            android:id="@+id/doctoramountpaid_textView"
+            android:id="@+id/paid_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="  TextView"
@@ -73,9 +74,9 @@
     <ExpandableListView
         android:id="@+id/jobsexpandableListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:cacheColorHint="#d24d57">
+        android:cacheColorHint="#d24d57" >
     </ExpandableListView>
 
 </LinearLayout>

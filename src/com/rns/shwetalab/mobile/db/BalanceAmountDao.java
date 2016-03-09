@@ -109,7 +109,7 @@ public class BalanceAmountDao
 				amount.add(dealers);
 			}
 		}
-		return balance;
+		return amount;
 	}
 	
 	public Cursor queryByName (int id) {
