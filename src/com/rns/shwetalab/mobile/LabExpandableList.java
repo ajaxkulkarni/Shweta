@@ -46,6 +46,7 @@ public class LabExpandableList extends Activity {
 		pay = (ImageView) findViewById(R.id.lab_addpayment_imageView);
 		pay_bal_text = (TextView) findViewById(R.id.lab_add_payment_textView1);
 		bal = (TextView) findViewById(R.id.amount_textView2);
+		pay = (ImageView) findViewById(R.id.lab_addpayment_imageView);
 		expListView = (ExpandableListView) findViewById(R.id.labjobsexpandableListView);
 		jobsDao = new JobsDao(getApplicationContext());
 		amountDao = new BalanceAmountDao(getApplicationContext());
@@ -58,13 +59,13 @@ public class LabExpandableList extends Activity {
 		getbalance(price);
 		joblistAdapter = new LabExpandableListAdapter(this, jobsDao.getLabJobsByMonth(month, name));
 		expListView.setAdapter(joblistAdapter);
-
+		
 		objLv = (ListView) findViewById(R.id.Job_listView);
 
 		// LabExpandableListAdapter Adapter = new LabExpandableListAdapter(this,
 		// jobsDao.getJobsByMonthName(month,name));
 		// objLv.setAdapter(Adapter);
-		pay = (ImageView) findViewById(R.id.lab_addpayment_imageView);
+		
 
 		pay.setOnClickListener(new OnClickListener() {
 			@Override
@@ -154,13 +155,17 @@ public class LabExpandableList extends Activity {
 		amountbalance = amountDao.getDealerName(id);
 		if (amountbalance.isEmpty()) {
 			bal.setText("" + price);
-		} else
+		} 
+		else
+		{
 			total = Integer.parseInt(price) - amountbalance.get(amountbalance.size() - 1).getAmount_paid();
-		bal.setText("" + total);
-		if (total == 0) {
-			pay.setVisibility(View.GONE);
-			pay_bal_text.setVisibility(View.GONE);
+			bal.setText("" + total);
+			if (total == 0) {
+						pay.setVisibility(View.GONE);
+						pay_bal_text.setVisibility(View.GONE);
+					}
 		}
+		
 	}
 
 }

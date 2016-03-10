@@ -39,7 +39,7 @@ public class JobsExpandableListView extends Activity {
 	public TextView date, bal, pay_bal_text;
 	ImageView pay;
 	int id = 0;
-	int a;
+	int a,bal_price;
 	int total, current_month, current_year;
 
 	@Override
@@ -48,6 +48,7 @@ public class JobsExpandableListView extends Activity {
 		setContentView(R.layout.activity_jobs_expandable_list_view);
 		expListView = (ExpandableListView) findViewById(R.id.jobsexpandableListView);
 		bal = (TextView) findViewById(R.id.paid_textView);
+		pay = (ImageView) findViewById(R.id.addpayment_imageView);
 		pay_bal_text = (TextView) findViewById(R.id.doctor_pay_balance_textView1);
 		final Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		amountDao = new BalanceAmountDao(getApplicationContext());
@@ -63,7 +64,7 @@ public class JobsExpandableListView extends Activity {
 		current_year = localCalendar.get(Calendar.YEAR);
 		// if(type==CommonUtil.TYPE_DOCTOR)
 		// bal.setText("HEllo");
-		pay = (ImageView) findViewById(R.id.addpayment_imageView);
+		
 
 		pay.setOnClickListener(new OnClickListener() {
 			@Override
@@ -160,11 +161,14 @@ public class JobsExpandableListView extends Activity {
 		if (amountbalance.isEmpty()) {
 			bal.setText("" + price);
 		} else
+		{
 			total = Integer.parseInt(price) - amountbalance.get(amountbalance.size() - 1).getAmount_paid();
-		bal.setText("" + total);
-		if (total == 0) {
-			pay.setVisibility(View.GONE);
-			pay_bal_text.setVisibility(View.GONE);
+			bal.setText("" + total);
+			if (total == 0) {
+						pay.setVisibility(View.GONE);
+						pay_bal_text.setVisibility(View.GONE);
+					}
 		}
+		
 	}
 }

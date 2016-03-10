@@ -55,10 +55,14 @@ public class DoctorAmountDetails extends Activity {
 				amountbalance = balanceamountdao.getDealerName(id);
 				if (amountbalance.isEmpty()) {
 					balanceamountdao.insertDetails(prepare_balance_amount_details());
-				} else {
+				} else 
+				{
+					
 					for (Balance_Amount amount : amountbalance) {
 						if (amount.getPerson_id() == id && amount.getMonth() == current_month
-								&& amount.getYear() == current_year) {
+								&& amount.getYear() == current_year) 
+						{
+							
 							calculate_amount(amount.getAmount_paid());
 							balanceamount.setId(amount.getId());
 							balanceamount.setMonth(amount.getMonth());
@@ -70,9 +74,7 @@ public class DoctorAmountDetails extends Activity {
 										.show();
 								return;
 							} else
-								CommonUtil.showMessage(DoctorAmountDetails.this);
-							Toast.makeText(DoctorAmountDetails.this, "Amount Updated Successfully", Toast.LENGTH_SHORT)
-									.show();
+								CommonUtil.showUpdateMessage(DoctorAmountDetails.this);
 						}
 
 						else {
