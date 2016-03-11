@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rns.shwetalab.mobile.adapter.AddWorkTypeDoctorListAdapter;
@@ -65,7 +66,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 			@Override
 			public void onClick(View v) 
 			{
-			//	validations();
+				//	validations();
 				prepareWorkType();
 				long result = workTypeDao.insertDetails(work);
 				if (result < 0) {
@@ -77,7 +78,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 			}
 		});
 
-		
+
 		doctor.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -103,10 +104,10 @@ public class AdminAddWorkTypeActivity extends Activity {
 
 	}
 
-	
+
 	private boolean validations() 
 	{
-		
+
 		if (TextUtils.isEmpty(workTypeEditText.getText())) 
 		{
 			workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
@@ -114,7 +115,7 @@ public class AdminAddWorkTypeActivity extends Activity {
 		}
 		return true;
 	}
-	
+
 	private void preparePersonMaps() {
 		prepareWorkPersonMaps();
 		personListAdapter = new AddWorkTypeDoctorListAdapter(this, workPersonMaps, doctorAmount);
@@ -151,17 +152,22 @@ public class AdminAddWorkTypeActivity extends Activity {
 		if (persons == null || persons.size() == 0) {
 			return null;
 		}
-		for (int i = 0; i < persons.size(); i++) {
-			WorkPersonMap map = (WorkPersonMap) personsListView.getAdapter().getItem(i);
-			v = personsListView.getAdapter().getView(i, null, null);
-			v = personsListView.getChildAt(i);
-			EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
-			if (!TextUtils.isEmpty(editText.getText().toString())) {
-				map.setPrice(new BigDecimal(editText.getText().toString()));
-				map.setWorkType(work);
-			}
-			maps.add(map);
+		for (int i = 0; i < persons.size(); i++) 
+		{
+				WorkPersonMap map = (WorkPersonMap) personsListView.getAdapter().getItem(i);
+				//v = personsListView.getAdapter().getView(i, null, null);
+				v = personsListView.getChildAt(i);
+				if(v.findViewById(R.id.addwork_type_doctorlist_adapter_editText)!=null)
+				{
+				EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
+			//	String name = ((EditText)v.findViewById(R.id.addwork_type_doctorlist_adapter_editText)).getText().toString();
+				if (!TextUtils.isEmpty(editText.getText().toString())) {
+					map.setPrice(new BigDecimal(editText.getText().toString()));
+					map.setWorkType(work);
+				}}
+				maps.add(map);
 		}
+
 		return maps;
 	}
 

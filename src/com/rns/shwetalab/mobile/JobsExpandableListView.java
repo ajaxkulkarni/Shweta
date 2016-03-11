@@ -33,13 +33,14 @@ public class JobsExpandableListView extends Activity {
 	private List<String> listDataHeader;
 	private HashMap<String, List<String>> listDataChild;
 	private JobsDao jobsDao;
-	private String dateSelected;
+	private String dateSelected,new_balance;
 	List<Integer> balance_data;
 	private BalanceAmountDao amountDao;
 	public TextView date, bal, pay_bal_text;
 	ImageView pay;
 	int id = 0;
 	int a,bal_price;
+	
 	int total, current_month, current_year;
 
 	@Override
@@ -60,6 +61,7 @@ public class JobsExpandableListView extends Activity {
 		final String price = extras.getString("Price");
 		prepareListData(month, name);
 		getbalance(price);
+		 
 		current_month = localCalendar.get(Calendar.MONTH) + 1;
 		current_year = localCalendar.get(Calendar.YEAR);
 		// if(type==CommonUtil.TYPE_DOCTOR)
@@ -72,6 +74,7 @@ public class JobsExpandableListView extends Activity {
 				Intent i = new Intent(JobsExpandableListView.this, DoctorAmountDetails.class);
 				i.putExtra("Price", price);
 				i.putExtra("ID", id);
+				i.putExtra("New_Balance", new_balance);
 				startActivity(i);
 			}
 		});
@@ -160,10 +163,12 @@ public class JobsExpandableListView extends Activity {
 
 		if (amountbalance.isEmpty()) {
 			bal.setText("" + price);
+			new_balance = bal.getText().toString();
 		} else
 		{
 			total = Integer.parseInt(price) - amountbalance.get(amountbalance.size() - 1).getAmount_paid();
 			bal.setText("" + total);
+			new_balance = bal.getText().toString();
 			if (total == 0) {
 						pay.setVisibility(View.GONE);
 						pay_bal_text.setVisibility(View.GONE);

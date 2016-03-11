@@ -31,7 +31,7 @@ public class LabExpandableList extends Activity {
 	private List<String> listDataHeader;
 	private HashMap<String, List<String>> listDataChild;
 	private JobsDao jobsDao;
-	private String dateSelected;
+	private String dateSelected,new_balance;
 	TextView date, bal, pay_bal_text;
 	private BalanceAmountDao amountDao;
 	int id, total;
@@ -77,7 +77,7 @@ public class LabExpandableList extends Activity {
 
 				i.putExtra("Price", price);
 				i.putExtra("ID", id);
-				// i.putExtra("Data",new Gson().toJson(id));
+				i.putExtra("New_Balance", new_balance);
 				startActivity(i);
 
 			}
@@ -155,11 +155,13 @@ public class LabExpandableList extends Activity {
 		amountbalance = amountDao.getDealerName(id);
 		if (amountbalance.isEmpty()) {
 			bal.setText("" + price);
+			new_balance = bal.getText().toString();
 		} 
 		else
 		{
 			total = Integer.parseInt(price) - amountbalance.get(amountbalance.size() - 1).getAmount_paid();
 			bal.setText("" + total);
+			new_balance = bal.getText().toString();
 			if (total == 0) {
 						pay.setVisibility(View.GONE);
 						pay_bal_text.setVisibility(View.GONE);
