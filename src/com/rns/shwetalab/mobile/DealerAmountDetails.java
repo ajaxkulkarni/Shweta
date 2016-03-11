@@ -1,18 +1,16 @@
 package com.rns.shwetalab.mobile;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.DealerDao;
 import com.rns.shwetalab.mobile.domain.Dealer;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -29,6 +27,8 @@ public class DealerAmountDetails extends Activity {
 	private Button pay;
 	private int result;
 	private TextView name;
+	BigDecimal balance_left;
+	BigDecimal bal;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class DealerAmountDetails extends Activity {
 		amount_paid = (EditText) findViewById(R.id.material_amount_paid_editText);
 		balance_amount = (EditText) findViewById(R.id.material_balance_amount_editText);
 		pay = (Button) findViewById(R.id.pay_balance_button1);
-			
+
 		material_price.setEnabled(false);
 		amount_paid.setEnabled(false);
 
@@ -52,13 +52,23 @@ public class DealerAmountDetails extends Activity {
 		pay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				prepareNewAmount();
-				long result = dealerDao.updateAmount(dealer);
-				if (result < 0) {
-					Toast.makeText(getApplicationContext(), "Error while updating!!", Toast.LENGTH_SHORT).show();
-					return;
-				} else
-					Toast.makeText(DealerAmountDetails.this, "Amount Updated Successfully", Toast.LENGTH_SHORT).show();
+				bp = new BigDecimal(balance_amount.getText().toString());
+				ap = new BigDecimal(amount_paid.getText().toString());
+				mp = new BigDecimal(material_price.getText().toString());
+				BigDecimal amountpaid = mp.subtract(ap);
+				result = bp.compareTo(amountpaid);
+				if (result == 1) {
+					balance_amount.setError(Html.fromHtml("<font color='black'>Enter valid amount </font>"));
+				} else {
+					long result = dealerDao.updateAmount(dealer);
+					if (result < 0) {
+						Toast.makeText(getApplicationContext(), "Error while updating!!", Toast.LENGTH_SHORT).show();
+						return;
+					} else
+						CommonUtil.showUpdateMessage(DealerAmountDetails.this);
+				}
 			}
 		});
 	}
@@ -89,10 +99,11 @@ public class DealerAmountDetails extends Activity {
 			bp = new BigDecimal(balance_amount.getText().toString());
 			total = bp.add(new BigDecimal(amount_paid.getText().toString()));
 			balance = new BigDecimal(balance_amount.getText().toString());
-			BigDecimal bal = new BigDecimal(material_price.getText().toString()).subtract(total);
+			bal = new BigDecimal(material_price.getText().toString()).subtract(total);
+
 			dealer.setAmount_paid(total);
 			dealer.setBalance(bal);
 		} else
-			Toast.makeText(getApplicationContext(), "Dealer is null!!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Dealer not Available!!", Toast.LENGTH_SHORT).show();
 	}
 }

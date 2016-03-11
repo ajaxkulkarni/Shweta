@@ -76,6 +76,7 @@ public class JobsExpandableListView extends Activity {
 				i.putExtra("ID", id);
 				i.putExtra("New_Balance", new_balance);
 				startActivity(i);
+				finish();
 			}
 		});
 
