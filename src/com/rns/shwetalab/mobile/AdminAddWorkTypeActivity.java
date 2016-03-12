@@ -26,6 +26,7 @@ import com.rns.shwetalab.mobile.db.PersonDao;
 import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.db.WorkTypeDao;
 import com.rns.shwetalab.mobile.domain.Person;
+import com.rns.shwetalab.mobile.domain.Utility;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
@@ -60,7 +61,8 @@ public class AdminAddWorkTypeActivity extends Activity {
 		labsListView = (ListView) findViewById(R.id.addworktypelablistView);
 		defaultprice.setText("100");
 		preparePersonMaps();
-
+		Utility.setListViewHeightBasedOnChildren(personsListView);
+		Utility.setListViewHeightBasedOnChildren(labsListView);
 		addWorkTypeButton.setOnClickListener(new OnClickListener() {
 
 			@Override

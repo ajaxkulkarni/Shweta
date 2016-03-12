@@ -60,7 +60,7 @@ public class BalanceSheet extends Activity {
 			@Override
 			public void onClick(View v) 
 			{
-				Intent i = new Intent(BalanceSheet.this, MonthlyDealerList.class);
+				Intent i = new Intent(BalanceSheet.this, DealerJobsList.class);
 				i.putExtra("Month", month);
 				i.putExtra("type", CommonUtil.TYPE_DEALER);
 				startActivity(i);
