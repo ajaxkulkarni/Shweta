@@ -181,17 +181,14 @@
                 android:padding="10dp" />
         </LinearLayout>
 
-        <EditText
+        <Spinner
             android:id="@+id/jobentry_shade_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/rounded"
             android:gravity="center"
-            android:hint="Shade"
-            android:inputType="text"
             android:padding="10dp" />
 
         <Button

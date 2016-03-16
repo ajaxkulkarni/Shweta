@@ -42,7 +42,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 	private SimpleDateFormat dateFormatter;
 
 	int count = 0;
-	Spinner sp1, sp2;
+	Spinner sp1, sp2,shade;
 	private AutoCompleteTextView doctorName;
 	private PersonDao personDao;
 	private AutoCompleteTextView workType1, workType2, workType3, workType4;
@@ -50,7 +50,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 	private JobsDao jobsDao;
 	private WorkType worktype;
 	private WorkPersonMap workPersonMap;
-	private EditText patientName, shade;
+	private EditText patientName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		sp1 = (Spinner) findViewById(R.id.spinner_position);
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
-		shade = (EditText) findViewById(R.id.jobentry_shade_editText);
+		shade = (Spinner) findViewById(R.id.jobentry_shade_editText);
 		 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,6 +85,9 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Quadrent, android.R.layout.simple_spinner_item);
 		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp2.setAdapter(adapter1);
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(JobEntry.this, R.array.Shade, android.R.layout.simple_spinner_item);
+		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		shade.setAdapter(adapter2);
 
 		// spinner_quad(sp1);
 		// spinner_position(sp2);
@@ -175,7 +178,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		job.setPatientName(patientName.getText().toString());
 		job.setPosition(sp1.getSelectedItemPosition());
 		job.setQuadrent(sp2.getSelectedItemPosition());
-		job.setShade(shade.getText().toString());
+		job.setShade(shade.getSelectedItemPosition());
 		Person doctor = new Person();
 		doctor.setName(doctorName.getText().toString());
 		job.setDoctor(doctor);

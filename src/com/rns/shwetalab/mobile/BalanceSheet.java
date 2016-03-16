@@ -14,6 +14,7 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class BalanceSheet extends Activity {
-	private TextView doctorPrice, labPrice, doctor, lab,dealerprice,dealers;
+	private TextView doctorPrice, labPrice, doctor, lab, dealerprice, dealers;
 	private WorkType worktype;
 	private WorkPersonMap workpersonmap;
 	private JobsDao jobsDao;
@@ -31,6 +32,7 @@ public class BalanceSheet extends Activity {
 	private TextView totalPrice;
 	private JobLabMapDao JobLabMapDao;
 	final String price = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,53 +42,66 @@ public class BalanceSheet extends Activity {
 		JobLabMapDao = new JobLabMapDao(this);
 		Bundle extras = getIntent().getExtras();
 		final String month = extras.getString("Month");
-		submit = (Button)findViewById(R.id.balancesheet_submit_button);
+		submit = (Button) findViewById(R.id.balancesheet_submit_button);
 		doctorPrice = (TextView) findViewById(R.id.activity_billingsheet_doctor_textView);
 		final BigDecimal gain = jobsDao.getDoctorIncomeForMonth(month, CommonUtil.TYPE_DOCTOR);
 		doctorPrice.setText(gain.toString());
 		labPrice = (TextView) findViewById(R.id.activity_billingsheetlab_textView);
 		BigDecimal labDues = JobLabMapDao.getLabIncomeForMonth(jobsDao.getJobsByMonth(month));
 		labPrice.setText(labDues.toString());
-		dealerprice = (TextView)findViewById(R.id.activity_billingsheetdealer_textView);
+		dealerprice = (TextView) findViewById(R.id.activity_billingsheetdealer_textView);
 		BigDecimal dealer = dealerDao.getIncomeForMonth(month, CommonUtil.TYPE_DEALER);
 		dealerprice.setText(dealer.toString());
 		totalPrice = (TextView) findViewById(R.id.activity_billingsheettotal_textView);
 		totalPrice.setText(gain.subtract(labDues).add(dealer).toString());
-		dealers = (TextView)findViewById(R.id.activity_billingsheetdealertextView);
+		dealers = (TextView) findViewById(R.id.activity_billingsheetdealertextView);
 		doctor = (TextView) findViewById(R.id.activity_billingsheetdoctortextView);
-		
-		
-		submit.setOnClickListener(new OnClickListener() 
-		{
-			
+
+		submit.setOnClickListener(new OnClickListener() {
+
 			@Override
-			public void onClick(View v) 
-			{
-				
-				String to = "ajinkyashiva@gmail.com";
-	              String subject = "Dental Invoice";
-	              String message = "Hello Ajinkya ";
-	              Intent email = new Intent(Intent.ACTION_SEND);
-	              email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
-	              email.putExtra(Intent.EXTRA_SUBJECT, subject);
-	              email.putExtra(Intent.EXTRA_TEXT, message);          
-	              email.setType("message/rfc822");              
-	              startActivity(Intent.createChooser(email, "Select Email Client"));
+			public void onClick(View v) {
+
+				String to = "rajeshmangale0802@gmail.com";
+				String subject = "Dental Invoice";
+				String message = "Case Id" + "Worktype" + "Price";
+				String message1 = "3" + "Root" + "1000";
+				Intent email = new Intent(Intent.ACTION_SEND);
+				email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
+				email.putExtra(Intent.EXTRA_SUBJECT, subject);
+				// email.putExtra(Intent.EXTRA_TEXT, message);
+				// email.putExtra(Intent.EXTRA_TEXT, message1);
+				email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(new StringBuilder().append("<p><b>Some Content</b></p>")
+						.append("<small><p></p></small>"+message).append("<small><p></p></small>"+message1).toString()));
+				email.setType("message/rfc822");
+				startActivity(Intent.createChooser(email, "Select Email Client"));
+
+				//
+				// MailMessage mail = new MailMessage();
+				// mail.To
+				// ="me@mycompany.com;him@hiscompany.com;her@hercompany.com";
+				// mail.From = "you@yourcompany.com";
+				// mail.Subject = "this is a test email.";
+				// mail.IsBodyHtml=true;
+				// mail.Body = text;
+				// MailAttachment attachment = new MailAttachment(
+				// Server.MapPath( "test.txt" ) );
+				// mail.Attachments.Add( attachment ); //add the attachment
+				// SmtpMail.SmtpServer = "smtp.gmail.com";
+
 			}
-		});  
-		
-		dealers.setOnClickListener(new OnClickListener() 
-		{
+		});
+
+		dealers.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 				Intent i = new Intent(BalanceSheet.this, DealerJobsList.class);
 				i.putExtra("Month", month);
 				i.putExtra("type", CommonUtil.TYPE_DEALER);
 				startActivity(i);
 			}
-		}); 
-		
+		});
+
 		doctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

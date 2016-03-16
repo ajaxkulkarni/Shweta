@@ -91,7 +91,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	private String prepareWorks(Job job) {
+	private String prepareWorks(Job job) 
+	{
+		int count = 0;
 		StringBuilder builder = new StringBuilder();
 		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(_context);
 		JobWorkTypeMapDao jobWorkTypeMapDao = new JobWorkTypeMapDao(_context);
@@ -105,18 +107,27 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 			for (WorkType workType : works) {
 				List<WorkPersonMap> jobs = workPersonMapDao.getWorkTypeById(workType, CommonUtil.TYPE_LAB,
 						job.getDoctor().getId());
-				{
-					work.addAll(jobs);
-					builder.append(work.get(0).getWorkType().getName());
-					break;
-				}
-			}
-		}
 
-		else {
+				work.addAll(jobs);
+				
+				for (WorkPersonMap work1 : jobs) {
+					
+					if (work1.getWorkType().getName().equals(jobs.get(count).getWorkType().getName())) {
+						builder.append(work1.getWorkType().getName()).append(",");
+						count++;
+						if (count >= jobs.size()) {
+							break;
+						}
+						
+					}
+					else
+						break;
+				}
+				break;
+			}
+		} else {
 			for (WorkType workType : job.getWorkTypes()) {
 				builder.append(workType.getName()).append(",");
-
 			}
 		}
 		return builder.toString();

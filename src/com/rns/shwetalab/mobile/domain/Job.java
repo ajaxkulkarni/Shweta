@@ -9,7 +9,7 @@ public class Job {
 	private Integer id;
 	private Integer quadrent,position;
 	private String patientName;
-	private String shade;
+	private Integer shade;
 	private Date date;
 	private Person doctor;
 	private List<WorkType> workTypes;
@@ -57,10 +57,10 @@ public class Job {
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
 	}
-	public String getShade() {
+	public Integer getShade() {
 		return shade;
 	}
-	public void setShade(String shade) {
+	public void setShade(Integer shade) {
 		this.shade = shade;
 	}
 	public Date getDate() {

@@ -44,7 +44,26 @@
         <item>7</item>
         <item>8</item>
     </string-array>
-
+<string-array name="Shade">
+        <item>Select Shade</item>
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>A3.5</item>
+        <item>A4</item>
+        <item>B1</item>
+        <item>B2</item>
+        <item>B3</item>
+        <item>B4</item>
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+        <item>C4</item>
+        <item>D1</item>
+        <item>D2</item>
+        <item>D3</item>
+        <item>D4</item>
+    </string-array>
     <string name="title_activity_balance_details">BalanceDetails</string>
     <string name="title_activity_add_dealer">AddDealer</string>
     <string name="title_activity_dealer_jobs_list">DealerJobsList</string>

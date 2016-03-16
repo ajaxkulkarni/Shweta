@@ -260,7 +260,7 @@ public class JobsDao {
 				job.setId(Integer.parseInt(cursor.getString(0)));
 				job.setPatientName(cursor.getString(1));
 				job.setDate(CommonUtil.convertDate(cursor.getString(2)));
-				job.setShade(cursor.getString(3));
+				job.setShade(cursor.getInt(3));
 				Person person = personDao.getPerson(cursor.getInt(4));
 				job.setDoctor(person);
 				job.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
