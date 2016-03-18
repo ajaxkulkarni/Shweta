@@ -144,17 +144,6 @@ public class JobsExpandableListViewAdapter extends BaseExpandableListAdapter
 			LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.activity_expandable_list_group, null);
 		}
-		//pay = (Button)convertView.findViewById(R.id.paybutton);
-//		pay.setOnClickListener(new OnClickListener() 
-//		{
-//			
-//			@Override
-//			public void onClick(View v) 
-//			{
-//				Intent i = new Intent(JobsExpandableListViewAdapter.this,DealerAmountDetails.class);
-//				start
-//			}
-//		});
 		TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
 		lblListHeader.setTypeface(null, Typeface.BOLD);
 		lblListHeader.setText(headerTitle);

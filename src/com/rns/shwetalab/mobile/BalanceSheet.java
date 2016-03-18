@@ -61,34 +61,6 @@ public class BalanceSheet extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				String to = "rajeshmangale0802@gmail.com";
-				String subject = "Dental Invoice";
-				String message = "Case Id" + "Worktype" + "Price";
-				String message1 = "3" + "Root" + "1000";
-				Intent email = new Intent(Intent.ACTION_SEND);
-				email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
-				email.putExtra(Intent.EXTRA_SUBJECT, subject);
-				// email.putExtra(Intent.EXTRA_TEXT, message);
-				// email.putExtra(Intent.EXTRA_TEXT, message1);
-				email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(new StringBuilder().append("<p><b>Some Content</b></p>")
-						.append("<small><p></p></small>"+message).append("<small><p></p></small>"+message1).toString()));
-				email.setType("message/rfc822");
-				startActivity(Intent.createChooser(email, "Select Email Client"));
-
-				//
-				// MailMessage mail = new MailMessage();
-				// mail.To
-				// ="me@mycompany.com;him@hiscompany.com;her@hercompany.com";
-				// mail.From = "you@yourcompany.com";
-				// mail.Subject = "this is a test email.";
-				// mail.IsBodyHtml=true;
-				// mail.Body = text;
-				// MailAttachment attachment = new MailAttachment(
-				// Server.MapPath( "test.txt" ) );
-				// mail.Attachments.Add( attachment ); //add the attachment
-				// SmtpMail.SmtpServer = "smtp.gmail.com";
-
 			}
 		});
 
