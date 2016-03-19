@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.rns.shwetalab.mobile.LabExpandableList;
 import com.rns.shwetalab.mobile.R;
 import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
 import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
 
 /**
@@ -101,15 +104,38 @@ public class LabExpandableListAdapter extends BaseExpandableListAdapter
 	}
 
 
-	private String prepareWorks(Job job) {
-		if(job.getWorkTypes() == null || job.getWorkTypes().size() == 0) {
+	private String prepareWorks(Job job) 
+	{
+		int count = 0;
+		StringBuilder builder = new StringBuilder();
+		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(context);
+		JobWorkTypeMapDao jobWorkTypeMapDao = new JobWorkTypeMapDao(context);
+		List<WorkType> works = jobWorkTypeMapDao.getWorktypesForJob(job);
+		if(works == null || works.size() == 0) {
 			return "";
 		}
-		StringBuilder builder = new StringBuilder();
-		for(WorkType workType:job.getWorkTypes()) {
-			builder.append(workType.getName()).append(",");
+
+		if (job.getDoctor().getWorkType().equals(CommonUtil.TYPE_LAB)) {
+			List<WorkPersonMap> work = new ArrayList<WorkPersonMap>();
+			for (WorkType workType : works) {
+				List<WorkPersonMap> jobs = workPersonMapDao.getWorkTypeById(workType, CommonUtil.TYPE_LAB,
+						job.getDoctor().getId());
+
+				work.addAll(jobs);
+				for (WorkPersonMap work1 : jobs) {
+					if (work1.getWorkType().getName().equals(jobs.get(count).getWorkType().getName())) {
+						builder.append(work1.getWorkType().getName()).append(",");
+						count++;
+						if (count >= jobs.size()) {
+							break;
+						}
+					}
+					else
+						break;
+				}
+				break;
+			}
 		}
-		builder.replace(builder.lastIndexOf(","), builder.lastIndexOf(","), "");
 		return builder.toString();
 	}
 
