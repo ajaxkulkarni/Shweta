@@ -1,16 +1,22 @@
 package com.rns.shwetalab.mobile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
-import com.google.gson.Gson;
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.Adapter;
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.BalanceAmountDao;
 import com.rns.shwetalab.mobile.db.JobsDao;
@@ -20,16 +26,16 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class JobsExpandableListView extends Activity {
 	private JobsExpandableListViewAdapter joblistAdapter;
@@ -46,8 +52,10 @@ public class JobsExpandableListView extends Activity {
 	String work;
 	BigDecimal amount;
 	int a, bal_price;
-
 	int total, current_month, current_year;
+	String file = "PositionPdf.pdf";
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +97,21 @@ public class JobsExpandableListView extends Activity {
 		mail.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				prepareInvoice(month, name);
-
-				// email.putExtra(Intent.EXTRA_TEXT, message);
-				// email.putExtra(Intent.EXTRA_TEXT, message1);
-
+			public void onClick(View v) 
+			{
+				try {
+					createPdf(month,name);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+
+
+
 
 		});
 
@@ -166,53 +182,56 @@ public class JobsExpandableListView extends Activity {
 		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
 		listDataHeader = new ArrayList<String>();
-		// TODO Auto-generated method stub
-		String to = "rajeshmangale0802@gmail.com";
-		String subject = "Dental Invoice";
-		String message1 = " " + id + " " + work + " " + amount;
-		Date dNow = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat(" MM-dd-yyyy ");
-		StringBuilder body = new StringBuilder();
-		String message = " Case Id " + " Worktype " + " Price ";
-		body.append("<html>");
-		body.append("<body>");
-		body.append("<table style = "+"width:100%"+">");
-		body.append("<tr>");
-		body.append("<td>" +"Case ID" +"</td>");
-		body.append(" <td>" +  " Worktype" + "</td>");
-		body.append(" <td>" +  "Price" + "</td>");
-		body.append("</tr>");
 
-		for (Job job : jobs) {
-			if (job.getDoctor() == null) {
-				continue;
-			}
-			body.append("<tr>");
-			body.append("<td>" + job.getId() + "</td>");
-			body.append("<td>" + prepareWorks(job) + "</td>");
-			body.append("<td>" + job.getPrice() + "</td>");
-			body.append("</tr");
-
-		}
-
-		body.append("</table");
-		body.append("</body");
-		body.append("</html");
-
-		Intent email = new Intent(Intent.ACTION_SEND);
-		email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
-		email.putExtra(Intent.EXTRA_SUBJECT, subject);
-		email.putExtra(Intent.EXTRA_TEXT,
-				Html.fromHtml(new StringBuilder().append("<p><b>Shweta Dental Laboratory</b></p>")
-						.append("<small><p>522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1st Floor,Pune-30</p></small>")
-						.append("<small><p>MOBILE.:9764004512 EMAIL-shwetadentallaboratory@gmail.com</p></small>")
-						.append("<small><p>To - Shweta Dental Laboratory</p></small>")
-						.append("<small><p></p></small>" + ft.format(dNow)).append("<p></p>" + body).toString()));
-		// email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(new
-		// StringBuilder().append("<p></p>"+body).toString()));
-
-		email.setType("message/rfc822");
-		startActivity(Intent.createChooser(email, "Select Email Client"));
+		// String subject = "Dental Invoice";
+		// String message1 = " " + id + " " + work + " " + amount;
+		// Date dNow = new Date();
+		// SimpleDateFormat ft = new SimpleDateFormat(" MM-dd-yyyy ");
+		// StringBuilder body = new StringBuilder();
+		// String message = " Case Id " + " Worktype " + " Price ";
+		// body.append("<html>");
+		// body.append("<body>");
+		// body.append("<table style = "+"width:100%"+">");
+		// body.append("<tr>");
+		// body.append("<td>" +"Case ID" +"</td>");
+		// body.append(" <td>" + " Worktype" + "</td>");
+		// body.append(" <td>" + "Price" + "</td>");
+		// body.append("</tr>");
+		//
+		// for (Job job : jobs) {
+		// if (job.getDoctor() == null) {
+		// continue;
+		// }
+		// body.append("<tr>");
+		// body.append("<td>" + job.getId() + "</td>");
+		// body.append("<td>" + prepareWorks(job) + "</td>");
+		// body.append("<td>" + job.getPrice() + "</td>");
+		// body.append("</tr");
+		//
+		// }
+		//
+		// body.append("</table");
+		// body.append("</body");
+		// body.append("</html");
+		//
+		// Intent email = new Intent(Intent.ACTION_SEND);
+		// email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
+		// email.putExtra(Intent.EXTRA_SUBJECT, subject);
+		// email.putExtra(Intent.EXTRA_TEXT,
+		// Html.fromHtml(new StringBuilder().append("<p><b>Shweta Dental
+		// Laboratory</b></p>")
+		// .append("<small><p>522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1st
+		// Floor,Pune-30</p></small>")
+		// .append("<small><p>MOBILE.:9764004512
+		// EMAIL-shwetadentallaboratory@gmail.com</p></small>")
+		// .append("<small><p>To - Shweta Dental Laboratory</p></small>")
+		// .append("<small><p></p></small>" + ft.format(dNow)).append("<p></p>"
+		// + body).toString()));
+		// // email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(new
+		// // StringBuilder().append("<p></p>"+body).toString()));
+		//
+		// email.setType("message/rfc822");
+		// startActivity(Intent.createChooser(email, "Select Email Client"));
 	}
 
 	private void prepareListData(String month, String name) {
@@ -261,6 +280,114 @@ public class JobsExpandableListView extends Activity {
 				pay_bal_text.setVisibility(View.GONE);
 			}
 		}
+
+	}
+
+	private void sendmail(File myFile) 
+	{
+		Intent email = new Intent(Intent.ACTION_SEND);
+		email.putExtra(Intent.EXTRA_SUBJECT,"Dental Invoice");
+		email.putExtra(Intent.EXTRA_TEXT, "Hello Brother");
+		Uri uri = FileProvider.getUriForFile(this,"com.rns.shwetalab.mobile", myFile);
+		email.putExtra(Intent.EXTRA_STREAM, uri);
+		email.setType("message/rfc822");
+		startActivity(email);
+
+	}
+
+
+	// more of the getters and setters ….. 
+	private void createPdf(String month, String name) throws FileNotFoundException, DocumentException 
+	{
+
+
+		jobsDao = new JobsDao(this);
+		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
+		listDataHeader = new ArrayList<String>();
+		File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_DOCUMENTS), "pdfdemo");
+		if (!pdfFolder.exists()) {
+			pdfFolder.mkdir();
+			Log.i("TAG", "Pdf Directory created");
+		}
+		File myFile = new File(pdfFolder + ".pdf");
+		FileOutputStream output = new FileOutputStream(myFile);
+
+
+		//Rectangle pagesize = new Rectangle(216f, 720f);
+		Document document = new Document();
+		PdfWriter.getInstance(document, output);
+		document.open();
+		addMetaData(document);
+		//(document);
+		addContent(document);
+		//		document.add(new Paragraph("Shweta"));
+		//		document.add(new Paragraph("Dental Laboratory"));
+		//		document.add(new Paragraph("522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1stFloor,Pune-30"));
+		//		document.add(new Paragraph("Mob:9764004512, Email - shwetadentallaboratory@gmail.com"));
+		//		document.add(new Paragraph("To :  Shweta Dental Laboratory"));	
+		//		for (Job job : jobs) 
+		//		{
+		//			 if (job.getDoctor() == null) 
+		//			 {
+		//			 continue;
+		//			 }
+		//			 
+		//		}
+		document.close();
+		sendmail(myFile);
+	}
+
+	private static void addMetaData(Document document) {
+		document.addTitle("My first PDF");
+		document.addSubject("Using iText");
+		document.addKeywords("Java, PDF, iText");
+		document.addAuthor("Lars Vogel");
+		document.addCreator("Lars Vogel");
+	}
+
+	private static void addContent(Document document) throws DocumentException {
+		Anchor anchor = new Anchor("First Chapter");
+		anchor.setName("First Chapter");
+
+		// Second parameter is the number of the chapter
+		Chapter catPart = new Chapter(new Paragraph(anchor), 1);
+
+		Paragraph subPara = new Paragraph("Subcategory 1");
+		Section subCatPart = catPart.addSection(subPara);
+		subCatPart.add(new Paragraph("Hello"));
+
+		subPara = new Paragraph("Subcategory 2");
+		subCatPart = catPart.addSection(subPara);
+		subCatPart.add(new Paragraph("Paragraph 1"));
+		subCatPart.add(new Paragraph("Paragraph 2"));
+		subCatPart.add(new Paragraph("Paragraph 3"));
+
+		// add a list
+		//  createList(subCatPart);
+		Paragraph paragraph = new Paragraph();
+		//  addEmptyLine(paragraph, 5);
+		subCatPart.add(paragraph);
+
+		// add a table
+		//  createTable(subCatPart);
+
+		// now add all this to the document
+		document.add(catPart);
+
+		// Next section
+		anchor = new Anchor("Second Chapter");
+		anchor.setName("Second Chapter");
+
+		// Second parameter is the number of the chapter
+		catPart = new Chapter(new Paragraph(anchor), 1);
+
+		subPara = new Paragraph("Subcategory");
+		subCatPart = catPart.addSection(subPara);
+		subCatPart.add(new Paragraph("This is a very important message"));
+
+		// now add all this to the document
+		document.add(catPart);
 
 	}
 }

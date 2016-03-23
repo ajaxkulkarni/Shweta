@@ -17,7 +17,7 @@ public class WorkTypeDao {
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase workTypeDb;
 	private Context context;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.WORKTYPE_NAME, DatabaseHelper.WORKTYPE_PRICE };
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.WORKTYPE_NAME, DatabaseHelper.WORKTYPE_PRICE, DatabaseHelper.WORKTYPE_QUANTITY };
 
 	public WorkTypeDao(Context c) {
 		context = c;
@@ -58,6 +58,7 @@ public class WorkTypeDao {
 
 	private ContentValues prepareContentValues(WorkType work) {
 		ContentValues contentValues = new ContentValues();
+		//contentValues.put(DatabaseHelper.WORKTYPE_QUANTITY, work.getQuantity());
 		contentValues.put(DatabaseHelper.WORKTYPE_NAME, work.getName());
 		if (work.getDefaultPrice() != null) {
 			contentValues.put(DatabaseHelper.WORKTYPE_PRICE, work.getDefaultPrice().toString());
@@ -106,6 +107,7 @@ public class WorkTypeDao {
 				work.setId(Integer.parseInt(cursor.getString(0)));
 				work.setName(cursor.getString(1));
 				work.setDefaultPrice(new BigDecimal(cursor.getString(2)));
+		//		work.setQuantity(cursor.getInt(3));
 				workTypes.add(work);
 			} while (cursor.moveToNext());
 		}

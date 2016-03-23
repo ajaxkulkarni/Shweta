@@ -173,6 +173,7 @@
             android:name=".DoctorAmountDetails"
             android:label="@string/title_activity_doctor_amount_details" >
         </activity>
-    </application>
+
+      </application>
 
 </manifest>

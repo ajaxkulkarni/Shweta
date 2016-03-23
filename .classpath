@@ -10,5 +10,9 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/Rajesh Mangale/Desktop/TiffEat/Jars/gson-2.2.2.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="C:/Users/Rajesh Mangale/Desktop/Dental Lab/Jars/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rajesh Mangale/Desktop/Dental Lab/Jars/additionnal.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rajesh Mangale/Desktop/Dental Lab/Jars/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rajesh Mangale/Desktop/iTextPdf/itextpdf-5.5.9.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

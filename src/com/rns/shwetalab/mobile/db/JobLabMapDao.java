@@ -88,7 +88,7 @@ public class JobLabMapDao {
 			labJob.setQuadrent(job.getQuadrent());
 			labJob.setShade(job.getShade());
 			labJob.setId(job.getId());
-//			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
+			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
 			labJob.setDoctor(personDao.getPerson(cursor.getInt(2)));
 			labJob.setPrice(new BigDecimal(cursor.getDouble(3)));
 			labJobs.add(labJob);

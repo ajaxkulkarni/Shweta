@@ -36,7 +36,7 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 
 public class JobEntry extends Activity implements OnItemSelectedListener, OnClickListener {
 
-	private EditText dateSelected;
+	private EditText dateSelected,quant1,quant2,quant3,quant4;
 	private DatePickerDialog toDatePickerDialog;
 	Button addwork, jobentry;
 	private SimpleDateFormat dateFormatter;
@@ -58,6 +58,10 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		setContentView(R.layout.activity_job_entry);
 		dateFormatter = new SimpleDateFormat(CommonUtil.DATE_FORMAT, Locale.US);
 		dateSelected = (EditText) findViewById(R.id.CurrentDateeditText);
+		quant1 = (EditText)findViewById(R.id.QuantityeditText1);
+		quant2 = (EditText)findViewById(R.id.QuantityeditText2);
+		quant3 = (EditText)findViewById(R.id.QuantityeditText3);
+		quant4 = (EditText)findViewById(R.id.QuantityeditText4);
 		setDateTimeField();
 		personDao = new PersonDao(getApplicationContext());
 		workTypeDao = new WorkTypeDao(getApplicationContext());
@@ -78,7 +82,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		sp2 = (Spinner) findViewById(R.id.spinner_quadrant);
 		patientName = (EditText) findViewById(R.id.jobentry_patname_editText);
 		shade = (Spinner) findViewById(R.id.jobentry_shade_editText);
-		 
+
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobEntry.this, R.array.Position, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp1.setAdapter(adapter);
@@ -127,21 +131,23 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 				if (count == 0) {
 
 					workType2.setVisibility(View.VISIBLE);
+					quant2.setVisibility(View.VISIBLE);
 					count++;
 				}
 
 				else if (count == 1) {
 
 					workType3.setVisibility(View.VISIBLE);
+					quant3.setVisibility(View.VISIBLE);
 					count++;
 				}
 
 				else if (count == 2) {
 					workType4.setVisibility(View.VISIBLE);
+					quant4.setVisibility(View.VISIBLE);
 					count++;
 				} else if (count == 3)
 					Toast.makeText(getApplicationContext(), "You can't add more than 3 Jobs", Toast.LENGTH_SHORT).show();
-
 			}
 		});
 
@@ -193,7 +199,21 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		addWorkType(workTypes, workType2);
 		addWorkType(workTypes, workType3);
 		addWorkType(workTypes, workType4);
+//		addquantity(workTypes,quant1);
+//		addquantity(workTypes,quant2);
+//		addquantity(workTypes,quant3);
+//		addquantity(workTypes,quant4);
 		job.setWorkTypes(workTypes);
+	}
+
+	private void addquantity(List<WorkType> workTypes, EditText quant) 
+	{if (TextUtils.isEmpty(quant.getText())) 
+	{
+		return;
+	}
+	WorkType workType = new WorkType();
+	workType.setQuantity(Integer.parseInt(quant.getText().toString()));
+	workTypes.add(workType);
 	}
 
 	private void addWorkType(List<WorkType> workTypes, AutoCompleteTextView work) {

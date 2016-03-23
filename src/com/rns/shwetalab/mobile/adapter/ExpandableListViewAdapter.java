@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.rns.shwetalab.mobile.R;
+import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
+import com.rns.shwetalab.mobile.db.PersonDao;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -11,13 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
-import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.WorkPersonMap;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 /**
  * Created by Rajesh on 8/28/2015.
@@ -88,43 +90,39 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		position.setText("Position :" + job.getPosition());
 		TextView shade = (TextView) convertView.findViewById(R.id.lbl_shade);
 		shade.setText("Shade :" + job.getShade());
+		TextView quantity = (TextView)convertView.findViewById(R.id.lbl_quantity);
+		quantity.setText("Quantity :" + prepareQuantity(job));
 		return convertView;
 	}
 
-	private String prepareWorks(Job job) 
+	private String prepareQuantity(Job job) 
 	{
-		int count = 0;
 		StringBuilder builder = new StringBuilder();
-		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(_context);
-		JobWorkTypeMapDao jobWorkTypeMapDao = new JobWorkTypeMapDao(_context);
-		List<WorkType> works = jobWorkTypeMapDao.getWorktypesForJob(job);
-		if (works == null || works.size() == 0) {
-			return "";
+		for(WorkType workType : job.getWorkTypes())
+		{
+			builder.append(workType.getQuantity()).append(",");
 		}
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	private String prepareWorks(Job job) {
+		StringBuilder builder = new StringBuilder();
+		WorkPersonMap personMap = new WorkPersonMap();
+		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(_context);
 		if (job.getDoctor().getWorkType().equals(CommonUtil.TYPE_LAB)) {
-			List<WorkPersonMap> work = new ArrayList<WorkPersonMap>();
-			for (WorkType workType : works) {
-				List<WorkPersonMap> jobs = workPersonMapDao.getWorkTypeById(workType, CommonUtil.TYPE_LAB,
-						job.getDoctor().getId());
+			for (WorkType workType : job.getWorkTypes())
 
-				work.addAll(jobs);
-				
-				for (WorkPersonMap work1 : jobs) {
-					
-					if (work1.getWorkType().getName().equals(jobs.get(count).getWorkType().getName())) {
-						builder.append(work1.getWorkType().getName()).append(",");
-						count++;
-						if (count >= jobs.size()) {
-							break;
-						}
-						
-					}
-					else
-						break;
+			{
+				personMap.setPerson(job.getDoctor());
+				personMap.setWorkType(workType);
+				WorkPersonMap map = workPersonMapDao.getWorkPersonMap(personMap);
+				if(map!=null)
+				{
+					builder.append(workType.getName()).append(",");
 				}
-				break;
 			}
+
 		} else {
 			for (WorkType workType : job.getWorkTypes()) {
 				builder.append(workType.getName()).append(",");

@@ -13,7 +13,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="#80CBC4"
             android:gravity="center"
             android:padding="20dp" >
@@ -31,13 +32,14 @@
         <EditText
             android:id="@+id/CurrentDateeditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded"
             android:drawableRight="@drawable/calender"
             android:ems="10"
-            android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Date"
             android:inputType="date" >
@@ -46,11 +48,12 @@
         <AutoCompleteTextView
             android:id="@+id/jobentry_docname_autocomplete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded"
             android:ems="10"
             android:gravity="center"
@@ -63,95 +66,154 @@
         <EditText
             android:id="@+id/jobentry_patname_editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded"
             android:gravity="center"
             android:hint="Patient Name"
             android:padding="10dp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/layout_worktype"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
-            <LinearLayout
-                android:id="@+id/layout_worktype"
+            <AutoCompleteTextView
+                android:id="@+id/jobentry_worktype_autocomplete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
-                android:orientation="horizontal" >
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded"
+                android:ems="10"
+                android:hint="Work Type"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:windowSoftInputMode="stateHidden" >
+            </AutoCompleteTextView>
 
-                <AutoCompleteTextView
-                    android:id="@+id/jobentry_worktype_autocomplete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded"
-                    android:ems="10"
-                    android:hint="Work Type"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:windowSoftInputMode="stateHidden" >
-                </AutoCompleteTextView>
+            <EditText
+                android:id="@+id/QuantityeditText1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Quantity"
+                android:inputType="phone" >
+            </EditText>
 
-                <Button
-                    android:id="@+id/jobentry_buttonadd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/addbutton"
-                    android:padding="10dp"
-                    android:text="+" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/jobentry_buttonadd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/addbutton"
+                android:padding="10dp"
+                android:text="+" />
         </LinearLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/jobentry_worktype1_editText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:hint="Work Type"
-            android:background="@drawable/rounded"
-            android:padding="10dp"
-            android:visibility="gone" />
+            android:orientation="horizontal" >
 
-        <AutoCompleteTextView
-            android:id="@+id/jobentry_worktype2_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded"
-            android:gravity="center"
-            android:hint="Work Type"
-            android:padding="10dp"
-            android:visibility="gone" />
+            <AutoCompleteTextView
+                android:id="@+id/jobentry_worktype1_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded"
+                android:gravity="center"
+                android:hint="Work Type"
+                android:padding="10dp"
+                android:visibility="gone" />
 
-        <AutoCompleteTextView
-            android:id="@+id/jobentry_worktype3_editText"
+            <EditText
+                android:id="@+id/QuantityeditText2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Quantity"
+                android:inputType="phone"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/rounded"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:hint="Work Type"
-            android:padding="10dp"
-            android:visibility="gone" />
+            android:orientation="horizontal" >
+
+            <AutoCompleteTextView
+                android:id="@+id/jobentry_worktype2_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded"
+                android:gravity="center"
+                android:hint="Work Type"
+                android:padding="10dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/QuantityeditText3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Quantity"
+                android:inputType="phone"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <AutoCompleteTextView
+                android:id="@+id/jobentry_worktype3_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded"
+                android:gravity="center"
+                android:hint="Work Type"
+                android:padding="10dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/QuantityeditText4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Quantity"
+                android:inputType="phone"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,6 +222,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
             <Spinner
@@ -184,9 +247,10 @@
         <Spinner
             android:id="@+id/jobentry_shade_editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded"
             android:gravity="center"
             android:padding="10dp" />
@@ -194,11 +258,12 @@
         <Button
             android:id="@+id/jobentrybutton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:background="#80CBC4"
             android:gravity="center"
             android:padding="10dp"

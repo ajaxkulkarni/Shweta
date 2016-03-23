@@ -233,34 +233,24 @@ public class LabExpandableList extends Activity {
 	{
 		int count = 0;
 		StringBuilder builder = new StringBuilder();
+		WorkPersonMap personMap = new WorkPersonMap();
 		WorkPersonMapDao workPersonMapDao = new WorkPersonMapDao(LabExpandableList.this);
 		JobWorkTypeMapDao jobWorkTypeMapDao = new JobWorkTypeMapDao(LabExpandableList.this);
-		List<WorkType> works = jobWorkTypeMapDao.getWorktypesForJob(job);
-		if(works == null || works.size() == 0) {
-			return "";
-		}
-
 		if (job.getDoctor().getWorkType().equals(CommonUtil.TYPE_LAB)) {
-			List<WorkPersonMap> work = new ArrayList<WorkPersonMap>();
-			for (WorkType workType : works) {
-				List<WorkPersonMap> jobs = workPersonMapDao.getWorkTypeById(workType, CommonUtil.TYPE_LAB,
-						job.getDoctor().getId());
+			for (WorkType workType : job.getWorkTypes())
 
-				work.addAll(jobs);
-				for (WorkPersonMap work1 : jobs) {
-					if (work1.getWorkType().getName().equals(jobs.get(count).getWorkType().getName())) {
-						builder.append(work1.getWorkType().getName()).append(",");
-						count++;
-						if (count >= jobs.size()) {
-							break;
-						}
-					}
-					else
-						break;
+			{
+				personMap.setPerson(job.getDoctor());
+				personMap.setWorkType(workType);
+				WorkPersonMap a = workPersonMapDao.getWorkPersonMap(personMap);
+				if(a!=null)
+				{
+					builder.append(workType.getName()).append(",");
 				}
-				break;
 			}
-		}
+
+		} 
+
 		return builder.toString();
 	}
 }

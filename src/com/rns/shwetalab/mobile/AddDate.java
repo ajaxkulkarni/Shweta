@@ -65,7 +65,10 @@ public class AddDate extends Activity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = nextActivity(dateSelected.getText().toString());
+			//	Intent intent = nextActivity(dateSelected.getText().toString());
+				Intent intent = new Intent(AddDate.this, ExpandableDoctorListView.class);
+				intent.putExtra(DatabaseHelper.JOB_DATE, dateSelected.getText().toString());
+				intent.putExtra("type", getIntent().getStringExtra("type"));
 				startActivity(intent);
 			}
 
