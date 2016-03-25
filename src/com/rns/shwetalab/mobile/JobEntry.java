@@ -195,25 +195,28 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 
 	private void prepareWorkTypes(Job job) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
+		List<Job> quantity = new ArrayList<Job>();
 		addWorkType(workTypes, workType1);
 		addWorkType(workTypes, workType2);
 		addWorkType(workTypes, workType3);
 		addWorkType(workTypes, workType4);
-//		addquantity(workTypes,quant1);
-//		addquantity(workTypes,quant2);
-//		addquantity(workTypes,quant3);
-//		addquantity(workTypes,quant4);
+		addquantity(quantity,quant1);
+		addquantity(quantity,quant2);
+		addquantity(quantity,quant3);
+		addquantity(quantity,quant4);
 		job.setWorkTypes(workTypes);
 	}
 
-	private void addquantity(List<WorkType> workTypes, EditText quant) 
+	private void addquantity(List<Job> quantity, EditText quant) 
 	{if (TextUtils.isEmpty(quant.getText())) 
 	{
 		return;
 	}
-	WorkType workType = new WorkType();
-	workType.setQuantity(Integer.parseInt(quant.getText().toString()));
-	workTypes.add(workType);
+	Job job  = new Job();
+	job.setQuantity(Integer.parseInt(quant.getText().toString()));
+//	workType.setQuantity(Integer.parseInt(quant.getText().toString()));
+//	workTypes.add(workType);
+	quantity.add(job);
 	}
 
 	private void addWorkType(List<WorkType> workTypes, AutoCompleteTextView work) {
@@ -239,6 +242,7 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 		workType2.setAdapter(doctorNames);
 		workType3.setAdapter(doctorNames);
 		workType4.setAdapter(doctorNames);
+		
 
 	}
 

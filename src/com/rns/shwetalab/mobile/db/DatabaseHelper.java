@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String WORKTYPE_TABLE = "worktype";
 	public static final String WORKTYPE_NAME = "name";
 	public static final String WORKTYPE_PRICE = "default_price";
-	public static final String WORKTYPE_QUANTITY = "quantity";
+	
 
 	public static final String WORKTYPE_PERSON_TABLE = "worktype_person";
 	public static final String WORKTYPE_PERSON_PERSON_ID = "person_id";
@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String JOB_WORKTYPES_TABLE = "worktypes_table";
 	public static final String JOB_ID = "job_id";
 	public static final String WORKTYPE_ID = "worktype_id";
+	public static final String WORKTYPE_QUANTITY = "quantity";
 
 	public static final String JOB_LABS_TABLE = "labs_table";
 	public static final String LAB_JOB_ID = "job_id";
@@ -93,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_JOB_WORKTYPES = "create table " + JOB_WORKTYPES_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + JOB_ID + " integer not null, " + WORKTYPE_ID
-			+ " integer not null)";
+			+ " integer not null, " + WORKTYPE_QUANTITY + " integer)";
 	
 	public static final String CREATE_TABLE_LAB_WORKTYPES = "create table " + JOB_LABS_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + LAB_JOB_ID + " integer not null, " + LAB_ID
@@ -105,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public static final String CREATE_TABLE_WORK_TYPE = "create table " + WORKTYPE_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + WORKTYPE_NAME + " text not null, " + WORKTYPE_PRICE
-			+ " integer, " + WORKTYPE_QUANTITY + " integer)";
+			+ " integer)";
 
 	public static final String CREATE_TABLE_WORK_TYPE_PERSON = "create table " + WORKTYPE_PERSON_TABLE + " (" + KEY_ID
 			+ " integer primary key autoincrement, " + WORKTYPE_PERSON_PERSON_ID + " integer ,"

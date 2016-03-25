@@ -16,10 +16,17 @@ public class Job {
 	private WorkPersonMap workPersonMap;
 	private BigDecimal price;
 	private BigDecimal balance;
+	private Integer quantity;
 	
 	
 	
 	
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 	public BigDecimal getBalance() {
 		return balance;
 	}

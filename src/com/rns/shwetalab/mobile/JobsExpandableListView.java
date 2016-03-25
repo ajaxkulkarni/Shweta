@@ -4,18 +4,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
 import com.itextpdf.text.Anchor;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.BalanceAmountDao;
@@ -23,13 +32,12 @@ import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.Balance_Amount;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkType;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,13 +57,17 @@ public class JobsExpandableListView extends Activity {
 	public TextView date, bal, pay_bal_text;
 	ImageView pay, mail;
 	int id = 0;
+	String price;
 	String work;
 	BigDecimal amount;
 	int a, bal_price;
 	int total, current_month, current_year;
 	String file = "PositionPdf.pdf";
-
-
+	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.RED);
+	private static Font redFont2 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.RED);
+	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +85,7 @@ public class JobsExpandableListView extends Activity {
 		final String month = extras.getString("Month");
 		final String name = extras.getString("Name");
 		String type = extras.getString("Type");
-		final String price = extras.getString("Price");
+		price = extras.getString("Price");
 		prepareListData(month, name);
 		getbalance(price);
 
@@ -97,10 +109,9 @@ public class JobsExpandableListView extends Activity {
 		mail.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) 
-			{
+			public void onClick(View v) {
 				try {
-					createPdf(month,name);
+					createPdf(month, name);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -109,9 +120,6 @@ public class JobsExpandableListView extends Activity {
 					e.printStackTrace();
 				}
 			}
-
-
-
 
 		});
 
@@ -178,62 +186,6 @@ public class JobsExpandableListView extends Activity {
 
 	}
 
-	private void prepareInvoice(String month, String name) {
-		jobsDao = new JobsDao(this);
-		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
-		listDataHeader = new ArrayList<String>();
-
-		// String subject = "Dental Invoice";
-		// String message1 = " " + id + " " + work + " " + amount;
-		// Date dNow = new Date();
-		// SimpleDateFormat ft = new SimpleDateFormat(" MM-dd-yyyy ");
-		// StringBuilder body = new StringBuilder();
-		// String message = " Case Id " + " Worktype " + " Price ";
-		// body.append("<html>");
-		// body.append("<body>");
-		// body.append("<table style = "+"width:100%"+">");
-		// body.append("<tr>");
-		// body.append("<td>" +"Case ID" +"</td>");
-		// body.append(" <td>" + " Worktype" + "</td>");
-		// body.append(" <td>" + "Price" + "</td>");
-		// body.append("</tr>");
-		//
-		// for (Job job : jobs) {
-		// if (job.getDoctor() == null) {
-		// continue;
-		// }
-		// body.append("<tr>");
-		// body.append("<td>" + job.getId() + "</td>");
-		// body.append("<td>" + prepareWorks(job) + "</td>");
-		// body.append("<td>" + job.getPrice() + "</td>");
-		// body.append("</tr");
-		//
-		// }
-		//
-		// body.append("</table");
-		// body.append("</body");
-		// body.append("</html");
-		//
-		// Intent email = new Intent(Intent.ACTION_SEND);
-		// email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
-		// email.putExtra(Intent.EXTRA_SUBJECT, subject);
-		// email.putExtra(Intent.EXTRA_TEXT,
-		// Html.fromHtml(new StringBuilder().append("<p><b>Shweta Dental
-		// Laboratory</b></p>")
-		// .append("<small><p>522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1st
-		// Floor,Pune-30</p></small>")
-		// .append("<small><p>MOBILE.:9764004512
-		// EMAIL-shwetadentallaboratory@gmail.com</p></small>")
-		// .append("<small><p>To - Shweta Dental Laboratory</p></small>")
-		// .append("<small><p></p></small>" + ft.format(dNow)).append("<p></p>"
-		// + body).toString()));
-		// // email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(new
-		// // StringBuilder().append("<p></p>"+body).toString()));
-		//
-		// email.setType("message/rfc822");
-		// startActivity(Intent.createChooser(email, "Select Email Client"));
-	}
-
 	private void prepareListData(String month, String name) {
 		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
@@ -283,111 +235,120 @@ public class JobsExpandableListView extends Activity {
 
 	}
 
-	private void sendmail(File myFile) 
-	{
+	private void sendmail(File myFile) {
+		String to = "rajeshmangale0802@gmail.com";
 		Intent email = new Intent(Intent.ACTION_SEND);
-		email.putExtra(Intent.EXTRA_SUBJECT,"Dental Invoice");
-		email.putExtra(Intent.EXTRA_TEXT, "Hello Brother");
-		Uri uri = FileProvider.getUriForFile(this,"com.rns.shwetalab.mobile", myFile);
+		email.putExtra(Intent.EXTRA_SUBJECT, "Shweta Dental Laboratory Invoice");
+		email.putExtra(Intent.EXTRA_TEXT, "PFA,");
+		Uri uri = Uri.fromFile(myFile);
+		email.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
 		email.putExtra(Intent.EXTRA_STREAM, uri);
 		email.setType("message/rfc822");
 		startActivity(email);
 
 	}
 
-
-	// more of the getters and setters ….. 
-	private void createPdf(String month, String name) throws FileNotFoundException, DocumentException 
-	{
-
-
-		jobsDao = new JobsDao(this);
-		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
-		listDataHeader = new ArrayList<String>();
-		File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_DOCUMENTS), "pdfdemo");
+	// more of the getters and setters …..
+	@SuppressLint("NewApi")
+	private void createPdf(String month, String name) throws FileNotFoundException, DocumentException {
+		File pdfFolder = new File(
+				Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsoluteFile(),
+				"Shweta Dental Lab Invoice");
 		if (!pdfFolder.exists()) {
 			pdfFolder.mkdir();
 			Log.i("TAG", "Pdf Directory created");
 		}
 		File myFile = new File(pdfFolder + ".pdf");
 		FileOutputStream output = new FileOutputStream(myFile);
-
-
-		//Rectangle pagesize = new Rectangle(216f, 720f);
 		Document document = new Document();
 		PdfWriter.getInstance(document, output);
 		document.open();
-		addMetaData(document);
-		//(document);
-		addContent(document);
-		//		document.add(new Paragraph("Shweta"));
-		//		document.add(new Paragraph("Dental Laboratory"));
-		//		document.add(new Paragraph("522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1stFloor,Pune-30"));
-		//		document.add(new Paragraph("Mob:9764004512, Email - shwetadentallaboratory@gmail.com"));
-		//		document.add(new Paragraph("To :  Shweta Dental Laboratory"));	
-		//		for (Job job : jobs) 
-		//		{
-		//			 if (job.getDoctor() == null) 
-		//			 {
-		//			 continue;
-		//			 }
-		//			 
-		//		}
+		addContent(document, name, month);
 		document.close();
 		sendmail(myFile);
 	}
 
-	private static void addMetaData(Document document) {
-		document.addTitle("My first PDF");
-		document.addSubject("Using iText");
-		document.addKeywords("Java, PDF, iText");
-		document.addAuthor("Lars Vogel");
-		document.addCreator("Lars Vogel");
+	private void addContent(Document document, String name, String month) throws DocumentException {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateobj = new Date();
+		Paragraph preface = new Paragraph();
+		preface.add(new Paragraph("Shweta", redFont));
+		preface.add(new Paragraph("Dental Laboratory", catFont));
+		preface.add(new Paragraph("522, Narayan Peth,Subhadra Co-op.Hsg.Soc,1stFloor,Pune-30", smallBold));
+		preface.add(new Paragraph("Mob:9764004512, Email-shwetadentallaboratory@gmail.com", smallBold));
+		addEmptyLine(preface, 2);
+		preface.add(new Paragraph("Date :" + df.format(dateobj), smallBold));
+		preface.setAlignment(Element.ALIGN_RIGHT);
+		addEmptyLine(preface, 5);
+		createtable(name, month, preface);
+		createtotalamounttable(preface);
+		addEmptyLine(preface, 4);
+		preface.add(new Paragraph("Thanks", redFont2));
+		preface.add(new Paragraph("For Shweta", redFont2));
+		preface.add(new Paragraph("Dental Laboratory", redFont2));
+		document.add(preface);
+
 	}
 
-	private static void addContent(Document document) throws DocumentException {
-		Anchor anchor = new Anchor("First Chapter");
-		anchor.setName("First Chapter");
+	private void createtotalamounttable(Paragraph preface) {
+		PdfPTable table1 = new PdfPTable(3);
+		PdfPCell c1 = new PdfPCell(new Phrase(""));
+		c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		table1.addCell(c1);
 
-		// Second parameter is the number of the chapter
-		Chapter catPart = new Chapter(new Paragraph(anchor), 1);
+		c1 = new PdfPCell(new Phrase(""));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table1.addCell(c1);
+		c1 = new PdfPCell(new Phrase(""));
+		c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		table1.addCell(c1);
 
-		Paragraph subPara = new Paragraph("Subcategory 1");
-		Section subCatPart = catPart.addSection(subPara);
-		subCatPart.add(new Paragraph("Hello"));
+		table1.setHeaderRows(1);
 
-		subPara = new Paragraph("Subcategory 2");
-		subCatPart = catPart.addSection(subPara);
-		subCatPart.add(new Paragraph("Paragraph 1"));
-		subCatPart.add(new Paragraph("Paragraph 2"));
-		subCatPart.add(new Paragraph("Paragraph 3"));
+		table1.addCell("Total");
+		table1.addCell("");
+		table1.addCell(price + "/-");
 
-		// add a list
-		//  createList(subCatPart);
-		Paragraph paragraph = new Paragraph();
-		//  addEmptyLine(paragraph, 5);
-		subCatPart.add(paragraph);
+		preface.add(table1);
+	}
 
-		// add a table
-		//  createTable(subCatPart);
+	private void createtable(String name, String month, Paragraph preface) {
+		// Section sec = null;
+		jobsDao = new JobsDao(this);
+		List<Job> jobs = jobsDao.getJobsByMonthName(month, name);
+		listDataHeader = new ArrayList<String>();
 
-		// now add all this to the document
-		document.add(catPart);
+		PdfPTable table = new PdfPTable(3);
+		PdfPCell c1 = new PdfPCell(new Phrase("Case Id"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
 
-		// Next section
-		anchor = new Anchor("Second Chapter");
-		anchor.setName("Second Chapter");
+		c1 = new PdfPCell(new Phrase("Worktype"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
 
-		// Second parameter is the number of the chapter
-		catPart = new Chapter(new Paragraph(anchor), 1);
+		c1 = new PdfPCell(new Phrase("Price"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
 
-		subPara = new Paragraph("Subcategory");
-		subCatPart = catPart.addSection(subPara);
-		subCatPart.add(new Paragraph("This is a very important message"));
+		table.setHeaderRows(1);
 
-		// now add all this to the document
-		document.add(catPart);
+		for (Job job : jobs) {
+			if (job.getDoctor() == null) {
+				continue;
+			}
 
+			table.addCell(job.getId().toString());
+			table.addCell(prepareWorks(job));
+			table.addCell(job.getPrice().toString() + "/-");
+
+		}
+		preface.add(table);
+	}
+
+	private static void addEmptyLine(Paragraph paragraph, int number) {
+		for (int i = 0; i < number; i++) {
+			paragraph.add(new Paragraph(" "));
+		}
 	}
 }

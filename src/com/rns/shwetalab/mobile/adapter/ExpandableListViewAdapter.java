@@ -90,21 +90,21 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		position.setText("Position :" + job.getPosition());
 		TextView shade = (TextView) convertView.findViewById(R.id.lbl_shade);
 		shade.setText("Shade :" + job.getShade());
-		TextView quantity = (TextView)convertView.findViewById(R.id.lbl_quantity);
-		quantity.setText("Quantity :" + prepareQuantity(job));
+	//	TextView quantity = (TextView)convertView.findViewById(R.id.lbl_quantity);
+	//	quantity.setText("Quantity :" + prepareQuantity(job));
 		return convertView;
 	}
 
-	private String prepareQuantity(Job job) 
-	{
-		StringBuilder builder = new StringBuilder();
-		for(WorkType workType : job.getWorkTypes())
-		{
-			builder.append(workType.getQuantity()).append(",");
-		}
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private String prepareQuantity(Job job) 
+//	{
+//		StringBuilder builder = new StringBuilder();
+//		for(WorkType workType : job.getWorkTypes())
+//		{
+//			builder.append(workType.getQuantity()).append(",");
+//		}
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	private String prepareWorks(Job job) {
 		StringBuilder builder = new StringBuilder();

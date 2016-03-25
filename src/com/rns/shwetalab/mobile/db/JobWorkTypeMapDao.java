@@ -20,7 +20,7 @@ public class JobWorkTypeMapDao {
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase jobMapDb;
 	private Context context;
-	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_ID, DatabaseHelper.WORKTYPE_ID };
+	private static String[] cols = { DatabaseHelper.KEY_ID, DatabaseHelper.JOB_ID, DatabaseHelper.WORKTYPE_ID, DatabaseHelper.WORKTYPE_QUANTITY  };
 	private PersonDao personDao;
 	private WorkTypeDao workTypeDao;
 
@@ -69,6 +69,7 @@ public class JobWorkTypeMapDao {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(DatabaseHelper.JOB_ID, job.getId());
 		contentValues.put(DatabaseHelper.WORKTYPE_ID, workType.getId());
+		contentValues.put(DatabaseHelper.WORKTYPE_QUANTITY,job.getQuantity());
 		return contentValues;
 	}
 

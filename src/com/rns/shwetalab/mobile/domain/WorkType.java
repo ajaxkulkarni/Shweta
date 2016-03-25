@@ -7,14 +7,8 @@ public class WorkType {
 	private Integer id;
 	private String name;
 	private BigDecimal defaultPrice;
-	private Integer quantity;
 	
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+	
 	public Integer getId() {
 		return id;
 	}
