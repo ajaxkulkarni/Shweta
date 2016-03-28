@@ -19,11 +19,6 @@ public class AddBalanceExpense extends Activity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_balance_expense);
-
-//		if(CommonUtil.FLAG!=1)
-//		{
-//			CommonUtil.showNotLogin(AddBalanceExpense.this, "Not Logged in");
-//		}
 		
 		init();
 

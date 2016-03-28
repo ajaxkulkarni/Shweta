@@ -31,20 +31,18 @@ public class AddPerson extends Activity {
 		setContentView(R.layout.activity_add_person);
 		person = new Person();
 		Bundle extras = getIntent().getExtras();
-		 String value = extras.getString("Value");
+		String value = extras.getString("Value");
 		String names = extras.getString("Name");
 		String email = extras.getString("Email");
 		String phone = extras.getString("Phone");
 		nameEditText = (EditText) findViewById(R.id.add_person_activity_name_editText);
 		emailEditText = (EditText) findViewById(R.id.add_person_activity_email_editText);
 		phoneEditText = (EditText) findViewById(R.id.add_person_activity_phone_editText);
-		if (value.equals("0")) 
-		{
+		if (value.equals("0")) {
 			nameEditText.setText(names.toString());
 			emailEditText.setText(email.toString());
 			phoneEditText.setText(phone);
-		} else if(value.equals("1"))
-		{
+		} else if (value.equals("1")) {
 			nameEditText.setText("");
 			emailEditText.setText("");
 			phoneEditText.setText("");

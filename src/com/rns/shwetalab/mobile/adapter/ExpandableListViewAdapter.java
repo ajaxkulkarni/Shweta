@@ -24,17 +24,12 @@ import com.rns.shwetalab.mobile.domain.WorkType;
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
 	private Context _context;
-	// private List<String> jobTitles; // header titles
-	// child data in format of header title, child title
-	// private HashMap<String, List<String>> _listDataChild;
 
 	private List<Job> jobs;
 
 	public ExpandableListViewAdapter(Context context, List<String> listDataHeader,
 			HashMap<String, List<String>> listChildData) {
 		this._context = context;
-		// this.jobTitles = listDataHeader;
-		// this._listDataChild = listChildData;
 	}
 
 	public ExpandableListViewAdapter(Context context, List<Job> jobs) {
@@ -44,8 +39,6 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosititon) {
-		// return
-		// this._listDataChild.get(this.jobTitles.get(groupPosition)).get(childPosititon);
 		return this.jobs.get(groupPosition);
 	}
 
@@ -58,8 +51,6 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
 
-		// final String childText = (String) getChild(groupPosition,
-		// childPosition);
 
 		Job job = (Job) getChild(groupPosition, childPosition);
 
@@ -87,21 +78,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		position.setText("Position :" + job.getPosition());
 		TextView shade = (TextView) convertView.findViewById(R.id.lbl_shade);
 		shade.setText("Shade :" + job.getShade());
-	//	TextView quantity = (TextView)convertView.findViewById(R.id.lbl_quantity);
-	//	quantity.setText("Quantity :" + prepareQuantity(job));
 		return convertView;
 	}
 
-//	private String prepareQuantity(Job job) 
-//	{
-//		StringBuilder builder = new StringBuilder();
-//		for(WorkType workType : job.getWorkTypes())
-//		{
-//			builder.append(workType.getQuantity()).append(",");
-//		}
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	private String prepareWorks(Job job) {
 		StringBuilder builder = new StringBuilder();

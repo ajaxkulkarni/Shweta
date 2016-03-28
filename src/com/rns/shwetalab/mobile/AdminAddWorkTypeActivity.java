@@ -88,8 +88,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 				lab.setChecked(false);
 				doctor.setChecked(true);
 				preparePersonMaps();
-				// labsListView.setVisibility(View.GONE);
-				// doctorsListView.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -99,8 +97,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 			public void onClick(View v) {
 				doctor.setChecked(false);
 				preparePersonMaps();
-				// doctorsListView.setVisibility(View.GONE);
-				// labsListView.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -157,12 +153,10 @@ public class AdminAddWorkTypeActivity extends Activity {
 		for (int i = 0; i < persons.size(); i++) 
 		{
 				WorkPersonMap map = (WorkPersonMap) personsListView.getAdapter().getItem(i);
-				//v = personsListView.getAdapter().getView(i, null, null);
 				v = personsListView.getChildAt(i);
 				if(v.findViewById(R.id.addwork_type_doctorlist_adapter_editText)!=null)
 				{
 				EditText editText = (EditText) v.findViewById(R.id.addwork_type_doctorlist_adapter_editText);
-			//	String name = ((EditText)v.findViewById(R.id.addwork_type_doctorlist_adapter_editText)).getText().toString();
 				if (!TextUtils.isEmpty(editText.getText().toString())) {
 					map.setPrice(new BigDecimal(editText.getText().toString()));
 					map.setWorkType(work);
@@ -178,7 +172,6 @@ public class AdminAddWorkTypeActivity extends Activity {
 		WorkPersonMap map = new WorkPersonMap();
 		if (!TextUtils.isEmpty(workTypeEditText.getText())) 
 		{
-			//workTypeEditText.setError(Html.fromHtml("<font color = 'red'>Enter Worktype!</font>"));
 			work.setName(workTypeEditText.getText().toString());
 		}
 		if (!TextUtils.isEmpty(defaultprice.getText())) 

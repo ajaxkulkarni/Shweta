@@ -59,8 +59,8 @@ public class DoctorAmountDetails extends Activity {
 						//CommonUtil.showLoginErrorMessage(DoctorAmountDetails.this);
 					} else 
 						balanceamountdao.insertDetails(prepare_balance_amount_details(balance_price));
-						
-					
+
+
 				} else {
 
 					for (Balance_Amount amount : amountbalance) {
@@ -68,24 +68,24 @@ public class DoctorAmountDetails extends Activity {
 								&& amount.getYear() == current_year) 
 						{
 							calculate_amount(amount.getAmount_paid());
-							
+
 							if(balance_price > total_price)
 							{
 								balance.setError(Html.fromHtml("<font color='black'>Enter valid amount </font>"));
 							}
 							else
 							{
-							balanceamount.setId(amount.getId());
-							balanceamount.setMonth(amount.getMonth());
-							balanceamount.setYear(amount.getYear());
-							balanceamount.setPerson_id(amount.getPerson_id());
-							long result = balanceamountdao.updateAmount(balanceamount);
-							if (result < 0) {
-								Toast.makeText(getApplicationContext(), "Error while updating!!", Toast.LENGTH_SHORT)
-								.show();
-								return;
-							} else
-								CommonUtil.showUpdateMessage(DoctorAmountDetails.this);
+								balanceamount.setId(amount.getId());
+								balanceamount.setMonth(amount.getMonth());
+								balanceamount.setYear(amount.getYear());
+								balanceamount.setPerson_id(amount.getPerson_id());
+								long result = balanceamountdao.updateAmount(balanceamount);
+								if (result < 0) {
+									Toast.makeText(getApplicationContext(), "Error while updating!!", Toast.LENGTH_SHORT)
+									.show();
+									return;
+								} else
+									CommonUtil.showUpdateMessage(DoctorAmountDetails.this);
 							}
 						} else {
 							balanceamountdao.insertDetails(prepare_balance_amount_details(balance_price));
@@ -108,11 +108,8 @@ public class DoctorAmountDetails extends Activity {
 
 	private void calculate_amount(int i) {
 		int balance_price = Integer.parseInt(balance.getText().toString());
-//		if (balance_price > i) {
-//			balance.setError(Html.fromHtml("<font color='black'>Enter valid amount </font>"));
-//		} else {
-			total = i + balance_price;
-			balanceamount.setAmount_paid(total);
-	//	}
+		total = i + balance_price;
+		balanceamount.setAmount_paid(total);
+
 	}
 }

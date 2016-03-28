@@ -29,8 +29,9 @@ public class ExpandableDoctorListView extends Activity {
 		dateSelected = getIntent().getStringExtra(DatabaseHelper.JOB_DATE);
 		expListView = (ExpandableListView) findViewById(R.id.myjobsexpandable_listview);
 		date.setText(dateSelected);
-		//prepareListData();
-		listAdapter = new ExpandableListViewAdapter(this, jobsDao.getJobsByDate(dateSelected, getIntent().getStringExtra("type")));
+		// prepareListData();
+		listAdapter = new ExpandableListViewAdapter(this,
+				jobsDao.getJobsByDate(dateSelected, getIntent().getStringExtra("type")));
 		expListView.setAdapter(listAdapter);
 		expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 			@Override
@@ -58,10 +59,9 @@ public class ExpandableDoctorListView extends Activity {
 		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
 			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				// Toast.makeText(getApplicationContext(), "Group Clicked " +
-				// listDataHeader.get(groupPosition),
-				// Toast.LENGTH_SHORT).show();
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
+					long id) {
+
 				return false;
 			}
 		});
@@ -70,9 +70,7 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				// Toast.makeText(getApplicationContext(),
-				// listDataHeader.get(groupPosition) + " Expanded",
-				// Toast.LENGTH_SHORT).show();
+
 			}
 		});
 
@@ -80,9 +78,6 @@ public class ExpandableDoctorListView extends Activity {
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-				// Toast.makeText(getApplicationContext(),
-				// listDataHeader.get(groupPosition) + " Collapsed",
-				// Toast.LENGTH_SHORT).show();
 
 			}
 		});
@@ -91,11 +86,8 @@ public class ExpandableDoctorListView extends Activity {
 		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
 			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				// Toast.makeText(getApplicationContext(),
-				// listDataHeader.get(groupPosition) + " : " +
-				// listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition),
-				// Toast.LENGTH_SHORT).show();
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
+					long id) {
 
 				return false;
 			}

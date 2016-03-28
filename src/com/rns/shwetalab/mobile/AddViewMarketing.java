@@ -9,52 +9,39 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class AddViewMarketing extends Activity 
-{
+public class AddViewMarketing extends Activity {
 
-	Button add,view;
+	Button add, view;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_view_marketing);
-		
-//		if(CommonUtil.FLAG!=1)
-//		{
-//			CommonUtil.showNotLogin(AddViewMarketing.this, "Not Logged in");
-//		}
-		
-		add = (Button)findViewById(R.id.addMArketingPerson);
-		view = (Button)findViewById(R.id.viewMarketingPerson);
-		add.setOnClickListener(new OnClickListener() 
-		{
+		add = (Button) findViewById(R.id.addMArketingPerson);
+		view = (Button) findViewById(R.id.viewMarketingPerson);
+		add.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) 
-			{
-				Intent i = new Intent(AddViewMarketing.this,MarketingPersonDetails.class);
+			public void onClick(View v) {
+				Intent i = new Intent(AddViewMarketing.this, MarketingPersonDetails.class);
 				startActivity(i);
 			}
 		});
-		view.setOnClickListener(new OnClickListener() 
-		{
+		view.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) 
-			{
-				Intent i = new Intent(AddViewMarketing.this,MarketingList.class );
+			public void onClick(View v) {
+				Intent i = new Intent(AddViewMarketing.this, MarketingList.class);
 				startActivity(i);
 			}
 		});
 
 	}
-	
+
 	@Override
-	public void onBackPressed() 
-	{
-		
-		Intent i = new Intent(AddViewMarketing.this,HomePage.class);
+	public void onBackPressed() {
+
+		Intent i = new Intent(AddViewMarketing.this, HomePage.class);
 		startActivity(i);
 		super.onBackPressed();
 	}
-	
+
 }
