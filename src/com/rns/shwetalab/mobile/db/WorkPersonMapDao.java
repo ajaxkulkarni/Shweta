@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.Person;
 import com.rns.shwetalab.mobile.domain.WorkPersonMap;
 import com.rns.shwetalab.mobile.domain.WorkType;
@@ -182,6 +181,7 @@ public class WorkPersonMapDao {
 		List<WorkPersonMap> typeMaps = new ArrayList<WorkPersonMap>();
 		for (WorkPersonMap map : maps) {
 			if (map.getPerson() != null && map.getPerson().getWorkType()!=null && map.getPerson().getWorkType().equals(personType)) {
+				map.getWorkType().setQuantity(work.getQuantity());
 				typeMaps.add(map);
 			}
 		}

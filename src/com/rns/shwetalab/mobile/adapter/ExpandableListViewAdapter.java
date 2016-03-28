@@ -1,17 +1,7 @@
 package com.rns.shwetalab.mobile.adapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.rns.shwetalab.mobile.R;
-import com.rns.shwetalab.mobile.db.CommonUtil;
-import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
-import com.rns.shwetalab.mobile.db.PersonDao;
-import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
-import com.rns.shwetalab.mobile.domain.Job;
-import com.rns.shwetalab.mobile.domain.WorkPersonMap;
-import com.rns.shwetalab.mobile.domain.WorkType;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -20,6 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.rns.shwetalab.mobile.R;
+import com.rns.shwetalab.mobile.db.CommonUtil;
+import com.rns.shwetalab.mobile.db.WorkPersonMapDao;
+import com.rns.shwetalab.mobile.domain.Job;
+import com.rns.shwetalab.mobile.domain.WorkPersonMap;
+import com.rns.shwetalab.mobile.domain.WorkType;
 
 /**
  * Created by Rajesh on 8/28/2015.
@@ -119,13 +116,13 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 				WorkPersonMap map = workPersonMapDao.getWorkPersonMap(personMap);
 				if(map!=null)
 				{
-					builder.append(workType.getName()).append(",");
+					builder.append(workType.getName()).append("(" + workType.getQuantity() + ")").append(",");
 				}
 			}
 
 		} else {
 			for (WorkType workType : job.getWorkTypes()) {
-				builder.append(workType.getName()).append(",");
+				builder.append(workType.getName()).append("(" + workType.getQuantity() + ")").append(",");
 			}
 		}
 		return builder.toString();

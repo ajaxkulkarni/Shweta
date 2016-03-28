@@ -80,13 +80,13 @@
         android:text="asd"
         android:textSize="17dip" />
     
-    <TextView
+    <!-- <TextView
         android:id="@+id/lbl_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:padding="20dp"
         android:text="asd"
-        android:textSize="17dip" />
+        android:textSize="17dip" /> -->
 
 </LinearLayout>

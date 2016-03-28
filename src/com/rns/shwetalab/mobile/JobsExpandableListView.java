@@ -28,10 +28,12 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.BalanceAmountDao;
+import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobsDao;
 import com.rns.shwetalab.mobile.domain.Balance_Amount;
 import com.rns.shwetalab.mobile.domain.Job;
 import com.rns.shwetalab.mobile.domain.WorkType;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -236,7 +238,7 @@ public class JobsExpandableListView extends Activity {
 	}
 
 	private void sendmail(File myFile) {
-		String to = "rajeshmangale0802@gmail.com";
+		String to = "ajinkyashiva@gmail.com";
 		Intent email = new Intent(Intent.ACTION_SEND);
 		email.putExtra(Intent.EXTRA_SUBJECT, "Shweta Dental Laboratory Invoice");
 		email.putExtra(Intent.EXTRA_TEXT, "PFA,");
@@ -251,8 +253,7 @@ public class JobsExpandableListView extends Activity {
 	// more of the getters and setters …..
 	@SuppressLint("NewApi")
 	private void createPdf(String month, String name) throws FileNotFoundException, DocumentException {
-		File pdfFolder = new File(
-				Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsoluteFile(),
+		File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(),
 				"Shweta Dental Lab Invoice");
 		if (!pdfFolder.exists()) {
 			pdfFolder.mkdir();
@@ -330,6 +331,10 @@ public class JobsExpandableListView extends Activity {
 		c1 = new PdfPCell(new Phrase("Price"));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(c1);
+		
+		c1 = new PdfPCell(new Phrase("Date"));
+		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(c1);
 
 		table.setHeaderRows(1);
 
@@ -341,6 +346,7 @@ public class JobsExpandableListView extends Activity {
 			table.addCell(job.getId().toString());
 			table.addCell(prepareWorks(job));
 			table.addCell(job.getPrice().toString() + "/-");
+			table.addCell(CommonUtil.convertDate(job.getDate()));
 
 		}
 		preface.add(table);

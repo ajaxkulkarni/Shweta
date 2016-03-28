@@ -11,18 +11,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rns.shwetalab.mobile.adapter.LabExpandableListAdapter;
-import com.rns.shwetalab.mobile.adapter.JobsExpandableListViewAdapter;
 import com.rns.shwetalab.mobile.db.BalanceAmountDao;
 import com.rns.shwetalab.mobile.db.CommonUtil;
 import com.rns.shwetalab.mobile.db.JobWorkTypeMapDao;
@@ -37,10 +33,8 @@ public class LabExpandableList extends Activity {
 
 	private LabExpandableListAdapter joblistAdapter;
 	private ExpandableListView expListView;
-	private List<String> listDataHeader;
-	private HashMap<String, List<String>> listDataChild;
 	private JobsDao jobsDao;
-	private String dateSelected, new_balance;
+	private String new_balance;
 	TextView date, bal, pay_bal_text;
 	private BalanceAmountDao amountDao;
 	int id, total;
@@ -146,8 +140,8 @@ public class LabExpandableList extends Activity {
 	private void prepareListData(String month, String name) {
 		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getLabJobsByMonth(month, name);
-		listDataHeader = new ArrayList<String>();
-		listDataChild = new HashMap<String, List<String>>();
+		//listDataHeader = new ArrayList<String>();
+		//listDataChild = new HashMap<String, List<String>>();
 		for (Job job : jobs) {
 			if (job.getDoctor() == null) {
 				continue;
@@ -179,7 +173,7 @@ public class LabExpandableList extends Activity {
 	private void prepareInvoice(String month, String name) {
 		jobsDao = new JobsDao(this);
 		List<Job> jobs = jobsDao.getLabJobsByMonth(month, name);
-		listDataHeader = new ArrayList<String>();
+		//listDataHeader = new ArrayList<String>();
 		// TODO Auto-generated method stub
 		String to = "rajeshmangale0802@gmail.com";
 		String subject = "Dental Invoice";

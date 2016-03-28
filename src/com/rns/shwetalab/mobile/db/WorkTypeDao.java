@@ -107,7 +107,6 @@ public class WorkTypeDao {
 				work.setId(Integer.parseInt(cursor.getString(0)));
 				work.setName(cursor.getString(1));
 				work.setDefaultPrice(new BigDecimal(cursor.getString(2)));
-		
 				workTypes.add(work);
 			} while (cursor.moveToNext());
 		}

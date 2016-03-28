@@ -81,6 +81,7 @@ public class JobLabMapDao {
 		List<Job> labJobs = new ArrayList<Job>();
 		Cursor cursor = queryByJob(job);
 		while(cursor.moveToNext()) {
+			int labId = cursor.getInt(2);
 			Job labJob = new Job();
 			labJob.setPatientName(job.getPatientName());
 			labJob.setDate(job.getDate());
@@ -88,15 +89,31 @@ public class JobLabMapDao {
 			labJob.setQuadrent(job.getQuadrent());
 			labJob.setShade(job.getShade());
 			labJob.setId(job.getId());
-			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
-			labJob.setDoctor(personDao.getPerson(cursor.getInt(2)));
 			labJob.setPrice(new BigDecimal(cursor.getDouble(3)));
+			labJob.setDoctor(personDao.getPerson(labId));
+			if(labAlreadyAdded(labJob, labJobs)) {
+				continue;
+			}
+			labJob.setWorkTypes(jobWorkTypeMapDao.getWorktypesForJob(job));
 			labJobs.add(labJob);
 			
 		} 
 		return labJobs;
 	}
 	
+
+	private boolean labAlreadyAdded(Job job, List<Job> labJobs) {
+		if(labJobs == null || labJobs.size() == 0) {
+			return false;
+		}
+		for(Job labJob: labJobs) {
+			if(labJob.getDoctor().getId() == job.getDoctor().getId()) {
+				labJob.setPrice(job.getPrice().add(labJob.getPrice()));
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public BigDecimal getLabIncomeForMonth(List<Job> jobs) {
 		if(jobs == null || jobs.size() == 0) {

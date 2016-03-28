@@ -69,7 +69,7 @@ public class JobWorkTypeMapDao {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(DatabaseHelper.JOB_ID, job.getId());
 		contentValues.put(DatabaseHelper.WORKTYPE_ID, workType.getId());
-		contentValues.put(DatabaseHelper.WORKTYPE_QUANTITY,job.getQuantity());
+		contentValues.put(DatabaseHelper.WORKTYPE_QUANTITY,workType.getQuantity());
 		return contentValues;
 	}
 
@@ -86,6 +86,7 @@ public class JobWorkTypeMapDao {
 		while (cursor.moveToNext()) {
 			WorkType worktype = new WorkType();
 			worktype = workTypeDao.getWorkType(Integer.parseInt(cursor.getString(2)));
+			worktype.setQuantity(cursor.getInt(3));
 			worktypes.add(worktype);
 		}
 		return worktypes;

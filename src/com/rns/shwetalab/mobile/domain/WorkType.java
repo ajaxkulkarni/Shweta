@@ -7,6 +7,7 @@ public class WorkType {
 	private Integer id;
 	private String name;
 	private BigDecimal defaultPrice;
+	private int quantity;
 	
 	
 	public Integer getId() {
@@ -26,6 +27,12 @@ public class WorkType {
 	}
 	public void setDefaultPrice(BigDecimal defaultPrice) {
 		this.defaultPrice = defaultPrice;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public int getQuantity() {
+		return quantity;
 	}
 		
 }

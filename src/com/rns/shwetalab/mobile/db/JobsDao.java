@@ -8,7 +8,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract.Contacts.Data;
 
 import com.rns.shwetalab.mobile.ViewMonth;
 import com.rns.shwetalab.mobile.domain.Job;
@@ -82,7 +81,8 @@ public class JobsDao {
 			return;
 		}
 		for (WorkType workType : job.getWorkTypes()) {
-			insertLabJob(workPersonMapDao.getMapsForWorkType(workType, CommonUtil.TYPE_LAB), job);
+			List<WorkPersonMap> worktypeMap = workPersonMapDao.getMapsForWorkType(workType, CommonUtil.TYPE_LAB);
+			insertLabJob(worktypeMap, job);
 		}
 	}
 
@@ -95,10 +95,11 @@ public class JobsDao {
 			map.setPerson(job.getDoctor());
 			map = workPersonMapDao.getWorkPersonMap(map);
 			if (map != null && map.getPrice() != null) {
-				total = total.add(map.getPrice());
+				total = total.add(map.getPrice().multiply(BigDecimal.valueOf(workType.getQuantity())));
 			} else if (workTypeDb.getDefaultPrice() != null) {
-				total = total.add(workTypeDb.getDefaultPrice());
+				total = total.add(workTypeDb.getDefaultPrice().multiply(BigDecimal.valueOf(workType.getQuantity())));
 			}
+			workTypeDb.setQuantity(workType.getQuantity());
 			workTypes.add(workTypeDb);
 		}
 		job.setPrice(total);
@@ -134,7 +135,7 @@ public class JobsDao {
 				labJob.setShade(job.getShade());
 				// labJob.setWorkType(job.getWorkTypes());
 				labJob.setDoctor(map.getPerson());
-				labJob.setPrice(map.getPrice());
+				labJob.setPrice(map.getPrice().multiply(BigDecimal.valueOf(map.getWorkType().getQuantity())));
 				jobLabMapDao.insertDetails(labJob);
 			}
 		}
@@ -156,19 +157,18 @@ public class JobsDao {
 
 	public List<Job> getJobsByDate(String date, String personType) {
 		List<Job> jobs = iterateJobsCursor(queryByDate(date));
-		List<Job> jobsByTypes = new ArrayList<Job>();
+		//List<Job> jobsByTypes = new ArrayList<Job>();
 		if (CommonUtil.TYPE_LAB.equalsIgnoreCase(personType)) 
 		{
 			return getLabJobs(jobs);
 		}
-		for (Job job : jobs) 
+		/*for (Job job : jobs) 
 		{
-			
 			if (job.getDoctor() != null && personType.equals(job.getDoctor().getWorkType())) {
 				jobsByTypes.add(job);
 			}
-		}
-		return jobsByTypes;
+		}*/
+		return jobs;
 	}
 
 	private List<Job> getLabJobs(List<Job> jobs) {
@@ -293,7 +293,7 @@ public class JobsDao {
 			{
 				if(labJob.getDoctor().getName().equals(name))
 				{	
-				totalLabJobs.add(labJob);
+					totalLabJobs.add(labJob);
 				}
 			}
 		}

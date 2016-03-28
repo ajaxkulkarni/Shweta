@@ -1,6 +1,5 @@
 package com.rns.shwetalab.mobile;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -195,36 +194,26 @@ public class JobEntry extends Activity implements OnItemSelectedListener, OnClic
 
 	private void prepareWorkTypes(Job job) {
 		List<WorkType> workTypes = new ArrayList<WorkType>();
-		List<Job> quantity = new ArrayList<Job>();
-		addWorkType(workTypes, workType1);
-		addWorkType(workTypes, workType2);
-		addWorkType(workTypes, workType3);
-		addWorkType(workTypes, workType4);
-		addquantity(quantity,quant1);
-		addquantity(quantity,quant2);
-		addquantity(quantity,quant3);
-		addquantity(quantity,quant4);
+		addWorkType(workTypes, workType1, quant1);
+		addWorkType(workTypes, workType2, quant2);
+		addWorkType(workTypes, workType3, quant3);
+		addWorkType(workTypes, workType4, quant4);
 		job.setWorkTypes(workTypes);
 	}
 
-	private void addquantity(List<Job> quantity, EditText quant) 
-	{if (TextUtils.isEmpty(quant.getText())) 
-	{
-		return;
-	}
-	Job job  = new Job();
-	job.setQuantity(Integer.parseInt(quant.getText().toString()));
-//	workType.setQuantity(Integer.parseInt(quant.getText().toString()));
-//	workTypes.add(workType);
-	quantity.add(job);
-	}
 
-	private void addWorkType(List<WorkType> workTypes, AutoCompleteTextView work) {
+	private void addWorkType(List<WorkType> workTypes, AutoCompleteTextView work, EditText quantity) {
 		if (TextUtils.isEmpty(work.getText())) {
 			return;
 		}
 		WorkType workType = new WorkType();
 		workType.setName(work.getText().toString());
+		if(TextUtils.isEmpty(quantity.getText())) {
+			workType.setQuantity(1);
+		}
+		else {
+			workType.setQuantity(Integer.valueOf(quantity.getText().toString()));
+		}
 		workTypes.add(workType);
 	}
 
